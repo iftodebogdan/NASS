@@ -1,0 +1,27 @@
+nass.elf
+reset
+reset xmb
+exit
+nass.prx
+reset
+nass.prx
+reset
+nass.prx
+test.prx
+reset
+reset
+exit
+test.prx
+exit
+test.prx
+reset
+reset
+test.prx
+reset
+test.prx
+test.prx
+reset
+test.prx
+test.prx
+test/.prx
+test.prx
