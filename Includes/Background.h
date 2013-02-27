@@ -8,7 +8,7 @@
 #ifndef BACKGROUND_H_
 #define BACKGROUND_H_
 
-#include "Drawable.h"
+#include "ScrollDrawable.h"
 
 class Background
 {
@@ -22,37 +22,27 @@ public:
 			int primaryBgScrollSpeedY,
 			int parallaxBgScrollSpeedX,
 			int parallaxBgScrollSpeedY);
+	~Background();
 
 	void SetBackgroundScrollSpeed(
 				int primaryBgScrollSpeedX,
 				int primaryBgScrollSpeedY,
 				int parallaxBgScrollSpeedX,
 				int parallaxBgScrollSpeedY);
+	int GetPrimaryBackgroundScrollSpeedX();
+	int GetPrimaryBackgroundScrollSpeedY();
+	int GetParallaxBackgroundScrollSpeedX();
+	int GetParallaxBackgroundScrollSpeedY();
+
 	void ShowParallaxBackground(bool isShown);
 	bool IsParallaxBackgroundShown();
 	void ResetBackground();
 	void Render();
 
 private:
-	void RenderBackground(
-				Drawable* backgroundImg,
-				int bgScrollSpeedX,
-				int bgScrollSpeedY,
-				float &bgPixelsToScrollX,
-				float &bgPixelsToScrollsY);
+	ScrollDrawable* mPrimaryBackground;
+	ScrollDrawable* mParallaxBackground;
 
-	Drawable* mPrimaryBackground;
-	Drawable* mParallaxBackground;
-
-	int mPrimaryBgScrollSpeedX;
-	int mPrimaryBgScrollSpeedY;
-	float mPrimaryBgPixelsToScrollX;
-	float mPrimaryBgPixelsToScrollY;
-
-	int mParallaxBgScrollSpeedX;
-	int mParallaxBgScrollSpeedY;
-	float mParallaxBgPixelsToScrollX;
-	float mParallaxBgPixelsToScrollY;
 	bool mParallaxBgIsShown;
 };
 

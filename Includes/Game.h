@@ -12,12 +12,27 @@
 #include "Background.h"
 #include "AnimatedSprite.h"
 
+enum GameState
+	{
+		TITLE_SCREEN
+	} mGameState;
+
 class Game
 {
 public:
 	Game();
 	~Game();
 	void Run();
+
+private:
+	void LoadResources();
+	void SetGameState(GameState state);
+	GameState GetGameState();
+
+	void RenderTitleScreen();
+
+	Background* mGameBackground;
+	AnimatedSprite* mPlayerSprite;
 };
 
 #endif /* GAME_H_ */

@@ -16,6 +16,9 @@ Game::Game()
 	oslSetQuitOnLoadFailure(1);
 	oslSetKeyAutorepeatInit(40);
 	oslSetKeyAutorepeatInterval(10);
+
+	LoadResources();
+	mGameState = TITLE_SCREEN;
 }
 
 Game::~Game()
@@ -28,22 +31,35 @@ void Game::Run()
 {
 	oslShowSplashScreen(1);
 
-	AnimatedSprite* AnimSpr = new AnimatedSprite("Res/spritesheet.png", 68, 64, 15);
-	Background* BgImg = new Background(
-								"Res/PrimaryBackground.png",
-								"Res/ParallaxBackground.png",
-								-60, 0, -90, 0);
-
 	while (!osl_quit)
 	{
-		oslStartDrawing();
-		oslCls();
+		while(GetGameState() == TITLE_SCREEN)
+		{
+			oslStartDrawing();
+			oslCls();
 
-		BgImg->Render();
-		AnimSpr->Render();
+			mGameBackground->Render();
+			mPlayerSprite->Render();
 
-		oslEndDrawing();
-		oslSyncFrame();
-		//oslSwapBuffers();
+			oslEndDrawing();
+			oslSyncFrame();
+			//oslSwapBuffers();
+		}
 	}
+}
+
+void Game::LoadResources()
+{
+	mPlayerSprite = new AnimatedSprite("Res/img/spritesheet.png", 68, 64, 15);
+	mGameBackground = new Background("Res/img/PrimaryBackground.png", "Res/img/ParallaxBackground.png", -30, 0, -60, 0);
+}
+
+void Game::SetGameState(GameState state)
+{
+	mGameState = state;
+}
+
+GameState Game::GetGameState()
+{
+	return mGameState;
 }

@@ -9,31 +9,29 @@
 
 Background::Background(string pathToPrimaryBgImgFile)
 {
-	mPrimaryBackground = new Drawable(pathToPrimaryBgImgFile);
+	mPrimaryBackground = new ScrollDrawable(pathToPrimaryBgImgFile, 0, 0);
 	mParallaxBackground = NULL;
 
 	oslAssert(
-			mPrimaryBackground->GetWidth() == 480 &&
-			mPrimaryBackground->GetHeight() == 272 );
+			mPrimaryBackground->GetWidth() == PSP_SCREEN_WIDTH &&
+			mPrimaryBackground->GetHeight() == PSP_SCREEN_HEIGHT );
 
 	ShowParallaxBackground(false);
-	SetBackgroundScrollSpeed(0,0,0,0);
 	ResetBackground();
 }
 
 Background::Background(string pathToPrimaryBgImgFile, string pathToParallaxBgImgFile)
 {
-	mPrimaryBackground = new Drawable(pathToPrimaryBgImgFile);
-	mParallaxBackground = new Drawable(pathToParallaxBgImgFile);
+	mPrimaryBackground = new ScrollDrawable(pathToPrimaryBgImgFile, 0, 0);
+	mParallaxBackground = new ScrollDrawable(pathToParallaxBgImgFile, 0, 0);
 
 	oslAssert(
-			mPrimaryBackground->GetWidth() == 480 &&
-			mPrimaryBackground->GetHeight() == 272 &&
-			mParallaxBackground->GetWidth() == 480 &&
-			mParallaxBackground->GetHeight() == 272 );
+			mPrimaryBackground->GetWidth() == PSP_SCREEN_WIDTH &&
+			mPrimaryBackground->GetHeight() == PSP_SCREEN_HEIGHT &&
+			mParallaxBackground->GetWidth() == PSP_SCREEN_WIDTH &&
+			mParallaxBackground->GetHeight() == PSP_SCREEN_HEIGHT );
 
 	ShowParallaxBackground(true);
-	SetBackgroundScrollSpeed(0,0,0,0);
 	ResetBackground();
 }
 
@@ -45,22 +43,31 @@ Background::Background(
 				int parallaxBgScrollSpeedX,
 				int parallaxBgScrollSpeedY)
 {
-	mPrimaryBackground = new Drawable(pathToPrimaryBgImgFile);
-	mParallaxBackground = new Drawable(pathToParallaxBgImgFile);
+	mPrimaryBackground = new ScrollDrawable(
+								pathToPrimaryBgImgFile,
+								primaryBgScrollSpeedX,
+								primaryBgScrollSpeedY);
+	mParallaxBackground = new ScrollDrawable(
+								pathToParallaxBgImgFile,
+								parallaxBgScrollSpeedX,
+								parallaxBgScrollSpeedY);
 
 	oslAssert(
-			mPrimaryBackground->GetWidth() == 480 &&
-			mPrimaryBackground->GetHeight() == 272 &&
-			mParallaxBackground->GetWidth() == 480 &&
-			mParallaxBackground->GetHeight() == 272 );
+			mPrimaryBackground->GetWidth() == PSP_SCREEN_WIDTH &&
+			mPrimaryBackground->GetHeight() == PSP_SCREEN_HEIGHT &&
+			mParallaxBackground->GetWidth() == PSP_SCREEN_WIDTH &&
+			mParallaxBackground->GetHeight() == PSP_SCREEN_HEIGHT );
 
 	ShowParallaxBackground(true);
-	SetBackgroundScrollSpeed(
-				primaryBgScrollSpeedX,
-				primaryBgScrollSpeedY,
-				parallaxBgScrollSpeedX,
-				parallaxBgScrollSpeedY);
 	ResetBackground();
+}
+
+Background::~Background()
+{
+	if(mPrimaryBackground != NULL)
+		delete mPrimaryBackground;
+	if(mParallaxBackground != NULL)
+		delete mParallaxBackground;
 }
 
 void Background::SetBackgroundScrollSpeed(
@@ -69,10 +76,28 @@ void Background::SetBackgroundScrollSpeed(
 			int parallaxBgScrollSpeedX,
 			int parallaxBgScrollSpeedY)
 {
-	mPrimaryBgScrollSpeedX = primaryBgScrollSpeedX;
-	mPrimaryBgScrollSpeedY = primaryBgScrollSpeedY;
-	mParallaxBgScrollSpeedX = parallaxBgScrollSpeedX;
-	mParallaxBgScrollSpeedY = parallaxBgScrollSpeedY;
+	mPrimaryBackground->SetScrollSpeed(primaryBgScrollSpeedX, primaryBgScrollSpeedY);
+	mParallaxBackground->SetScrollSpeed(parallaxBgScrollSpeedX, parallaxBgScrollSpeedY);
+}
+
+int Background::GetPrimaryBackgroundScrollSpeedX()
+{
+	return mPrimaryBackground->GetScrollSpeedX();
+}
+
+int Background::GetPrimaryBackgroundScrollSpeedY()
+{
+	return mPrimaryBackground->GetScrollSpeedY();
+}
+
+int Background::GetParallaxBackgroundScrollSpeedX()
+{
+	return mParallaxBackground->GetScrollSpeedX();
+}
+
+int Background::GetParallaxBackgroundScrollSpeedY()
+{
+	return mParallaxBackground->GetScrollSpeedY();
 }
 
 void Background::ShowParallaxBackground(bool isShown)
@@ -90,84 +115,13 @@ bool Background::IsParallaxBackgroundShown()
 
 void Background::ResetBackground()
 {
-	mPrimaryBackground->SetPositionXY(0,0);
-	if(mParallaxBackground != NULL)
-		mParallaxBackground->SetPositionXY(0,0);
-	mPrimaryBgPixelsToScrollX = 0;
-	mPrimaryBgPixelsToScrollY = 0;
-	mParallaxBgPixelsToScrollX = 0;
-	mParallaxBgPixelsToScrollY = 0;
+	mPrimaryBackground->Reset();
+	mParallaxBackground->Reset();
 }
 
 void Background::Render()
 {
-	RenderBackground(
-			mPrimaryBackground,
-			mPrimaryBgScrollSpeedX,
-			mPrimaryBgScrollSpeedY,
-			mPrimaryBgPixelsToScrollX,
-			mPrimaryBgPixelsToScrollY);
+	mPrimaryBackground->Render();
 	if(mParallaxBgIsShown)
-		RenderBackground(
-				mParallaxBackground,
-				mParallaxBgScrollSpeedX,
-				mParallaxBgScrollSpeedY,
-				mParallaxBgPixelsToScrollX,
-				mParallaxBgPixelsToScrollY);
-}
-
-void Background::RenderBackground(
-			Drawable* backgroundImg,
-			int bgScrollSpeedX,
-			int bgScrollSpeedY,
-			float &bgPixelsToScrollX,
-			float &bgPixelsToScrollY)
-{
-	bgPixelsToScrollX += bgScrollSpeedX / 60.0f;
-	if(abs(bgPixelsToScrollX) >= 1)
-	{
-		backgroundImg->MoveX(bgPixelsToScrollX);
-		bgPixelsToScrollX -= (int)bgPixelsToScrollX;
-	}
-	if(abs(backgroundImg->GetPositionX()) >= 480)
-		backgroundImg->MoveX(bgScrollSpeedX / abs(bgScrollSpeedX) * -480);
-
-	bgPixelsToScrollY += bgScrollSpeedY / 60.0f;
-		if(abs(bgPixelsToScrollY) >= 1)
-		{
-			backgroundImg->MoveY(bgPixelsToScrollY);
-			bgPixelsToScrollY -= (int)bgPixelsToScrollY;
-		}
-		if(abs(backgroundImg->GetPositionY()) >= 272)
-			backgroundImg->MoveY(bgScrollSpeedY / abs(bgScrollSpeedY) * -272);
-
-	backgroundImg->Draw(); //Draw center image
-
-	if(bgScrollSpeedX)
-	{	//Move left/right by 480px
-		backgroundImg->MoveX(bgScrollSpeedX / abs(bgScrollSpeedX) * -480);
-		backgroundImg->Draw(); //Draw left/right image
-		//Reset to center position
-		backgroundImg->MoveX(bgScrollSpeedX / abs(bgScrollSpeedX) * 480);
-	}
-
-	if(bgScrollSpeedY)
-	{	//Move up/down by 272px
-		backgroundImg->MoveY(bgScrollSpeedY / abs(bgScrollSpeedY) * -272);
-		backgroundImg->Draw(); //Draw top/bottom image
-		//Reset to center position
-		backgroundImg->MoveY(bgScrollSpeedY / abs(bgScrollSpeedY) * 272);
-	}
-
-	if(bgScrollSpeedX && bgScrollSpeedY)
-	{	//Move left/right by 480px
-		backgroundImg->MoveX(bgScrollSpeedX / abs(bgScrollSpeedX) * -480);
-		//Move up/down by 272px
-		backgroundImg->MoveY(bgScrollSpeedY / abs(bgScrollSpeedY) * -272);
-		backgroundImg->Draw(); //Draw diagonal image
-		//Reset to center position
-		backgroundImg->MoveX(bgScrollSpeedX / abs(bgScrollSpeedX) * 480);
-		backgroundImg->MoveY(bgScrollSpeedY / abs(bgScrollSpeedY) * 272);
-	}
-	backgroundImg->Draw();
+		mParallaxBackground->Render();
 }
