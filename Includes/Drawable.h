@@ -31,13 +31,10 @@ public:
 	void MoveXY(int offsetX, int offsetY);
 
 	void Draw();
+	void Draw(int coordX, int coordY);
 
-private:
+protected:
 	OSL_IMAGE *mDrawableImg;
-	int mPosX;
-	int mPosY;
-	int mImgWidth;
-	int mImgHeight;
 };
 
 #endif /* DRAWABLE_H_ */

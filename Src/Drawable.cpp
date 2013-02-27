@@ -15,11 +15,8 @@ Drawable::Drawable(string pathToFile)
 						OSL_PF_8888);
 	oslAssert(mDrawableImg != NULL);
 
-	mImgWidth = mDrawableImg->x;
-	mImgHeight = mDrawableImg->y;
-
-	mPosX = 0;
-	mPosY = 0;
+	mDrawableImg->x = 0;
+	mDrawableImg->y = 0;
 }
 
 Drawable::~Drawable()
@@ -30,57 +27,63 @@ Drawable::~Drawable()
 
 int Drawable::GetPositionX()
 {
-	return mPosX;
+	return mDrawableImg->x;
 }
 
 int Drawable::GetPositionY()
 {
-	return mPosY;
+	return mDrawableImg->y;
 }
 
 int Drawable::GetWidth()
 {
-	return mImgWidth;
+	return mDrawableImg->sizeX;
 }
 
 int Drawable::GetHeight()
 {
-	return mImgHeight;
+	return mDrawableImg->sizeY;
 }
 
 void Drawable::SetPositionX(int coordX)
 {
-	mPosX = coordX;
+	mDrawableImg->x = coordX;
 }
 
 void Drawable::SetPositionY(int coordY)
 {
-	mPosY = coordY;
+	mDrawableImg->y = coordY;
 }
 
 void Drawable::SetPositionXY(int coordX, int coordY)
 {
-	mPosX = coordX;
-	mPosY = coordY;
+	mDrawableImg->x = coordX;
+	mDrawableImg->y = coordY;
 }
 
 void Drawable::MoveX(int offsetX)
 {
-	mPosX += offsetX;
+	mDrawableImg->x += offsetX;
 }
 
 void Drawable::MoveY(int offsetY)
 {
-	mPosY += offsetY;
+	mDrawableImg->y += offsetY;
 }
 
 void Drawable::MoveXY(int offsetX, int offsetY)
 {
-	mPosX += offsetX;
-	mPosY += offsetY;
+	mDrawableImg->x += offsetX;
+	mDrawableImg->y += offsetY;
 }
 
 void Drawable::Draw()
 {
-	oslDrawImageXY(mDrawableImg, mPosX, mPosY);
+	oslDrawImage(mDrawableImg);
+}
+
+void Drawable::Draw(int coordX, int coordY)
+{
+	SetPositionXY(coordX, coordY);
+	Draw();
 }
