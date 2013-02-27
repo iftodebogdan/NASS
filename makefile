@@ -1,5 +1,5 @@
 TARGET = NASS
-OBJS = Src/main.o Src/Drawable.o Src/Game.o Src/AnimatedSprite.o
+OBJS = Src/main.o Src/Drawable.o Src/Game.o Src/AnimatedSprite.o Src/Background.o
  
 INCDIR = 
 CFLAGS = -G4 -Wall -O2 

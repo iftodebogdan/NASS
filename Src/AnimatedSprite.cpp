@@ -8,18 +8,18 @@
 #include "../Includes/AnimatedSprite.h"
 
 AnimatedSprite::AnimatedSprite(
-		string pathToFile,
+		string pathToImgFile,
 		int frameWidthSize,
 		int frameHeightSize,
-		int ticksPerFrame)
-			:Drawable(pathToFile)
+		int framesPerSecond)
+			:Drawable(pathToImgFile)
 {
 	oslSetImageFrameSize(mDrawableImg, frameWidthSize, frameHeightSize);
 
 	mFrameCount = ( GetWidth() / GetFrameWidth() ) *
 					  ( GetHeight() / GetFrameHeight() );
 
-	SetAnimationSpeed(ticksPerFrame);
+	SetAnimationSpeed(framesPerSecond);
 	ResetAnimation();
 }
 
@@ -39,14 +39,14 @@ void AnimatedSprite::ResetAnimation()
 	mTicksLeft = 0;
 }
 
-void AnimatedSprite::SetAnimationSpeed(int ticksPerFrame)
+void AnimatedSprite::SetAnimationSpeed(int framesPerSecond)
 {
-	mTicksPerFrame = ticksPerFrame;
+	mFramesPerSecond = framesPerSecond;
 }
 
 int AnimatedSprite::GetAnimationSpeed()
 {
-	return mTicksPerFrame;
+	return mFramesPerSecond;
 }
 
 int AnimatedSprite::GetFrameCount()
@@ -58,7 +58,7 @@ void AnimatedSprite::Render()
 {
 	if(mTicksLeft <= 0)
 	{
-		mTicksLeft = mTicksPerFrame;
+		mTicksLeft = 60 / mFramesPerSecond;
 		mCurrentFrame < mFrameCount - 1 ? mCurrentFrame++ : mCurrentFrame = 0;
 	}
 	else

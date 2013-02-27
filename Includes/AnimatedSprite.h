@@ -14,16 +14,16 @@ class AnimatedSprite : public Drawable
 {
 public:
 	AnimatedSprite(
-			string pathToFile,
+			string pathToImgFile,
 			int frameWidthSize,
 			int frameHeigthSize,
-			int ticksPerFrame);
+			int framesPerSecond);
 
 	int GetFrameWidth();
 	int GetFrameHeight();
 
 	void ResetAnimation();
-	void SetAnimationSpeed(int ticksPerFrame);
+	void SetAnimationSpeed(int framesPerSecond);
 	int GetAnimationSpeed();
 
 	int GetFrameCount();
@@ -31,8 +31,8 @@ public:
 	void Render();
 
 private:
-	int mTicksPerFrame;
 	int mTicksLeft;
+	int mFramesPerSecond;
 	int mFrameCount;
 	int mCurrentFrame;
 };

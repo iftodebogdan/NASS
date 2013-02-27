@@ -14,7 +14,7 @@ using namespace std;
 
 class Drawable {
 public:
-	Drawable(string pathToFile);
+	Drawable(string pathToImgFile);
 	~Drawable();
 
 	int GetPositionX();

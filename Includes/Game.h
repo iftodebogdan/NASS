@@ -9,6 +9,7 @@
 #define GAME_H_
 
 #include <oslib/oslib.h>
+#include "Background.h"
 #include "AnimatedSprite.h"
 
 class Game

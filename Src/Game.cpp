@@ -28,15 +28,22 @@ void Game::Run()
 {
 	oslShowSplashScreen(1);
 
-	AnimatedSprite* Image = new AnimatedSprite("res/spritesheet.png", 32, 32, 6);
+	AnimatedSprite* AnimSpr = new AnimatedSprite("Res/spritesheet.png", 68, 64, 15);
+	Background* BgImg = new Background(
+								"Res/PrimaryBackground.png",
+								"Res/ParallaxBackground.png",
+								-60, 0, -90, 0);
 
 	while (!osl_quit)
 	{
 		oslStartDrawing();
-		oslClearScreen(RGB(0,0,0));
-		Image->Render();
-		oslSwapBuffers();
+		oslCls();
+
+		BgImg->Render();
+		AnimSpr->Render();
+
 		oslEndDrawing();
 		oslSyncFrame();
+		//oslSwapBuffers();
 	}
 }

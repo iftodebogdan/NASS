@@ -7,10 +7,10 @@
 
 #include "../Includes/Drawable.h"
 
-Drawable::Drawable(string pathToFile)
+Drawable::Drawable(string pathToImgFile)
 {
 	mDrawableImg = oslLoadImageFilePNG(
-						(char*)pathToFile.c_str(),
+						(char*)pathToImgFile.c_str(),
 						OSL_IN_RAM | OSL_SWIZZLED,
 						OSL_PF_8888);
 	oslAssert(mDrawableImg != NULL);
