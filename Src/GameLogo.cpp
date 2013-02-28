@@ -8,13 +8,13 @@
 #include "../Includes/GameLogo.h"
 
 GameLogo::GameLogo(string pathToImgFile, int scrollSpeedX, int scrollSpeedY)
-			:ScrollDrawable(pathToImgFile, scrollSpeedX, scrollSpeedY)
+			:ScrollingDrawable(pathToImgFile, scrollSpeedX, scrollSpeedY)
 {
 
 	mScrollSpeedX_backup = scrollSpeedX;
 	mScrollSpeedY_backup = scrollSpeedY;
 	Reset();
-	SetTileable(false);
+	SetTiling(false);
 }
 
 void GameLogo::Reset()
@@ -43,7 +43,7 @@ void GameLogo::SetState(GameLogoState newState)
 	if(newState == ENTERING)
 		Reset();
 
-	if(newState == IDLE_AFTER_ENTERING || newState == IDLE_AFTER_EXITING)
+	if(newState == ENTERED || newState == EXITED)
 	{
 		mGameLogoState = newState;
 		SetScrollSpeed(0, 0);
@@ -66,7 +66,7 @@ GameLogoState GameLogo::GetState()
 void GameLogo::Render()
 {
 	CheckState();
-	ScrollDrawable::Render();
+	ScrollingDrawable::Render();
 }
 
 void GameLogo::CheckState()
@@ -132,8 +132,8 @@ void GameLogo::CheckState()
 	if(GetScrollSpeedX() == 0 && GetScrollSpeedY() == 0)
 	{
 		if(GetState() == ENTERING)
-			SetState(IDLE_AFTER_ENTERING);
+			SetState(ENTERED);
 		else
-			SetState(IDLE_AFTER_EXITING);
+			SetState(EXITED);
 	}
 }

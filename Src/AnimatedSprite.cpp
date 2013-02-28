@@ -58,8 +58,8 @@ void AnimatedSprite::Render()
 {
 	if(mTicksLeft <= 0)
 	{
-		mTicksLeft = 60 / mFramesPerSecond;
-		mCurrentFrame < mFrameCount - 1 ? mCurrentFrame++ : mCurrentFrame = 0;
+		mTicksLeft = 60 / GetAnimationSpeed();
+		mCurrentFrame < GetFrameCount() - 1 ? mCurrentFrame++ : mCurrentFrame = 0;
 	}
 	else
 		mTicksLeft--;

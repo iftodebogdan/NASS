@@ -8,40 +8,40 @@
 #ifndef BACKGROUND_H_
 #define BACKGROUND_H_
 
-#include "ScrollDrawable.h"
+#include "ScrollingDrawable.h"
 
 class Background
 {
 public:
-	Background(string pathToPrimaryBgImgFile);
-	Background(string pathToPrimaryBgImgFile, string pathToParallaxBgImgFile);
-	Background(
-			string pathToPrimaryBgImgFile,
-			string pathToParallaxBgImgFile,
-			int primaryBgScrollSpeedX,
-			int primaryBgScrollSpeedY,
-			int parallaxBgScrollSpeedX,
-			int parallaxBgScrollSpeedY);
-	~Background();
+	Background(string pathToPrimaryBgImgFile); //creates a single-layered background with no scrolling effect
+	Background(string pathToPrimaryBgImgFile, string pathToParallaxBgImgFile); //creates a double-layered background with no scrolling effect
+Background(									//creates a double-layered background with scrolling effect
+			string pathToPrimaryBgImgFile,	//an image file in png format for the bottom layer
+			string pathToParallaxBgImgFile,	//an image file in png format for the top layer
+			int primaryBgScrollSpeedX,		//the bottom layer's scroll speed on the Ox axis in pixels/second
+			int primaryBgScrollSpeedY,		//the bottom layer's scroll speed on the Oy axis in pixels/second
+			int parallaxBgScrollSpeedX,		//the top layer's scroll speed on the Ox axis in pixels/second
+			int parallaxBgScrollSpeedY);	//the top layer's scroll speed on the Oy axis in pixels/second
+	~Background();	//destroys the background
 
-	void SetBackgroundScrollSpeed(
-				int primaryBgScrollSpeedX,
-				int primaryBgScrollSpeedY,
-				int parallaxBgScrollSpeedX,
-				int parallaxBgScrollSpeedY);
-	int GetPrimaryBackgroundScrollSpeedX();
-	int GetPrimaryBackgroundScrollSpeedY();
-	int GetParallaxBackgroundScrollSpeedX();
-	int GetParallaxBackgroundScrollSpeedY();
+	void SetBackgroundScrollSpeed(			//sets the background scroll speed
+				int primaryBgScrollSpeedX,	//the bottom layer's scroll speed on the Ox axis in pixels/second
+				int primaryBgScrollSpeedY,	//the bottom layer's scroll speed on the Oy axis in pixels/second
+				int parallaxBgScrollSpeedX,	//the top layer's scroll speed on the Ox axis in pixels/second
+				int parallaxBgScrollSpeedY);//the top layer's scroll speed on the Oy axis in pixels/second
+	int GetPrimaryBackgroundScrollSpeedX();	//returns the bottom layer's scroll speed on the Ox axis in pixels/second
+	int GetPrimaryBackgroundScrollSpeedY();	//returns the bottom layer's scroll speed on the Oy axis in pixels/second
+	int GetParallaxBackgroundScrollSpeedX();//returns the top layer's scroll speed on the Ox axis in pixels/second
+	int GetParallaxBackgroundScrollSpeedY();//returns the top layer's scroll speed on the Oy axis in pixels/second
 
-	void ShowParallaxBackground(bool isShown);
-	bool IsParallaxBackgroundShown();
-	void ResetBackground();
-	void Render();
+	void ShowParallaxBackground(bool isShown);	//sets whether the top layer is visible
+	bool IsParallaxBackgroundShown();	//returns true or false in accordance to the visibility of the top layer
+	void ResetBackground();	//resets the background
+	void Render();	//renders the background
 
 private:
-	ScrollDrawable* mPrimaryBackground;
-	ScrollDrawable* mParallaxBackground;
+	ScrollingDrawable* mPrimaryBackground;
+	ScrollingDrawable* mParallaxBackground;
 
 	bool mParallaxBgIsShown;
 };

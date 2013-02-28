@@ -9,7 +9,7 @@
 
 Background::Background(string pathToPrimaryBgImgFile)
 {
-	mPrimaryBackground = new ScrollDrawable(pathToPrimaryBgImgFile, 0, 0);
+	mPrimaryBackground = new ScrollingDrawable(pathToPrimaryBgImgFile, 0, 0);
 	mParallaxBackground = NULL;
 
 	oslAssert(
@@ -22,8 +22,8 @@ Background::Background(string pathToPrimaryBgImgFile)
 
 Background::Background(string pathToPrimaryBgImgFile, string pathToParallaxBgImgFile)
 {
-	mPrimaryBackground = new ScrollDrawable(pathToPrimaryBgImgFile, 0, 0);
-	mParallaxBackground = new ScrollDrawable(pathToParallaxBgImgFile, 0, 0);
+	mPrimaryBackground = new ScrollingDrawable(pathToPrimaryBgImgFile, 0, 0);
+	mParallaxBackground = new ScrollingDrawable(pathToParallaxBgImgFile, 0, 0);
 
 	oslAssert(
 			mPrimaryBackground->GetWidth() == PSP_SCREEN_WIDTH &&
@@ -43,11 +43,11 @@ Background::Background(
 				int parallaxBgScrollSpeedX,
 				int parallaxBgScrollSpeedY)
 {
-	mPrimaryBackground = new ScrollDrawable(
+	mPrimaryBackground = new ScrollingDrawable(
 								pathToPrimaryBgImgFile,
 								primaryBgScrollSpeedX,
 								primaryBgScrollSpeedY);
-	mParallaxBackground = new ScrollDrawable(
+	mParallaxBackground = new ScrollingDrawable(
 								pathToParallaxBgImgFile,
 								parallaxBgScrollSpeedX,
 								parallaxBgScrollSpeedY);
@@ -122,6 +122,6 @@ void Background::ResetBackground()
 void Background::Render()
 {
 	mPrimaryBackground->Render();
-	if(mParallaxBgIsShown)
+	if(IsParallaxBackgroundShown())
 		mParallaxBackground->Render();
 }

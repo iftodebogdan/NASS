@@ -1,0 +1,49 @@
+/*
+ * ScrollDrawable.h
+ *
+ *  Created on: Feb 28, 2013
+ *      Author: Bogdan
+ */
+
+#ifndef SCROLLDRAWABLE_H_
+#define SCROLLDRAWABLE_H_
+
+#include "Drawable.h"
+#define PSP_SCREEN_WIDTH 480	//the width of the PSP's screen in pixels
+#define PSP_SCREEN_HEIGHT 272	//the height of the PSP's screen in pixels
+
+class ScrollingDrawable : public Drawable
+{
+public:
+	ScrollingDrawable(string pathToImgFile);	//creates a tiling scrolling image using the given image file in png format
+	ScrollingDrawable(	//creates a tiling scrolling image
+			string pathToImgFile,	//an image file in png format
+			int scrollSpeedX,	//the scroll speed on the Ox axis in pixels/second
+			int scrollSpeedY);	//the scroll speed on the Oy axis in pixels/second
+	ScrollingDrawable(	//creates a scrolling image
+				string pathToImgFile,	//an image file in png format
+				int scrollSpeedX,	//the scroll speed on the Ox axis in pixels/second
+				int scrollSpeedY,	//the scroll speed on the Oy axis in pixels/second
+				bool isTiling);	//sets whether to tile the scrolling image
+
+	void SetScrollSpeed(int scrollSpeedX, int scrollSpeedY);	//sets the scroll speed of the image on the Ox and Oy axis
+	void SetScrollSpeedX(int scrollSpeedX);	//sets the scroll speed of the image on the Ox axis in pixels/second
+	void SetScrollSpeedY(int scrollSpeedY);	//sets the scroll speed of the image on the Oy axis in pixels/second
+	int GetScrollSpeedX();	//returns the scroll speed on the Ox axis in pixels/second
+	int GetScrollSpeedY();	//returns the scroll speed on the Oy axis in pixels/second
+
+	bool IsTiling(); //returns true or false in accordance to whether the scrolling image is tiling
+	void SetTiling(bool isTiling); //sets whether the scrolling image is tiling
+	void Reset(); //resets the animation of the scrolling image
+
+	void Render();	//renders the scrolling image
+
+private:
+	bool mIsTiling;
+	int mScrollSpeedX;
+	int mScrollSpeedY;
+	float mPixelsToScrollX;
+	float mPixelsToScrollY;
+};
+
+#endif /* SCROLLDRAWABLE_H_ */

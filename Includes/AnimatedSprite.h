@@ -13,22 +13,22 @@
 class AnimatedSprite : public Drawable
 {
 public:
-	AnimatedSprite(
-			string pathToImgFile,
-			int frameWidthSize,
-			int frameHeigthSize,
-			int framesPerSecond);
+	AnimatedSprite(					//creates an animated sprite
+			string pathToImgFile,	//an image file in png format
+			int frameWidthSize,		//the width of a frame
+			int frameHeigthSize,	//the height of a frame
+			int framesPerSecond);	//animation speed in frames/second
 
-	int GetFrameWidth();
-	int GetFrameHeight();
+	int GetFrameWidth(); //returns the width of a frame in pixels
+	int GetFrameHeight(); //returns the height of a frame in pixels
 
-	void ResetAnimation();
-	void SetAnimationSpeed(int framesPerSecond);
-	int GetAnimationSpeed();
+	void ResetAnimation(); //resets the animation sequence
+	void SetAnimationSpeed(int framesPerSecond); //sets an animation speed in frames/second
+	int GetAnimationSpeed(); //returns the animation speed in frames/second
 
-	int GetFrameCount();
+	int GetFrameCount(); //returns the number of frames for the animated sprite
 
-	void Render();
+	void Render(); //renders the animation
 
 private:
 	int mTicksLeft;

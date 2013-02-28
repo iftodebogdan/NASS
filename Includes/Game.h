@@ -11,30 +11,32 @@
 #include <oslib/oslib.h>
 #include "Background.h"
 #include "AnimatedSprite.h"
-#include "GameLogo.h"
+#include "TitleScreen.h"
+#include "Resources.h"
 
-enum GameState
+enum GameState	//holds the possible states of the game
 	{
-		TITLE_SCREEN
-	} mGameState;
+		TITLE_SCREEN	//the game is at the title screen
+	};
 
 class Game
 {
 public:
-	Game();
-	~Game();
-	void Run();
+	Game();	//creates the game
+	~Game();	//destroys the game
+	void Run();	//runs the game
 
 private:
 	void LoadResources();
-	void SetGameState(GameState state);
+	void SetGameState(GameState newGameState);
 	GameState GetGameState();
 
 	void RenderTitleScreen();
 
 	Background* mGameBackground;
 	AnimatedSprite* mPlayerSprite;
-	GameLogo* mGameLogo;
+	TitleScreen* mTitleScreen;
+	GameState mGameState;
 };
 
 #endif /* GAME_H_ */

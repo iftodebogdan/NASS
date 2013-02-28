@@ -40,7 +40,7 @@ void Game::Run()
 
 			mGameBackground->Render();
 			mPlayerSprite->Render();
-			mGameLogo->Render();
+			mTitleScreen->Render();
 
 			oslEndDrawing();
 			oslSyncFrame();
@@ -51,9 +51,9 @@ void Game::Run()
 
 void Game::LoadResources()
 {
-	mPlayerSprite = new AnimatedSprite("Res/img/spritesheet.png", 68, 64, 15);
-	mGameBackground = new Background("Res/img/PrimaryBackground.png", "Res/img/ParallaxBackground.png", -30, 0, -60, 0);
-	mGameLogo = new GameLogo("Res/img/GameLogo.png", -200, 0);
+	mPlayerSprite = new AnimatedSprite(Resources::IMG_PLAYER_SHIP, 68, 64, 15);
+	mGameBackground = new Background(Resources::IMG_PRIMARY_BACKGROUND, Resources::IMG_PARALLAX_BACKGROUND, -30, 0, -60, 0);
+	mTitleScreen = new TitleScreen();
 }
 
 void Game::SetGameState(GameState state)
