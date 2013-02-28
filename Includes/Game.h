@@ -11,6 +11,7 @@
 #include <oslib/oslib.h>
 #include "Background.h"
 #include "AnimatedSprite.h"
+#include "GameLogo.h"
 
 enum GameState
 	{
@@ -33,6 +34,7 @@ private:
 
 	Background* mGameBackground;
 	AnimatedSprite* mPlayerSprite;
+	GameLogo* mGameLogo;
 };
 
 #endif /* GAME_H_ */

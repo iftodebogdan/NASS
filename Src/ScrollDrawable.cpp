@@ -10,10 +10,9 @@
 ScrollDrawable::ScrollDrawable(string pathToImgFile)
 					:Drawable(pathToImgFile)
 {
-	oslAssert(GetWidth() == PSP_SCREEN_WIDTH && GetHeight() == PSP_SCREEN_HEIGHT );
-
 	SetScrollSpeed(0, 0);
 	Reset();
+	SetTileable(true);
 }
 
 ScrollDrawable::ScrollDrawable(
@@ -22,15 +21,36 @@ ScrollDrawable::ScrollDrawable(
 				int scrollSpeedY)
 					:Drawable(pathToImgFile)
 {
-	oslAssert(GetWidth() == PSP_SCREEN_WIDTH && GetHeight() == PSP_SCREEN_HEIGHT );
-
 	SetScrollSpeed(scrollSpeedX, scrollSpeedY);
 	Reset();
+	SetTileable(true);
+}
+
+ScrollDrawable::ScrollDrawable(
+				string pathToImgFile,
+				int scrollSpeedX,
+				int scrollSpeedY,
+				bool isTileable)
+					:Drawable(pathToImgFile)
+{
+	SetScrollSpeed(scrollSpeedX, scrollSpeedY);
+	Reset();
+	SetTileable(isTileable);
 }
 
 void ScrollDrawable::SetScrollSpeed(int scrollSpeedX, int scrollSpeedY)
 {
 	mScrollSpeedX = scrollSpeedX;
+	mScrollSpeedY = scrollSpeedY;
+}
+
+void ScrollDrawable::SetScrollSpeedX(int scrollSpeedX)
+{
+	mScrollSpeedX = scrollSpeedX;
+}
+
+void ScrollDrawable::SetScrollSpeedY(int scrollSpeedY)
+{
 	mScrollSpeedY = scrollSpeedY;
 }
 
@@ -44,6 +64,15 @@ int ScrollDrawable::GetScrollSpeedY()
 	return mScrollSpeedY;
 }
 
+bool ScrollDrawable::IsTileable()
+{
+	return mIsTileable;
+}
+
+void ScrollDrawable::SetTileable(bool isTileable)
+{
+	mIsTileable = isTileable;
+}
 void ScrollDrawable::Reset()
 {
 	SetPositionXY(0,0);
@@ -59,7 +88,7 @@ void ScrollDrawable::Render()
 		MoveX(mPixelsToScrollX);
 		mPixelsToScrollX -= (int)mPixelsToScrollX;
 	}
-	if(abs(GetPositionX()) >= PSP_SCREEN_WIDTH)
+	if(abs(GetPositionX()) > PSP_SCREEN_WIDTH)
 		MoveX(mScrollSpeedX / abs(mScrollSpeedX) * -PSP_SCREEN_WIDTH);
 
 	mPixelsToScrollY += mScrollSpeedY / 60.0f;
@@ -68,12 +97,12 @@ void ScrollDrawable::Render()
 			MoveY(mPixelsToScrollY);
 			mPixelsToScrollY -= (int)mPixelsToScrollY;
 		}
-		if(abs(GetPositionY()) >= PSP_SCREEN_HEIGHT)
+		if(abs(GetPositionY()) > PSP_SCREEN_HEIGHT)
 			MoveY(mScrollSpeedY / abs(mScrollSpeedY) * -PSP_SCREEN_HEIGHT);
 
 	Draw(); //Draw center image
 
-	if(mScrollSpeedX)
+	if(mScrollSpeedX && IsTileable())
 	{	//Move left/right by 480px
 		MoveX(mScrollSpeedX / abs(mScrollSpeedX) * -PSP_SCREEN_WIDTH);
 		Draw(); //Draw left/right image
@@ -81,7 +110,7 @@ void ScrollDrawable::Render()
 		MoveX(mScrollSpeedX / abs(mScrollSpeedX) * PSP_SCREEN_WIDTH);
 	}
 
-	if(mScrollSpeedY)
+	if(mScrollSpeedY && IsTileable())
 	{	//Move up/down by 272px
 		MoveY(mScrollSpeedY / abs(mScrollSpeedY) * -PSP_SCREEN_HEIGHT);
 		Draw(); //Draw top/bottom image
@@ -89,7 +118,7 @@ void ScrollDrawable::Render()
 		MoveY(mScrollSpeedY / abs(mScrollSpeedY) * PSP_SCREEN_HEIGHT);
 	}
 
-	if(mScrollSpeedX && mScrollSpeedY)
+	if(mScrollSpeedX && mScrollSpeedY && IsTileable())
 	{	//Move left/right by 480px
 		MoveX(mScrollSpeedX / abs(mScrollSpeedX) * -PSP_SCREEN_WIDTH);
 		//Move up/down by 272px
