@@ -12,6 +12,8 @@
 #include "Background.h"
 #include "AnimatedSprite.h"
 #include "TitleScreen.h"
+#include "Font.h"
+#include "Controller.h"
 #include "Resources.h"
 
 enum GameState	//holds the possible states of the game
@@ -34,8 +36,8 @@ private:
 	void RenderTitleScreen();
 
 	Background* mGameBackground;
-	AnimatedSprite* mPlayerSprite;
 	TitleScreen* mTitleScreen;
+	AnimatedSprite* mPlayerSprite;
 	GameState mGameState;
 };
 

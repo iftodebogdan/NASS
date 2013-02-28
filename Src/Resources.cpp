@@ -15,4 +15,7 @@ string Resources::IMG_DROP_DOWN_MENU = "Res/img/DropDownMenu.png";
 string Resources::IMG_UP_DOWN_BUTTONS = "Res/img/UpDownButtons.png";
 string Resources::IMG_CROSS_BUTTON = "Res/img/CrossButton.png";
 
-string Resources::STR_ARRAY_MENU_ITEMS[] = {"Item1", "Item2", "Item3"};
+string Resources::FNT_PARAFONT = "Res/fnt/parafont.png";
+
+string Resources::STR_MENU_ITEMS[3] = {"Item1", "Item2", "Item3"};
+int Resources::MENU_ITEMS_COUNT = 3;

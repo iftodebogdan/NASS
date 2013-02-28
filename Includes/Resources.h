@@ -22,7 +22,10 @@ public:
 	static string IMG_UP_DOWN_BUTTONS;
 	static string IMG_CROSS_BUTTON;
 
-	static string STR_ARRAY_MENU_ITEMS[];
+	static string FNT_PARAFONT;
+
+	static string STR_MENU_ITEMS[3];
+	static int MENU_ITEMS_COUNT;
 };
 
 #endif /* RESOURCE_H_ */

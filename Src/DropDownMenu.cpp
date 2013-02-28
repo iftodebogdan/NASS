@@ -16,6 +16,7 @@ DropDownMenu::DropDownMenu(string pathToImgFile)
 
 	mUpDownButtons = new Drawable(Resources::IMG_UP_DOWN_BUTTONS);
 	mCrossButton = new Drawable(Resources::IMG_CROSS_BUTTON);
+	mMenuItemIndex = 0;
 }
 
 DropDownMenu::DropDownMenu(string pathToImgFile, unsigned scrollSpeed)
@@ -27,6 +28,7 @@ DropDownMenu::DropDownMenu(string pathToImgFile, unsigned scrollSpeed)
 
 	mUpDownButtons = new Drawable(Resources::IMG_UP_DOWN_BUTTONS);
 	mCrossButton = new Drawable(Resources::IMG_CROSS_BUTTON);
+	mMenuItemIndex = 0;
 }
 
 DropDownMenu::DropDownMenu(
@@ -41,6 +43,13 @@ DropDownMenu::DropDownMenu(
 
 	mUpDownButtons = new Drawable(Resources::IMG_UP_DOWN_BUTTONS);
 	mCrossButton = new Drawable(Resources::IMG_CROSS_BUTTON);
+	mMenuItemIndex = 0;
+}
+
+void DropDownMenu::Reset()
+{
+	SetState(RETRACTED);
+	mMenuItemIndex = 0;
 }
 
 void DropDownMenu::SetState(DropDownMenuState newState)
@@ -83,28 +92,55 @@ unsigned DropDownMenu::GetScrollSpeed()
 
 void DropDownMenu::Render()
 {
-	ScrollingDrawable::Render();
 	CheckState();
+	ScrollingDrawable::Render();
+	if(GetState() == EXTENDED)
+		RenderMenuItems(Resources::STR_MENU_ITEMS);
 }
 
 void DropDownMenu::CheckState()
 {
 	if(GetState() == RETRACTING && GetPositionY() <= POS_Y_RETRACTED)
-		SetState(RETRACTED);
+		Reset(); //SetState(RETRACTED);
 	if(GetState() == RETRACTED && GetScrollSpeedY() != 0)
 		SetScrollSpeedY(0);
+	if(GetState() == RETRACTED && Controller::IsPressed(TRIANGLE))
+		SetState(EXTENDING);
 
 	if(GetState() == EXTENDING && GetPositionY() >= 0)
 		SetState(EXTENDED);
 	if(GetState() == EXTENDED && GetScrollSpeedY() != 0)
 		SetScrollSpeedY(0);
+	if(GetState() == EXTENDED && Controller::IsPressed(TRIANGLE))
+		SetState(RETRACTING);
 
-	if(GetState() == EXTENDED)
-		RenderMenuItems(Resources::STR_ARRAY_MENU_ITEMS);
+	if(GetState() == EXTENDED && Controller::IsPressed(DPAD_DOWN) && mMenuItemIndex < Resources::MENU_ITEMS_COUNT - 1)
+		mMenuItemIndex++;
+	if(GetState() == EXTENDED && Controller::IsPressed(DPAD_UP) && mMenuItemIndex > 0)
+		mMenuItemIndex--;
+
+	if(GetState() == EXTENDED && Controller::IsPressed(CROSS))
+		switch(mMenuItemIndex)
+		{
+		case 0:
+			//DoSomething(0);
+			break;
+		case 1:
+			//DoSomething(1);
+			break;
+		case 2:
+			//DoSomething(2);
+			break;
+		default:
+			mMenuItemIndex = 0;
+			break;
+		}
 }
 
 void DropDownMenu::RenderMenuItems(string* MenuItems)
 {
 	mUpDownButtons->Draw(16, 7);
 	mCrossButton->Draw(429, 14);
+
+	Font::DrawTextCentered(MenuItems[mMenuItemIndex], 240, 15);
 }

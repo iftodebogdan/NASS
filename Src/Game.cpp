@@ -38,6 +38,7 @@ void Game::Run()
 			oslStartDrawing();
 			oslCls();
 
+			Controller::ReadKeys();
 			mGameBackground->Render();
 			mPlayerSprite->Render();
 			mTitleScreen->Render();
@@ -54,6 +55,7 @@ void Game::LoadResources()
 	mPlayerSprite = new AnimatedSprite(Resources::IMG_PLAYER_SHIP, 68, 64, 15);
 	mGameBackground = new Background(Resources::IMG_PRIMARY_BACKGROUND, Resources::IMG_PARALLAX_BACKGROUND, -30, 0, -60, 0);
 	mTitleScreen = new TitleScreen();
+	Font::LoadFont(Resources::FNT_PARAFONT);
 }
 
 void Game::SetGameState(GameState state)

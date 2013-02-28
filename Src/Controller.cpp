@@ -8,9 +8,18 @@
 #include "../Includes/Controller.h"
 #include <oslib/oslib.h>
 
-bool Controller::IsPressed(Keys pressedKey)
+void Controller::ReadKeys()
 {
 	oslReadKeys();
+}
+
+void Controller::ReadRemoteKeys()
+{
+	oslReadRemoteKeys();
+}
+
+bool Controller::IsPressed(Keys pressedKey)
+{
 	switch(pressedKey)
 	{
 	case DPAD_UP:
@@ -46,7 +55,6 @@ bool Controller::IsPressed(Keys pressedKey)
 
 bool Controller::IsPressedRemote(RemoteKeys pressedRemoteKey)
 {
-	oslReadRemoteKeys();
 	switch(pressedRemoteKey)
 	{
 	case PLAYPAUSE:
@@ -68,13 +76,11 @@ bool Controller::IsPressedRemote(RemoteKeys pressedRemoteKey)
 
 int Controller::AnalogX()
 {
-	oslReadKeys();
 	return osl_keys->analogX;
 }
 
 int Controller::AnalogY()
 {
-	oslReadKeys();
 	return osl_keys->analogY;
 }
 

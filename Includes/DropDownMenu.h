@@ -10,6 +10,8 @@
 
 #include "Resources.h"
 #include "ScrollingDrawable.h"
+#include "Controller.h"
+#include "Font.h"
 
 #define POS_Y_RETRACTED -GetHeight() + 16 -1
 
@@ -31,6 +33,8 @@ public:
 			unsigned scrollSpeed,
 			DropDownMenuState dropDownMenuState);
 
+	void Reset();
+
 	void SetState(DropDownMenuState newState);
 	DropDownMenuState GetState();
 
@@ -45,6 +49,7 @@ private:
 
 	DropDownMenuState mDropDownMenuState;
 	unsigned mScrollSpeed;
+	int mMenuItemIndex;
 
 	Drawable* mUpDownButtons;
 	Drawable* mCrossButton;

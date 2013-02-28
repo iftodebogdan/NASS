@@ -1,10 +1,10 @@
 TARGET = NASS
 OBJS = Src/main.o Src/Drawable.o Src/Game.o Src/AnimatedSprite.o \
 	   Src/ScrollingDrawable.o Src/Background.o Src/GameLogo.o Src/TitleScreen.o \
-	   Src/Resources.o Src/DropDownMenu.o Src/Controller.o
+	   Src/Resources.o Src/DropDownMenu.o Src/Controller.o Src/Font.o
  
 INCDIR = 
-CFLAGS = -G4 -Wall -O2 
+CFLAGS = -O2 -g -G0 -Wall 
 CXXFLAGS = $(CFLAGS) -fno-exceptions -fno-rtti
 ASFLAGS = $(CFLAGS)
  

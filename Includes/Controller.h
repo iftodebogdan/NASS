@@ -38,6 +38,8 @@ enum RemoteKeys
 class Controller
 {
 public:
+	static void ReadKeys();
+	static void ReadRemoteKeys();
 	static bool IsPressed(Keys pressedKey);
 	static bool IsPressedRemote(RemoteKeys pressedRemoteKey);
 	static int AnalogX();

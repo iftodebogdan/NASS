@@ -10,7 +10,7 @@
 TitleScreen::TitleScreen()
 {
 	mGameLogo = new GameLogo(Resources::IMG_GAME_LOGO, -200, 0);
-	mDropDownMenu = new DropDownMenu(Resources::IMG_DROP_DOWN_MENU, 200, EXTENDING);
+	mDropDownMenu = new DropDownMenu(Resources::IMG_DROP_DOWN_MENU, 200, RETRACTED);
 }
 
 TitleScreen::~TitleScreen()
