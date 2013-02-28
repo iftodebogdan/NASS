@@ -10,7 +10,7 @@
 GameLogo::GameLogo(string pathToImgFile, int scrollSpeedX, int scrollSpeedY)
 			:ScrollDrawable(pathToImgFile, scrollSpeedX, scrollSpeedY)
 {
-	SetScrollSpeed(scrollSpeedX, scrollSpeedY);
+
 	mScrollSpeedX_backup = scrollSpeedX;
 	mScrollSpeedY_backup = scrollSpeedY;
 	Reset();
@@ -19,6 +19,8 @@ GameLogo::GameLogo(string pathToImgFile, int scrollSpeedX, int scrollSpeedY)
 
 void GameLogo::Reset()
 {
+	SetScrollSpeed(mScrollSpeedX_backup, mScrollSpeedY_backup);
+
 	if(GetScrollSpeedX() > 0) //Left -> Right
 		SetPositionX(-GetWidth());
 	else if(GetScrollSpeedX() < 0) //Right -> Left
@@ -39,12 +41,9 @@ void GameLogo::Reset()
 void GameLogo::SetState(GameLogoState newState)
 {
 	if(newState == ENTERING)
-	{
-		SetScrollSpeed(mScrollSpeedX_backup, mScrollSpeedY_backup);
 		Reset();
-	}
 
-	if(newState == IDLE)
+	if(newState == IDLE_AFTER_ENTERING || newState == IDLE_AFTER_EXITING)
 	{
 		mGameLogoState = newState;
 		SetScrollSpeed(0, 0);
@@ -53,6 +52,8 @@ void GameLogo::SetState(GameLogoState newState)
 	if(newState == EXITING)
 	{
 		mGameLogoState = newState;
+		SetPositionX( (PSP_SCREEN_WIDTH / 2) - (GetWidth() / 2) );
+		SetPositionY( (PSP_SCREEN_HEIGHT / 2) - (GetHeight() / 2) );
 		SetScrollSpeed(mScrollSpeedX_backup, mScrollSpeedY_backup);
 	}
 }
@@ -129,5 +130,10 @@ void GameLogo::CheckState()
 	}
 
 	if(GetScrollSpeedX() == 0 && GetScrollSpeedY() == 0)
-			SetState(IDLE);
+	{
+		if(GetState() == ENTERING)
+			SetState(IDLE_AFTER_ENTERING);
+		else
+			SetState(IDLE_AFTER_EXITING);
+	}
 }

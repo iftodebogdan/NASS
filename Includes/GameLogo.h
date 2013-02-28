@@ -14,7 +14,8 @@ enum GameLogoState
 {
 	ENTERING,
 	EXITING,
-	IDLE
+	IDLE_AFTER_ENTERING,
+	IDLE_AFTER_EXITING
 };
 class GameLogo : public ScrollDrawable
 {
