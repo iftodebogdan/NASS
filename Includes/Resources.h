@@ -8,14 +8,21 @@
 #ifndef RESOURCE_H_
 #define RESOURCE_H_
 
+#include <string>
+using namespace std;
+
 class Resources	//holds string resources for easy editing
 {
 public:
-	static char IMG_PRIMARY_BACKGROUND[];
-	static char IMG_PARALLAX_BACKGROUND[];
-	static char IMG_GAME_LOGO[];
-	static char IMG_PLAYER_SHIP[];
-	static char IMG_DROP_DOWN_MENU[];
+	static string IMG_PRIMARY_BACKGROUND;
+	static string IMG_PARALLAX_BACKGROUND;
+	static string IMG_GAME_LOGO;
+	static string IMG_PLAYER_SHIP;
+	static string IMG_DROP_DOWN_MENU;
+	static string IMG_UP_DOWN_BUTTONS;
+	static string IMG_CROSS_BUTTON;
+
+	static string STR_ARRAY_MENU_ITEMS[];
 };
 
 #endif /* RESOURCE_H_ */
