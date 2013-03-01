@@ -40,6 +40,8 @@ Background(									//creates a double-layered background with scrolling effect
 	void Render();	//renders the background
 
 private:
+	void RenderBackground(ScrollingDrawable* background);
+
 	ScrollingDrawable* mPrimaryBackground;
 	ScrollingDrawable* mParallaxBackground;
 

@@ -14,7 +14,7 @@
 enum GameState	//holds the possible states of the game
 	{
 		TITLE_SCREEN,	//the game is at the title screen
-		IN_GAME
+		GAME_SCREEN
 	};
 
 class Game

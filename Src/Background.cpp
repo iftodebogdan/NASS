@@ -121,7 +121,45 @@ void Background::ResetBackground()
 
 void Background::Render()
 {
-	mPrimaryBackground->Render();
+	RenderBackground(mPrimaryBackground);
 	if(IsParallaxBackgroundShown())
-		mParallaxBackground->Render();
+		RenderBackground(mParallaxBackground);
+}
+
+void Background::RenderBackground(ScrollingDrawable* background)
+{
+	if(abs(background->GetPositionX()) >= PSP_SCREEN_WIDTH)
+		background->MoveX(background->GetScrollSpeedX() / abs(background->GetScrollSpeedX()) * -PSP_SCREEN_WIDTH);
+
+	if(abs(background->GetPositionY()) >= PSP_SCREEN_HEIGHT)
+		background->MoveY(background->GetScrollSpeedY() / abs(background->GetScrollSpeedY()) * -PSP_SCREEN_HEIGHT);
+
+	background->Render();
+
+	if(background->GetScrollSpeedX())
+	{	//Move left/right by 480px
+		background->MoveX(background->GetScrollSpeedX() / abs(background->GetScrollSpeedX()) * -PSP_SCREEN_WIDTH);
+		background->Draw(); //Draw left/right image
+		//Reset to center position
+		background->MoveX(background->GetScrollSpeedX() / abs(background->GetScrollSpeedX()) * PSP_SCREEN_WIDTH);
+	}
+
+	if(background->GetScrollSpeedY())
+	{	//Move up/down by 272px
+		background->MoveY(background->GetScrollSpeedY() / abs(background->GetScrollSpeedY()) * -PSP_SCREEN_HEIGHT);
+		background->Draw(); //Draw top/bottom image
+		//Reset to center position
+		background->MoveY(background->GetScrollSpeedY() / abs(background->GetScrollSpeedY()) * PSP_SCREEN_HEIGHT);
+	}
+
+	if(background->GetScrollSpeedX() && background->GetScrollSpeedY())
+	{	//Move left/right by 480px
+		background->MoveX(background->GetScrollSpeedX() / abs(background->GetScrollSpeedX()) * -PSP_SCREEN_WIDTH);
+		//Move up/down by 272px
+		background->MoveY(background->GetScrollSpeedY() / abs(background->GetScrollSpeedY()) * -PSP_SCREEN_HEIGHT);
+		background->Draw(); //Draw diagonal image
+		//Reset to center position
+		background->MoveX(background->GetScrollSpeedX() / abs(background->GetScrollSpeedX()) * PSP_SCREEN_WIDTH);
+		background->MoveY(background->GetScrollSpeedY() / abs(background->GetScrollSpeedY()) * PSP_SCREEN_HEIGHT);
+	}
 }

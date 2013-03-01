@@ -14,7 +14,6 @@ GameLogo::GameLogo(string pathToImgFile, int scrollSpeedX, int scrollSpeedY)
 	mScrollSpeedX_backup = scrollSpeedX;
 	mScrollSpeedY_backup = scrollSpeedY;
 	Reset();
-	SetTiling(false);
 }
 
 void GameLogo::Reset()

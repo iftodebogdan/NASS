@@ -12,7 +12,6 @@ ScrollingDrawable::ScrollingDrawable(string pathToImgFile)
 {
 	SetScrollSpeed(0, 0);
 	Reset();
-	SetTiling(true);
 }
 
 ScrollingDrawable::ScrollingDrawable(
@@ -23,19 +22,6 @@ ScrollingDrawable::ScrollingDrawable(
 {
 	SetScrollSpeed(scrollSpeedX, scrollSpeedY);
 	Reset();
-	SetTiling(true);
-}
-
-ScrollingDrawable::ScrollingDrawable(
-				string pathToImgFile,
-				int scrollSpeedX,
-				int scrollSpeedY,
-				bool isTiling)
-					:Drawable(pathToImgFile)
-{
-	SetScrollSpeed(scrollSpeedX, scrollSpeedY);
-	Reset();
-	SetTiling(isTiling);
 }
 
 void ScrollingDrawable::SetScrollSpeed(int scrollSpeedX, int scrollSpeedY)
@@ -64,15 +50,6 @@ int ScrollingDrawable::GetScrollSpeedY()
 	return mScrollSpeedY;
 }
 
-bool ScrollingDrawable::IsTiling()
-{
-	return mIsTiling;
-}
-
-void ScrollingDrawable::SetTiling(bool isTiling)
-{
-	mIsTiling = isTiling;
-}
 void ScrollingDrawable::Reset()
 {
 	SetPositionXY(0,0);
@@ -88,20 +65,20 @@ void ScrollingDrawable::Render()
 		MoveX(mPixelsToScrollX);
 		mPixelsToScrollX -= (int)mPixelsToScrollX;
 	}
-	if(abs(GetPositionX()) > PSP_SCREEN_WIDTH)
-		MoveX(GetScrollSpeedX() / abs(GetScrollSpeedX()) * -PSP_SCREEN_WIDTH);
+	/*if(abs(GetPositionX()) > PSP_SCREEN_WIDTH)
+		MoveX(GetScrollSpeedX() / abs(GetScrollSpeedX()) * -PSP_SCREEN_WIDTH);*/
 
 	mPixelsToScrollY += GetScrollSpeedY() / 60.0f;
-		if(abs(mPixelsToScrollY) >= 1)
-		{
-			MoveY(mPixelsToScrollY);
-			mPixelsToScrollY -= (int)mPixelsToScrollY;
-		}
-		if(abs(GetPositionY()) > PSP_SCREEN_HEIGHT)
-			MoveY(GetScrollSpeedY() / abs(GetScrollSpeedY()) * -PSP_SCREEN_HEIGHT);
+	if(abs(mPixelsToScrollY) >= 1)
+	{
+		MoveY(mPixelsToScrollY);
+		mPixelsToScrollY -= (int)mPixelsToScrollY;
+	}
+	/*if(abs(GetPositionY()) > PSP_SCREEN_HEIGHT)
+		MoveY(GetScrollSpeedY() / abs(GetScrollSpeedY()) * -PSP_SCREEN_HEIGHT);*/
 
-	Draw(); //Draw center image
-
+	Draw(); //Draw image
+/*
 	if(GetScrollSpeedX() && IsTiling())
 	{	//Move left/right by 480px
 		MoveX(GetScrollSpeedX() / abs(GetScrollSpeedX()) * -PSP_SCREEN_WIDTH);
@@ -129,5 +106,5 @@ void ScrollingDrawable::Render()
 		MoveY(GetScrollSpeedY() / abs(GetScrollSpeedY()) * PSP_SCREEN_HEIGHT);
 	}
 
-	Draw();
+	Draw();*/
 }

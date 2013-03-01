@@ -9,7 +9,7 @@
 #include "../Includes/Resources.h"
 
 DropDownMenu::DropDownMenu(string pathToImgFile)
-				:ScrollingDrawable(pathToImgFile, 0, 0, false)
+				:ScrollingDrawable(pathToImgFile, 0, 0)
 {
 	SetPositionXY( (PSP_SCREEN_WIDTH / 2) - (GetWidth() / 2), POS_Y_RETRACTED );
 	SetScrollSpeed(200);
@@ -19,7 +19,7 @@ DropDownMenu::DropDownMenu(string pathToImgFile)
 }
 
 DropDownMenu::DropDownMenu(string pathToImgFile, unsigned scrollSpeed)
-				:ScrollingDrawable(pathToImgFile, 0, 0, false)
+				:ScrollingDrawable(pathToImgFile, 0, 0)
 {
 	SetPositionXY( (PSP_SCREEN_WIDTH / 2) - (GetWidth() / 2), POS_Y_RETRACTED );
 	SetScrollSpeed(scrollSpeed);
@@ -32,7 +32,7 @@ DropDownMenu::DropDownMenu(
 				string pathToImgFile,
 				unsigned scrollSpeed,
 				DropDownMenuState dropDownMenuState)
-					:ScrollingDrawable(pathToImgFile, 0, 0, false)
+					:ScrollingDrawable(pathToImgFile, 0, 0)
 {
 	SetPositionXY( (PSP_SCREEN_WIDTH / 2) - (GetWidth() / 2), POS_Y_RETRACTED );
 	SetScrollSpeed(scrollSpeed);

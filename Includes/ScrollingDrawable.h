@@ -20,11 +20,6 @@ public:
 			string pathToImgFile,	//an image file in png format
 			int scrollSpeedX,	//the scroll speed on the Ox axis in pixels/second
 			int scrollSpeedY);	//the scroll speed on the Oy axis in pixels/second
-	ScrollingDrawable(	//creates a scrolling image
-				string pathToImgFile,	//an image file in png format
-				int scrollSpeedX,	//the scroll speed on the Ox axis in pixels/second
-				int scrollSpeedY,	//the scroll speed on the Oy axis in pixels/second
-				bool isTiling);	//sets whether to tile the scrolling image
 
 	void SetScrollSpeed(int scrollSpeedX, int scrollSpeedY);	//sets the scroll speed of the image on the Ox and Oy axis
 	void SetScrollSpeedX(int scrollSpeedX);	//sets the scroll speed of the image on the Ox axis in pixels/second
@@ -32,14 +27,11 @@ public:
 	int GetScrollSpeedX();	//returns the scroll speed on the Ox axis in pixels/second
 	int GetScrollSpeedY();	//returns the scroll speed on the Oy axis in pixels/second
 
-	bool IsTiling(); //returns true or false in accordance to whether the scrolling image is tiling
-	void SetTiling(bool isTiling); //sets whether the scrolling image is tiling
 	void Reset(); //resets the animation of the scrolling image
 
 	void Render();	//renders the scrolling image
 
 private:
-	bool mIsTiling;
 	int mScrollSpeedX;
 	int mScrollSpeedY;
 	float mPixelsToScrollX;
