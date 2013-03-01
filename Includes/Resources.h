@@ -39,7 +39,6 @@ public:
 
 	static Background* mGameBackground;
 	static GameLogo* mGameLogo;
-	static AnimatedSprite* mPlayerShip;
 	static Drawable* mUpDownButtons;
 	static Drawable* mCrossButton;
 	static DropDownMenu* mDropDownMenu;
