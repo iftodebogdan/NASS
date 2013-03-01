@@ -14,8 +14,6 @@ Game::Game()
 	oslInitAudio();
 	oslSetTransparentColor(RGB(255,0,255));
 	oslSetQuitOnLoadFailure(1);
-	oslSetKeyAutorepeatInit(40);
-	oslSetKeyAutorepeatInterval(10);
 
 	Resources::LoadResources();
 	Resources::AssertResources();
@@ -58,14 +56,14 @@ GameState Game::GetGameState()
 
 void Game::RenderTitleScreen()
 {
-	Controller::ReadKeys();
+	Resources::mController->ReadKeys();
 	Resources::mGameBackground->Render();
 	Resources::mGameLogo->Render();
 	Resources::mDropDownMenu->Render();
 
 	if(Resources::mDropDownMenu->GetState() == RETRACTED)
 	{
-		Font::DrawTextCentered(Resources::STR_PRESS_X_TO_START, 240, 240);
+		Resources::mParafontFont->DrawTextCentered(Resources::STR_PRESS_X_TO_START, 240, 240);
 		Resources::mCrossButton->Draw(210, 235);
 	}
 }

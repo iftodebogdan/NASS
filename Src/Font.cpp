@@ -7,7 +7,15 @@
 
 #include "../Includes/Font.h"
 
-OSL_SFONT* Font::mFont = NULL;
+Font::Font(string fontFile)
+{
+	LoadFont(fontFile);
+}
+
+Font::~Font()
+{
+	oslDeleteSFont(mFont);
+}
 
 void Font::LoadFont(string fontFile)
 {

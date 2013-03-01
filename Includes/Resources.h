@@ -37,11 +37,13 @@ public:
 	static string STR_MENU_ITEMS[3];
 	static int MENU_ITEMS_COUNT;
 
+	static Font* mParafontFont;
+	static Controller* mController;
 	static Background* mGameBackground;
 	static GameLogo* mGameLogo;
+	static DropDownMenu* mDropDownMenu;
 	static Drawable* mUpDownButtons;
 	static Drawable* mCrossButton;
-	static DropDownMenu* mDropDownMenu;
 };
 
 #endif /* RESOURCE_H_ */

@@ -40,13 +40,15 @@ enum RemoteKeys
 class Controller
 {
 public:
-	static void ReadKeys();
-	static void ReadRemoteKeys();
-	static bool IsPressed(Keys pressedKey);
-	static bool IsPressedRemote(RemoteKeys pressedRemoteKey);
-	static int AnalogX();
-	static int AnalogY();
-	static void WaitAnyKey();
+	Controller();
+
+	void ReadKeys();
+	void ReadRemoteKeys();
+	bool IsPressed(Keys pressedKey);
+	bool IsPressedRemote(RemoteKeys pressedRemoteKey);
+	int AnalogX();
+	int AnalogY();
+	void WaitAnyKey();
 };
 
 #endif /* CONTROLLER_H_ */

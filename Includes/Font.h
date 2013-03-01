@@ -15,12 +15,15 @@ using namespace std;
 class Font
 {
 public:
-	static OSL_SFONT* mFont;
+	Font(string fontFile);
+	~Font();
 
-	static void LoadFont(string fontFile);
-	static void DrawText(string text, int posX, int posY);
-	static void DrawTextCentered(string text, int posX, int posY);
-	static int GetTextWidth(string text);
+	void LoadFont(string fontFile);
+	void DrawText(string text, int posX, int posY);
+	void DrawTextCentered(string text, int posX, int posY);
+	int GetTextWidth(string text);
+
+	OSL_SFONT* mFont;
 };
 
 #endif /* FONT_H_ */

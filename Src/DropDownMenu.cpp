@@ -99,22 +99,22 @@ void DropDownMenu::CheckState()
 		Reset(); //SetState(RETRACTED);
 	if(GetState() == RETRACTED && GetScrollSpeedY() != 0)
 		SetScrollSpeedY(0);
-	if(GetState() == RETRACTED && Controller::IsPressed(TRIANGLE))
+	if(GetState() == RETRACTED && Resources::mController->IsPressed(TRIANGLE))
 		SetState(EXTENDING);
 
 	if(GetState() == EXTENDING && GetPositionY() >= 0)
 		SetState(EXTENDED);
 	if(GetState() == EXTENDED && GetScrollSpeedY() != 0)
 		SetScrollSpeedY(0);
-	if(GetState() == EXTENDED && Controller::IsPressed(TRIANGLE))
+	if(GetState() == EXTENDED && Resources::mController->IsPressed(TRIANGLE))
 		SetState(RETRACTING);
 
-	if(GetState() == EXTENDED && Controller::IsPressed(DPAD_DOWN) && mMenuItemIndex < Resources::MENU_ITEMS_COUNT - 1)
+	if(GetState() == EXTENDED && Resources::mController->IsPressed(DPAD_DOWN) && mMenuItemIndex < Resources::MENU_ITEMS_COUNT - 1)
 		mMenuItemIndex++;
-	if(GetState() == EXTENDED && Controller::IsPressed(DPAD_UP) && mMenuItemIndex > 0)
+	if(GetState() == EXTENDED && Resources::mController->IsPressed(DPAD_UP) && mMenuItemIndex > 0)
 		mMenuItemIndex--;
 
-	if(GetState() == EXTENDED && Controller::IsPressed(CROSS))
+	if(GetState() == EXTENDED && Resources::mController->IsPressed(CROSS))
 		switch(mMenuItemIndex)
 		{
 		case 0:
@@ -137,5 +137,5 @@ void DropDownMenu::RenderMenuItems(string* MenuItems)
 	Resources::mUpDownButtons->Draw(16, 7);
 	Resources::mCrossButton->Draw(429, 14);
 
-	Font::DrawTextCentered(MenuItems[mMenuItemIndex], 240, 15);
+	Resources::mParafontFont->DrawTextCentered(MenuItems[mMenuItemIndex], 240, 15);
 }

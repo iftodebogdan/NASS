@@ -7,6 +7,12 @@
 
 #include "../Includes/Controller.h"
 
+Controller::Controller()
+{
+	oslSetKeyAutorepeatInit(40);
+	oslSetKeyAutorepeatInterval(10);
+}
+
 void Controller::ReadKeys()
 {
 	oslReadKeys();
