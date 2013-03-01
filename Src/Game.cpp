@@ -17,7 +17,8 @@ Game::Game()
 	oslSetKeyAutorepeatInit(40);
 	oslSetKeyAutorepeatInterval(10);
 
-	LoadResources();
+	Resources::LoadResources();
+	Resources::AssertResources();
 	mGameState = TITLE_SCREEN;
 }
 
@@ -33,29 +34,16 @@ void Game::Run()
 
 	while (!osl_quit)
 	{
-		while(GetGameState() == TITLE_SCREEN)
-		{
-			oslStartDrawing();
-			oslCls();
+		oslStartDrawing();
+		oslCls();
 
-			Controller::ReadKeys();
-			mGameBackground->Render();
-			mPlayerSprite->Render();
-			mTitleScreen->Render();
+		if(GetGameState() == TITLE_SCREEN)
+			RenderTitleScreen();
 
-			oslEndDrawing();
-			oslSyncFrame();
-			//oslSwapBuffers();
-		}
+		oslEndDrawing();
+		oslSyncFrame();
+		//oslSwapBuffers();
 	}
-}
-
-void Game::LoadResources()
-{
-	mPlayerSprite = new AnimatedSprite(Resources::IMG_PLAYER_SHIP, 68, 64, 15);
-	mGameBackground = new Background(Resources::IMG_PRIMARY_BACKGROUND, Resources::IMG_PARALLAX_BACKGROUND, -30, 0, -60, 0);
-	mTitleScreen = new TitleScreen();
-	Font::LoadFont(Resources::FNT_PARAFONT);
 }
 
 void Game::SetGameState(GameState state)
@@ -66,4 +54,18 @@ void Game::SetGameState(GameState state)
 GameState Game::GetGameState()
 {
 	return mGameState;
+}
+
+void Game::RenderTitleScreen()
+{
+	Controller::ReadKeys();
+	Resources::mGameBackground->Render();
+	Resources::mGameLogo->Render();
+	Resources::mDropDownMenu->Render();
+
+	if(Resources::mDropDownMenu->GetState() == RETRACTED)
+	{
+		Font::DrawTextCentered(Resources::STR_PRESS_X_TO_START, 240, 240);
+		Resources::mCrossButton->Draw(210, 235);
+	}
 }

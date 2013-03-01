@@ -8,12 +8,21 @@
 #ifndef RESOURCE_H_
 #define RESOURCE_H_
 
+#include "AnimatedSprite.h"
+#include "Background.h"
+#include "GameLogo.h"
+#include "DropDownMenu.h"
+#include "Controller.h"
+#include "Font.h"
 #include <string>
 using namespace std;
 
 class Resources	//holds string resources for easy editing
 {
 public:
+	static void LoadResources();
+	static void AssertResources();
+
 	static string IMG_PRIMARY_BACKGROUND;
 	static string IMG_PARALLAX_BACKGROUND;
 	static string IMG_GAME_LOGO;
@@ -24,8 +33,16 @@ public:
 
 	static string FNT_PARAFONT;
 
+	static string STR_PRESS_X_TO_START;
 	static string STR_MENU_ITEMS[3];
 	static int MENU_ITEMS_COUNT;
+
+	static Background* mGameBackground;
+	static GameLogo* mGameLogo;
+	static AnimatedSprite* mPlayerShip;
+	static Drawable* mUpDownButtons;
+	static Drawable* mCrossButton;
+	static DropDownMenu* mDropDownMenu;
 };
 
 #endif /* RESOURCE_H_ */

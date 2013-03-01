@@ -9,16 +9,12 @@
 #define GAME_H_
 
 #include <oslib/oslib.h>
-#include "Background.h"
-#include "AnimatedSprite.h"
-#include "TitleScreen.h"
-#include "Font.h"
-#include "Controller.h"
 #include "Resources.h"
 
 enum GameState	//holds the possible states of the game
 	{
-		TITLE_SCREEN	//the game is at the title screen
+		TITLE_SCREEN,	//the game is at the title screen
+		IN_GAME
 	};
 
 class Game
@@ -32,12 +28,8 @@ private:
 	void LoadResources();
 	void SetGameState(GameState newGameState);
 	GameState GetGameState();
-
 	void RenderTitleScreen();
 
-	Background* mGameBackground;
-	TitleScreen* mTitleScreen;
-	AnimatedSprite* mPlayerSprite;
 	GameState mGameState;
 };
 

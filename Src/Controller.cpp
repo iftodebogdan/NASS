@@ -6,7 +6,6 @@
  */
 
 #include "../Includes/Controller.h"
-#include <oslib/oslib.h>
 
 void Controller::ReadKeys()
 {

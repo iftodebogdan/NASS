@@ -8,10 +8,10 @@
 #ifndef DROPDOWNMENU_H_
 #define DROPDOWNMENU_H_
 
-#include "Resources.h"
-#include "ScrollingDrawable.h"
 #include "Controller.h"
 #include "Font.h"
+#include "ScrollingDrawable.h"
+//#include "Resources.h" //->Moved to DropDownMenu.cpp
 
 #define POS_Y_RETRACTED -GetHeight() + 16 -1
 
@@ -50,9 +50,6 @@ private:
 	DropDownMenuState mDropDownMenuState;
 	unsigned mScrollSpeed;
 	int mMenuItemIndex;
-
-	Drawable* mUpDownButtons;
-	Drawable* mCrossButton;
 };
 
 #endif /* DROPDOWNMENU_H_ */

@@ -6,6 +6,7 @@
  */
 
 #include "../Includes/DropDownMenu.h"
+#include "../Includes/Resources.h"
 
 DropDownMenu::DropDownMenu(string pathToImgFile)
 				:ScrollingDrawable(pathToImgFile, 0, 0, false)
@@ -14,8 +15,6 @@ DropDownMenu::DropDownMenu(string pathToImgFile)
 	SetScrollSpeed(200);
 	SetState(RETRACTED);
 
-	mUpDownButtons = new Drawable(Resources::IMG_UP_DOWN_BUTTONS);
-	mCrossButton = new Drawable(Resources::IMG_CROSS_BUTTON);
 	mMenuItemIndex = 0;
 }
 
@@ -26,8 +25,6 @@ DropDownMenu::DropDownMenu(string pathToImgFile, unsigned scrollSpeed)
 	SetScrollSpeed(scrollSpeed);
 	SetState(RETRACTED);
 
-	mUpDownButtons = new Drawable(Resources::IMG_UP_DOWN_BUTTONS);
-	mCrossButton = new Drawable(Resources::IMG_CROSS_BUTTON);
 	mMenuItemIndex = 0;
 }
 
@@ -41,8 +38,6 @@ DropDownMenu::DropDownMenu(
 	SetScrollSpeed(scrollSpeed);
 	SetState(dropDownMenuState);
 
-	mUpDownButtons = new Drawable(Resources::IMG_UP_DOWN_BUTTONS);
-	mCrossButton = new Drawable(Resources::IMG_CROSS_BUTTON);
 	mMenuItemIndex = 0;
 }
 
@@ -139,8 +134,8 @@ void DropDownMenu::CheckState()
 
 void DropDownMenu::RenderMenuItems(string* MenuItems)
 {
-	mUpDownButtons->Draw(16, 7);
-	mCrossButton->Draw(429, 14);
+	Resources::mUpDownButtons->Draw(16, 7);
+	Resources::mCrossButton->Draw(429, 14);
 
 	Font::DrawTextCentered(MenuItems[mMenuItemIndex], 240, 15);
 }
