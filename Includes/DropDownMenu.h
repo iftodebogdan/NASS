@@ -44,7 +44,7 @@ public:
 	void Render();
 
 private:
-	void CheckState();
+	void EvaluateState();
 	void RenderMenuItems(string* menuItems);
 
 	DropDownMenuState mDropDownMenuState;

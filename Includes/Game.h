@@ -11,10 +11,12 @@
 #include <oslib/oslib.h>
 #include "Resources.h"
 
+#define DEBUG_MODE 1
+
 enum GameState	//holds the possible states of the game
 	{
 		TITLE_SCREEN,	//the game is at the title screen
-		GAME_SCREEN
+		GAME_SCREEN		//the game is at the game screen
 	};
 
 class Game
@@ -26,9 +28,12 @@ public:
 
 private:
 	void LoadResources();
-	void SetGameState(GameState newGameState);
-	GameState GetGameState();
+	void SetState(GameState newGameState);
+	GameState GetState();
 	void RenderTitleScreen();
+	void RenderGameScreen();
+
+	void DebugScreen();
 
 	GameState mGameState;
 };

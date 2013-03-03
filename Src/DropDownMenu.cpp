@@ -87,13 +87,13 @@ unsigned DropDownMenu::GetScrollSpeed()
 
 void DropDownMenu::Render()
 {
-	CheckState();
+	EvaluateState();
 	ScrollingDrawable::Render();
 	if(GetState() == EXTENDED)
 		RenderMenuItems(Resources::STR_MENU_ITEMS);
 }
 
-void DropDownMenu::CheckState()
+void DropDownMenu::EvaluateState()
 {
 	if(GetState() == RETRACTING && GetPositionY() <= POS_Y_RETRACTED)
 		Reset(); //SetState(RETRACTED);

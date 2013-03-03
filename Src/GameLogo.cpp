@@ -45,6 +45,27 @@ void GameLogo::SetState(GameLogoState newState)
 	if(newState == ENTERED || newState == EXITED)
 	{
 		mGameLogoState = newState;
+		if(newState == ENTERED)
+		{
+			SetPositionX( (PSP_SCREEN_WIDTH / 2) - (GetWidth() / 2) );
+			SetPositionY( (PSP_SCREEN_HEIGHT / 2) - (GetHeight() / 2) );
+		}
+		else
+		{
+			if(mScrollSpeedX_backup > 0) //Left -> Right
+				SetPositionX(PSP_SCREEN_WIDTH);
+			else if(mScrollSpeedX_backup < 0) //Right -> Left
+					SetPositionX(-GetWidth());
+				else if(mScrollSpeedX_backup == 0) //Center on Ox
+						SetPositionX( (PSP_SCREEN_WIDTH / 2) - (GetWidth() / 2) );
+
+			if(mScrollSpeedY_backup > 0) //Up -> Down
+				SetPositionY(PSP_SCREEN_HEIGHT);
+			else if(mScrollSpeedY_backup < 0) //Down -> Up
+					SetPositionY(-GetHeight());
+				else if(mScrollSpeedY_backup == 0) //Center on Oy
+					SetPositionY( (PSP_SCREEN_HEIGHT / 2) - (GetHeight() / 2) );
+		}
 		SetScrollSpeed(0, 0);
 	}
 
@@ -64,11 +85,11 @@ GameLogoState GameLogo::GetState()
 
 void GameLogo::Render()
 {
-	CheckState();
+	EvaluateState();
 	ScrollingDrawable::Render();
 }
 
-void GameLogo::CheckState()
+void GameLogo::EvaluateState()
 {
 	if(GetState() == ENTERING)
 	{
@@ -130,9 +151,10 @@ void GameLogo::CheckState()
 
 	if(GetScrollSpeedX() == 0 && GetScrollSpeedY() == 0)
 	{
-		if(GetState() == ENTERING)
+		if(GetState() == ENTERING && GetState() != ENTERED && GetState() != EXITED)
 			SetState(ENTERED);
 		else
-			SetState(EXITED);
+			if(GetState() == EXITING && GetState() != ENTERED && GetState() != EXITED)
+				SetState(EXITED);
 	}
 }

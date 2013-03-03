@@ -27,7 +27,7 @@ public:
 	void Render();	//renders the game logo
 
 private:
-	void CheckState();
+	void EvaluateState();
 
 	GameLogoState mGameLogoState;
 	int mScrollSpeedX_backup;

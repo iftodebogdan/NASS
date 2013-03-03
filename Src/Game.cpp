@@ -32,11 +32,19 @@ void Game::Run()
 
 	while (!osl_quit)
 	{
+		Resources::mController->ReadKeys();
+
 		oslStartDrawing();
 		oslCls();
 
-		if(GetGameState() == TITLE_SCREEN)
+		if(GetState() == TITLE_SCREEN)
 			RenderTitleScreen();
+
+		if(GetState() == GAME_SCREEN)
+			RenderGameScreen();
+
+		if(DEBUG_MODE)
+			DebugScreen();
 
 		oslEndDrawing();
 		oslSyncFrame();
@@ -44,26 +52,58 @@ void Game::Run()
 	}
 }
 
-void Game::SetGameState(GameState state)
+void Game::SetState(GameState newState)
 {
-	mGameState = state;
+	if(newState == TITLE_SCREEN)
+	{
+		Resources::mGameLogo->Reset();
+		Resources::mDropDownMenu->Reset();
+	}
+
+	mGameState = newState;
 }
 
-GameState Game::GetGameState()
+GameState Game::GetState()
 {
 	return mGameState;
 }
 
 void Game::RenderTitleScreen()
 {
-	Resources::mController->ReadKeys();
 	Resources::mGameBackground->Render();
 	Resources::mGameLogo->Render();
-	Resources::mDropDownMenu->Render();
+	if(Resources::mGameLogo->GetState() != EXITING && Resources::mGameLogo->GetState() != EXITED)
+		Resources::mDropDownMenu->Render();
 
-	if(Resources::mDropDownMenu->GetState() == RETRACTED)
-	{
-		Resources::mParafontFont->DrawTextCentered(Resources::STR_PRESS_X_TO_START, 240, 240);
-		Resources::mCrossButton->Draw(210, 235);
-	}
+	if(Resources::mGameLogo->GetState() == ENTERING && Resources::mController->IsPressed(CROSS))
+		Resources::mGameLogo->SetState(ENTERED);
+	else
+		if(Resources::mDropDownMenu->GetState() == RETRACTED && Resources::mGameLogo->GetState() == ENTERED)
+		{
+			Resources::mParafontFont->DrawTextCentered(Resources::STR_PRESS_X_TO_START, 240, 240);
+			Resources::mCrossButton->Draw(210, 235);
+
+			if(Resources::mController->IsPressed(CROSS))
+			{
+				Resources::mGameLogo->SetState(EXITING);
+			}
+		}
+
+	if(Resources::mGameLogo->GetState() == EXITED)
+		SetState(GAME_SCREEN);
+}
+
+void Game::RenderGameScreen()
+{
+	Resources::mGameBackground->Render();
+
+	if(Resources::mController->IsPressed(CIRCLE))
+		SetState(TITLE_SCREEN);
+}
+
+void Game::DebugScreen()
+{
+	oslPrintf("Game state: %d\n", GetState());
+	oslPrintf("GameLogo state: %d\n", Resources::mGameLogo->GetState());
+	oslPrintf("DropDownMenu state: %d\n", Resources::mDropDownMenu->GetState());
 }
