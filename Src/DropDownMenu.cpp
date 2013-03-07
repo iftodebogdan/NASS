@@ -137,5 +137,5 @@ void DropDownMenu::RenderMenuItems(string* MenuItems)
 	Resources::mUpDownButtons->Draw(16, 7);
 	Resources::mCrossButton->Draw(429, 14);
 
-	Resources::mParafontFont->DrawTextCentered(MenuItems[mMenuItemIndex], 240, 15);
+	Resources::mCopperPlateFont->DrawTextCentered(MenuItems[mMenuItemIndex], 240, 20);
 }

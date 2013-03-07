@@ -25,13 +25,11 @@ void Font::LoadFont(string fontFile)
 
 void Font::DrawText(string text, int posX, int posY)
 {
-	oslAssert(mFont != NULL);
 	oslSFontDrawText(mFont, posX, posY, (char*)text.c_str());
 }
 
 void Font::DrawTextCentered(string text, int posX, int posY)
 {
-	oslAssert(mFont != NULL);
 	DrawText(text, posX - GetTextWidth(text) / 2, posY);
 }
 

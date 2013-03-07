@@ -14,6 +14,7 @@ Game::Game()
 	oslInitAudio();
 	oslSetTransparentColor(RGB(255,0,255));
 	oslSetQuitOnLoadFailure(1);
+	oslSetKeyAnalogToDPad(80);
 
 	Resources::LoadResources();
 	Resources::AssertResources();
@@ -60,6 +61,11 @@ void Game::SetState(GameState newState)
 		Resources::mDropDownMenu->Reset();
 	}
 
+	if(newState == GAME_SCREEN)
+	{
+		Resources::mPlayer->Reset();
+	}
+
 	mGameState = newState;
 }
 
@@ -96,13 +102,21 @@ void Game::RenderTitleScreen()
 void Game::RenderGameScreen()
 {
 	Resources::mGameBackground->Render();
+	Resources::mPlayer->Render();
 
-	if(Resources::mController->IsPressed(CIRCLE))
-		SetState(TITLE_SCREEN);
+	if(Resources::mController->IsPressed(START))
+		if(oslMessageBox(
+			Resources::STR_QUIT_MESSAGE.c_str(),
+			Resources::STR_QUIT_TITLE.c_str(),
+			oslMake3Buttons(OSL_KEY_CROSS, OSL_MB_YES, OSL_KEY_CIRCLE, OSL_MB_NO, 0, 0)) == OSL_MB_YES)
+				SetState(TITLE_SCREEN);
 }
 
 void Game::DebugScreen()
 {
+	oslSetBkColor(COLOR_BLACK);
+	oslSetTextColor(COLOR_WHITE);
+
 	oslPrintf("Game state: %d\n", GetState());
 	oslPrintf("GameLogo state: %d\n", Resources::mGameLogo->GetState());
 	oslPrintf("DropDownMenu state: %d\n", Resources::mDropDownMenu->GetState());

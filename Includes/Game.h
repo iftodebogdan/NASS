@@ -11,7 +11,7 @@
 #include <oslib/oslib.h>
 #include "Resources.h"
 
-#define DEBUG_MODE 1
+#define DEBUG_MODE 0
 
 enum GameState	//holds the possible states of the game
 	{

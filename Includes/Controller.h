@@ -10,6 +10,8 @@
 
 #include <oslib/oslib.h>
 
+#define ANALOG_SENSITIVITY 80
+
 enum Keys
 {
 	DPAD_UP,
@@ -45,7 +47,9 @@ public:
 	void ReadKeys();
 	void ReadRemoteKeys();
 	bool IsPressed(Keys pressedKey);
+	bool IsHeld(Keys heldKey);
 	bool IsPressedRemote(RemoteKeys pressedRemoteKey);
+	bool IsHeldRemote(RemoteKeys heldRemoteKey);
 	int AnalogX();
 	int AnalogY();
 	void WaitAnyKey();

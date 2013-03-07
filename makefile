@@ -1,7 +1,8 @@
 TARGET = NASS
 OBJS = Src/main.o Src/Drawable.o Src/Game.o Src/AnimatedSprite.o \
 	   Src/ScrollingDrawable.o Src/Background.o Src/GameLogo.o \
-	   Src/DropDownMenu.o Src/Controller.o Src/Font.o Src/Resources.o
+	   Src/DropDownMenu.o Src/Controller.o Src/Font.o Src/Resources.o \
+	   Src/Player.o
  
 INCDIR = 
 CFLAGS = -O2 -g -G0 -Wall 
