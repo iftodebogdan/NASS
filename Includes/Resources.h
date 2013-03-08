@@ -15,7 +15,10 @@
 #include "Controller.h"
 #include "Font.h"
 #include "Player.h"
+#include "Enemy.h"
 #include <string>
+#include <list>
+#include <time.h>
 using namespace std;
 
 #define PLAYER_FRAME_WIDTH_SIZE 68
@@ -34,8 +37,8 @@ using namespace std;
 #define ASTEROID_L_FRAME_HEIGHT_SIZE 49
 #define ASTEROID_L_FRAMERATE 8
 
-#define MOON_ROCK_FRAME_WIDTH_SIZE
-#define MOON_ROCK_FRAME_HEIGHT_SIZE
+#define MOON_ROCK_FRAME_WIDTH_SIZE 27
+#define MOON_ROCK_FRAME_HEIGHT_SIZE 27
 #define MOON_ROCK_FRAMERATE 8
 
 class Resources	//holds string resources for easy editing
@@ -76,6 +79,11 @@ public:
 	static Drawable* mUpDownButtons;
 	static Drawable* mCrossButton;
 	static Player* mPlayer;
+	static AnimatedSprite* mMoonRock;
+	static AnimatedSprite* mAsteroidL;
+	static AnimatedSprite* mAsteroidM;
+	static AnimatedSprite* mAsteroidS;
+	static EnemyList* mEnemyList;
 };
 
 #endif /* RESOURCE_H_ */

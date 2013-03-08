@@ -18,11 +18,14 @@ public:
 			int frameWidthSize,		//the width of a frame
 			int frameHeigthSize,	//the height of a frame
 			int framesPerSecond);	//animation speed in frames/second
+	AnimatedSprite(const AnimatedSprite *animatedSprite);
 
 	int GetFrameWidth(); //returns the width of a frame in pixels
 	int GetFrameHeight(); //returns the height of a frame in pixels
 
 	void ResetAnimation(); //resets the animation sequence
+	void InvertAnimation(bool isInverted);
+	bool IsAnimationInverted();
 	void SetAnimationSpeed(int framesPerSecond); //sets an animation speed in frames/second
 	int GetAnimationSpeed(); //returns the animation speed in frames/second
 
@@ -35,6 +38,7 @@ private:
 	int mFramesPerSecond;
 	int mFrameCount;
 	int mCurrentFrame;
+	bool mInvertedAnimation;
 };
 
 #endif /* ANIMATEDSPRITE_H_ */

@@ -64,6 +64,7 @@ void Game::SetState(GameState newState)
 	if(newState == GAME_SCREEN)
 	{
 		Resources::mPlayer->Reset();
+		Resources::mEnemyList->Reset();
 	}
 
 	mGameState = newState;
@@ -103,6 +104,7 @@ void Game::RenderGameScreen()
 {
 	Resources::mGameBackground->Render();
 	Resources::mPlayer->Render();
+	Resources::mEnemyList->Render();
 
 	if(Resources::mController->IsPressed(START))
 		if(oslMessageBox(
@@ -120,4 +122,6 @@ void Game::DebugScreen()
 	oslPrintf("Game state: %d\n", GetState());
 	oslPrintf("GameLogo state: %d\n", Resources::mGameLogo->GetState());
 	oslPrintf("DropDownMenu state: %d\n", Resources::mDropDownMenu->GetState());
+	oslPrintf("Enemy count: %d\n", Resources::mEnemyList->GetEnemyCount());
+	oslPrintf("mEnemySpeedModifier: %d\n", Resources::mEnemyList->GetEnemySpeedModifier());
 }

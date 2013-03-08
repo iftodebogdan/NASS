@@ -29,7 +29,13 @@ public:
 
 	void Reset();
 	void Render();
+	PlayerState GetState();
+	void SetState(PlayerState newState);
+
+private:
 	void EvaluateState();
+
+	PlayerState mPlayerState;
 };
 
 #endif /* PLAYER_H_ */

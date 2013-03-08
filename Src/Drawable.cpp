@@ -18,6 +18,11 @@ Drawable::Drawable(string pathToImgFile)
 	SetPositionXY(0, 0);
 }
 
+Drawable::Drawable(const Drawable *drawableImg)
+{
+	mDrawableImg = new OSL_IMAGE(*drawableImg->mDrawableImg);
+}
+
 Drawable::~Drawable()
 {
 	if(mDrawableImg != NULL)

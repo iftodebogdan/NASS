@@ -23,6 +23,16 @@ AnimatedSprite::AnimatedSprite(
 	ResetAnimation();
 }
 
+AnimatedSprite::AnimatedSprite(const AnimatedSprite *animatedSprite)
+	: Drawable(animatedSprite)
+{
+	mCurrentFrame = animatedSprite->mCurrentFrame;
+	mFrameCount = animatedSprite->mFrameCount;
+	mFramesPerSecond = animatedSprite->mFramesPerSecond;
+	mTicksLeft = animatedSprite->mTicksLeft;
+	mInvertedAnimation = animatedSprite->mInvertedAnimation;
+}
+
 int AnimatedSprite::GetFrameWidth()
 {
 	return mDrawableImg->frameSizeX;
@@ -37,6 +47,17 @@ void AnimatedSprite::ResetAnimation()
 {
 	mCurrentFrame = 0;
 	mTicksLeft = 0;
+	InvertAnimation(false);
+}
+
+void AnimatedSprite::InvertAnimation(bool isInverted)
+{
+	mInvertedAnimation = isInverted;
+}
+
+bool AnimatedSprite::IsAnimationInverted()
+{
+	return mInvertedAnimation;
 }
 
 void AnimatedSprite::SetAnimationSpeed(int framesPerSecond)
@@ -59,7 +80,10 @@ void AnimatedSprite::Render()
 	if(mTicksLeft <= 0)
 	{
 		mTicksLeft = 60 / GetAnimationSpeed();
-		mCurrentFrame < GetFrameCount() - 1 ? mCurrentFrame++ : mCurrentFrame = 0;
+		if(!IsAnimationInverted())
+			mCurrentFrame < GetFrameCount() - 1 ? mCurrentFrame++ : mCurrentFrame = 0;
+		else
+			mCurrentFrame > 0 ? mCurrentFrame-- : mCurrentFrame = GetFrameCount() - 1;
 	}
 	else
 		mTicksLeft--;

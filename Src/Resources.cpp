@@ -39,23 +39,50 @@ Drawable* Resources::mUpDownButtons = NULL;
 Drawable* Resources::mCrossButton = NULL;
 DropDownMenu* Resources::mDropDownMenu = NULL;
 Player* Resources::mPlayer = NULL;
+AnimatedSprite* Resources::mAsteroidL = NULL;
+AnimatedSprite* Resources::mAsteroidM = NULL;
+AnimatedSprite* Resources::mAsteroidS = NULL;
+AnimatedSprite* Resources::mMoonRock = NULL;
+EnemyList* Resources::mEnemyList = NULL;
 
 void Resources::LoadResources()
 {
-	mParafontFont = new Font(Resources::FNT_PARAFONT);
-	mSmallStoneFont = new Font(Resources::FNT_SMALLSTONE);
-	mCopperPlateFont = new Font(Resources::FNT_COPPERPLATE);
+	oslSrand(time(NULL));
+	mParafontFont = new Font(FNT_PARAFONT);
+	mSmallStoneFont = new Font(FNT_SMALLSTONE);
+	mCopperPlateFont = new Font(FNT_COPPERPLATE);
 	mController = new Controller();
-	mGameBackground = new Background(Resources::IMG_PRIMARY_BACKGROUND, Resources::IMG_PARALLAX_BACKGROUND, -30, 0, -60, 0);
-	mGameLogo = new GameLogo(Resources::IMG_GAME_LOGO, -200, 0);
-	mDropDownMenu = new DropDownMenu(Resources::IMG_DROP_DOWN_MENU, 200, RETRACTED);
-	mUpDownButtons = new Drawable(Resources::IMG_UP_DOWN_BUTTONS);
-	mCrossButton = new Drawable(Resources::IMG_CROSS_BUTTON);
+	mGameBackground = new Background(IMG_PRIMARY_BACKGROUND, IMG_PARALLAX_BACKGROUND, -30, 0, -60, 0);
+	mGameLogo = new GameLogo(IMG_GAME_LOGO, -200, 0);
+	mDropDownMenu = new DropDownMenu(IMG_DROP_DOWN_MENU, 200, RETRACTED);
+	mUpDownButtons = new Drawable(IMG_UP_DOWN_BUTTONS);
+	mCrossButton = new Drawable(IMG_CROSS_BUTTON);
 	mPlayer = new Player(
-					Resources::IMG_PLAYER_SHIP,
+					IMG_PLAYER_SHIP,
 					PLAYER_FRAME_WIDTH_SIZE,
 					PLAYER_FRAME_HEIGHT_SIZE,
 					PLAYER_FRAMERATE);
+	mMoonRock = new AnimatedSprite(
+						IMG_MOON_ROCK,
+						MOON_ROCK_FRAME_WIDTH_SIZE,
+						MOON_ROCK_FRAME_HEIGHT_SIZE,
+						MOON_ROCK_FRAMERATE);
+	mAsteroidL = new AnimatedSprite(
+						IMG_ASTEROID_L,
+						ASTEROID_L_FRAME_WIDTH_SIZE,
+						ASTEROID_L_FRAME_HEIGHT_SIZE,
+						ASTEROID_L_FRAMERATE);
+	mAsteroidM = new AnimatedSprite(
+						IMG_ASTEROID_M,
+						ASTEROID_M_FRAME_WIDTH_SIZE,
+						ASTEROID_M_FRAME_HEIGHT_SIZE,
+						ASTEROID_M_FRAMERATE);
+	mAsteroidS = new AnimatedSprite(
+						IMG_ASTEROID_S,
+						ASTEROID_S_FRAME_WIDTH_SIZE,
+						ASTEROID_S_FRAME_HEIGHT_SIZE,
+						ASTEROID_S_FRAMERATE);
+	mEnemyList = new EnemyList();
 }
 
 void Resources::AssertResources()
@@ -70,4 +97,9 @@ void Resources::AssertResources()
 	oslAssert(mUpDownButtons != NULL);
 	oslAssert(mCrossButton != NULL);
 	oslAssert(mPlayer != NULL);
+	oslAssert(mMoonRock != NULL);
+	oslAssert(mAsteroidL != NULL);
+	oslAssert(mAsteroidM != NULL);
+	oslAssert(mAsteroidS != NULL);
+	oslAssert(mEnemyList != NULL);
 }

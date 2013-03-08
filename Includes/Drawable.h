@@ -15,6 +15,7 @@ using namespace std;
 class Drawable {
 public:
 	Drawable(string pathToImgFile);	//creates a drawable using an image file in png format
+	Drawable(const Drawable *drawableImg);
 	~Drawable();	//destroys a drawable
 
 	int GetPositionX();	//returns the position of the image on the Ox axis

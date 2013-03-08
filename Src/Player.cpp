@@ -19,12 +19,13 @@ Player::Player(
 					frameHeigthSize,
 					framesPerSecond)
 {
-
+	Reset();
 }
 
 void Player::Reset()
 {
-	SetPositionXY( 0, (PSP_SCREEN_HEIGHT - GetFrameHeight()) / 2 );
+	SetState(SPAWNING);
+	SetPositionXY( -GetFrameWidth(), (PSP_SCREEN_HEIGHT - GetFrameHeight()) / 2 );
 }
 
 void Player::Render()
@@ -33,33 +34,53 @@ void Player::Render()
 	AnimatedSprite::Render();
 }
 
+PlayerState Player::GetState()
+{
+	return mPlayerState;
+}
+
+void Player::SetState(PlayerState newState)
+{
+	mPlayerState = newState;
+}
+
 void Player::EvaluateState()
 {
-	if(Resources::mController->IsHeld(DPAD_UP))
+	if(GetState() == SPAWNING && GetPositionX() < 0)
 	{
-		MoveY(-PLAYER_SPEED);
-		if(GetPositionY() < 0)
-			SetPositionY(0);
+		MoveX(1);
+		if(GetPositionX() >= 0)
+			SetState(ALIVE);
 	}
-	else
-		if(Resources::mController->IsHeld(DPAD_DOWN))
-		{
-			MoveY(PLAYER_SPEED);
-			if(GetPositionY() > PSP_SCREEN_HEIGHT - GetFrameHeight())
-				SetPositionY(PSP_SCREEN_HEIGHT - GetFrameHeight());
-		}
 
-	if(Resources::mController->IsHeld(DPAD_LEFT))
+	if(GetState() == ALIVE)
 	{
-		MoveX(-PLAYER_SPEED);
-		if(GetPositionX() < 0)
-			SetPositionX(0);
-	}
-	else
-		if(Resources::mController->IsHeld(DPAD_RIGHT))
+		if(Resources::mController->IsHeld(DPAD_UP))
 		{
-			MoveX(PLAYER_SPEED);
-			if(GetPositionX() > PSP_SCREEN_WIDTH - GetFrameWidth())
-				SetPositionX(PSP_SCREEN_WIDTH - GetFrameWidth());
+			MoveY(-PLAYER_SPEED);
+			if(GetPositionY() < 0)
+				SetPositionY(0);
 		}
+		else
+			if(Resources::mController->IsHeld(DPAD_DOWN))
+			{
+				MoveY(PLAYER_SPEED);
+				if(GetPositionY() > PSP_SCREEN_HEIGHT - GetFrameHeight())
+					SetPositionY(PSP_SCREEN_HEIGHT - GetFrameHeight());
+			}
+
+		if(Resources::mController->IsHeld(DPAD_LEFT))
+		{
+			MoveX(-PLAYER_SPEED);
+			if(GetPositionX() < 0)
+				SetPositionX(0);
+		}
+		else
+			if(Resources::mController->IsHeld(DPAD_RIGHT))
+			{
+				MoveX(PLAYER_SPEED);
+				if(GetPositionX() > PSP_SCREEN_WIDTH - GetFrameWidth())
+					SetPositionX(PSP_SCREEN_WIDTH - GetFrameWidth());
+			}
+	}
 }
