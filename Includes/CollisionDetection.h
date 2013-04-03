@@ -8,7 +8,12 @@
 #ifndef COLLISIONDETECTION_H_
 #define COLLISIONDETECTION_H_
 
+#include "Resources.h"
 
-
+class CollisionDetection
+{
+public:
+	static void CheckForCollisions(Player* playerObject, EnemyList* enemyListObject);
+};
 
 #endif /* COLLISIONDETECTION_H_ */

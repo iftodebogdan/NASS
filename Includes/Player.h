@@ -27,6 +27,9 @@ public:
 		int frameHeigthSize,	//the height of a frame
 		int framesPerSecond);	//animation speed in frames/second
 
+	int GetWidth();
+	int GetHeight();
+
 	void Reset();
 	void Render();
 	PlayerState GetState();

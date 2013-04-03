@@ -105,6 +105,7 @@ void Game::RenderGameScreen()
 	Resources::mGameBackground->Render();
 	Resources::mPlayer->Render();
 	Resources::mEnemyList->Render();
+	CollisionDetection::CheckForCollisions(Resources::mPlayer, Resources::mEnemyList);
 
 	if(Resources::mController->IsPressed(START))
 		if(oslMessageBox(

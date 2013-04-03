@@ -16,6 +16,7 @@
 #include "Font.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "CollisionDetection.h"
 #include <string>
 #include <list>
 #include <time.h>

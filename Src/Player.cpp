@@ -22,6 +22,16 @@ Player::Player(
 	Reset();
 }
 
+int Player::GetWidth()
+{
+	return GetFrameWidth();
+}
+
+int Player::GetHeight()
+{
+	return GetFrameHeight();
+}
+
 void Player::Reset()
 {
 	SetState(SPAWNING);

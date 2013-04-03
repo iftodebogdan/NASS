@@ -24,6 +24,9 @@ public:
 	Enemy(AnimatedSprite *enemySprite, int posY, int scrollSpeed);
 	Enemy(AnimatedSprite *enemySprite, int posY, int scrollSpeed, int frameRate, bool invertedAnimation);
 
+	int GetWidth();
+	int GetHeight();
+
 	void Reset();
 	EnemyState GetState();
 	void SetState(EnemyState newState);
@@ -41,6 +44,8 @@ private:
 
 class EnemyList
 {
+	friend class CollisionDetection;
+
 public:
 	EnemyList();
 

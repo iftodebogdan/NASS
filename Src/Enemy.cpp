@@ -26,6 +26,16 @@ Enemy::Enemy(AnimatedSprite *enemySprite, int posY, int scrollSpeed, int frameRa
 	Reset();
 }
 
+int Enemy::GetWidth()
+{
+	return GetFrameWidth();
+}
+
+int Enemy::GetHeight()
+{
+	return GetFrameHeight();
+}
+
 void Enemy::Reset()
 {
 	SetPositionX(PSP_SCREEN_WIDTH);
