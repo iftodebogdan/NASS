@@ -29,8 +29,8 @@ string Resources::STR_QUIT_MESSAGE = "Would you like to quit and return to the t
 string Resources::STR_GAME_OVER_TITLE = "Game Over!";
 string Resources::STR_GAME_OVER_MESSAGE = "You have died!";
 string Resources::STR_PRESS_X_TO_START = "Press       to start";
-string Resources::STR_MENU_ITEMS[3] = {"Item1", "Item2", "Item3"};
-int Resources::MENU_ITEMS_COUNT = 3;
+string Resources::STR_MENU_ITEMS[3] = {"Quit"};
+int Resources::MENU_ITEMS_COUNT = 1;
 
 Font* Resources::mParafontFont = NULL;
 Font* Resources::mSmallStoneFont = NULL;

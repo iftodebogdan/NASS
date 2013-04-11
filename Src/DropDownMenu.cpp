@@ -118,13 +118,7 @@ void DropDownMenu::EvaluateState()
 		switch(mMenuItemIndex)
 		{
 		case 0:
-			//DoSomething(0);
-			break;
-		case 1:
-			//DoSomething(1);
-			break;
-		case 2:
-			//DoSomething(2);
+			oslQuit();
 			break;
 		default:
 			mMenuItemIndex = 0;
