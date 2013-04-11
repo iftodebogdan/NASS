@@ -70,6 +70,11 @@ int AnimatedSprite::GetAnimationSpeed()
 	return mFramesPerSecond;
 }
 
+int AnimatedSprite::GetCurrentFrame()
+{
+	return mCurrentFrame + 1;
+}
+
 int AnimatedSprite::GetFrameCount()
 {
 	return mFrameCount;

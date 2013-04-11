@@ -15,8 +15,10 @@
 
 enum GameState	//holds the possible states of the game
 	{
-		TITLE_SCREEN,	//the game is at the title screen
-		GAME_SCREEN		//the game is at the game screen
+		TITLE_SCREEN,		//the game is at the title screen
+		GAME_SCREEN,		//the game is at the game screen
+		TRANSITION_GAME_OVER_SCREEN,
+		GAME_OVER_SCREEN	//the game is at the game over screen
 	};
 
 class Game
@@ -32,6 +34,7 @@ private:
 	GameState GetState();
 	void RenderTitleScreen();
 	void RenderGameScreen();
+	void RenderGameOverScreen();
 
 	void DebugScreen();
 

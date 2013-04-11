@@ -7,7 +7,7 @@
 
 #include "../Includes/CollisionDetection.h"
 
-void CollisionDetection::CheckForCollisions(Player *playerObject, EnemyList *enemyListObject)
+bool CollisionDetection::CheckForCollisions(Player *playerObject, EnemyList *enemyListObject)
 {
 	float playerObjectRadius = (float)playerObject->GetWidth() / 2.0f;
 	float playerObjectCenterX = (float)playerObject->GetPositionX() + (float)playerObject->GetWidth() / 2.0f;
@@ -25,6 +25,8 @@ void CollisionDetection::CheckForCollisions(Player *playerObject, EnemyList *ene
 		float squareDist = pow(distX, 2) + pow(distY, 2);
 
 		if(squareDist <= pow(playerObjectRadius + enemyObjectRadius, 2))
-			oslPrintf("Objects are colliding\n");
+			return true;	//oslPrintf("Objects are colliding\n");
 	}
+
+	return false;
 }

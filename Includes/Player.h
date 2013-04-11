@@ -21,11 +21,12 @@ enum PlayerState
 class Player : public AnimatedSprite
 {
 public:
-	Player(						//creates an animated sprite
-		string pathToImgFile,	//an image file in png format
-		int frameWidthSize,		//the width of a frame
-		int frameHeigthSize,	//the height of a frame
-		int framesPerSecond);	//animation speed in frames/second
+	Player(									//creates an animated sprite
+		string pathToShipImgFile,			//an image file in png format
+		string pathToShipExplosionImgFile,
+		int frameWidthSize,					//the width of a frame
+		int frameHeigthSize,				//the height of a frame
+		int framesPerSecond);				//animation speed in frames/second
 
 	int GetWidth();
 	int GetHeight();
@@ -39,6 +40,7 @@ private:
 	void EvaluateState();
 
 	PlayerState mPlayerState;
+	AnimatedSprite* mPlayerShipExplosion;
 };
 
 #endif /* PLAYER_H_ */

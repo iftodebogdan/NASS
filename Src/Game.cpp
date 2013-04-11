@@ -16,6 +16,9 @@ Game::Game()
 	oslSetQuitOnLoadFailure(1);
 	oslSetKeyAnalogToDPad(80);
 
+	if(DEBUG_MODE)
+		oslBenchmarkTest(OSL_BENCH_INIT);
+
 	Resources::LoadResources();
 	Resources::AssertResources();
 	mGameState = TITLE_SCREEN;
@@ -33,6 +36,9 @@ void Game::Run()
 
 	while (!osl_quit)
 	{
+		if(DEBUG_MODE)
+			oslBenchmarkTest(OSL_BENCH_START);
+
 		Resources::mController->ReadKeys();
 
 		oslStartDrawing();
@@ -41,11 +47,23 @@ void Game::Run()
 		if(GetState() == TITLE_SCREEN)
 			RenderTitleScreen();
 
-		if(GetState() == GAME_SCREEN)
+		if(GetState() == GAME_SCREEN || GetState() == TRANSITION_GAME_OVER_SCREEN)
 			RenderGameScreen();
 
+		if(GetState() == TRANSITION_GAME_OVER_SCREEN)
+			if(Resources::mPlayer->GetState() == DEAD)
+				SetState(GAME_OVER_SCREEN);
+
+		if(GetState() == GAME_OVER_SCREEN)
+			RenderGameOverScreen();
+
 		if(DEBUG_MODE)
+		{
+			oslBenchmarkTest(OSL_BENCH_END);
+			oslSysBenchmarkDisplay();
+			oslPrintf("\n");
 			DebugScreen();
+		}
 
 		oslEndDrawing();
 		oslSyncFrame();
@@ -65,6 +83,11 @@ void Game::SetState(GameState newState)
 	{
 		Resources::mPlayer->Reset();
 		Resources::mEnemyList->Reset();
+	}
+
+	if(newState == TRANSITION_GAME_OVER_SCREEN)
+	{
+		Resources::mPlayer->SetState(DYING);
 	}
 
 	mGameState = newState;
@@ -105,7 +128,10 @@ void Game::RenderGameScreen()
 	Resources::mGameBackground->Render();
 	Resources::mPlayer->Render();
 	Resources::mEnemyList->Render();
-	CollisionDetection::CheckForCollisions(Resources::mPlayer, Resources::mEnemyList);
+	if(CollisionDetection::CheckForCollisions(Resources::mPlayer, Resources::mEnemyList) &&
+	   GetState() != TRANSITION_GAME_OVER_SCREEN)
+			SetState(TRANSITION_GAME_OVER_SCREEN);
+
 
 	if(Resources::mController->IsPressed(START))
 		if(oslMessageBox(
@@ -113,6 +139,17 @@ void Game::RenderGameScreen()
 			Resources::STR_QUIT_TITLE.c_str(),
 			oslMake3Buttons(OSL_KEY_CROSS, OSL_MB_YES, OSL_KEY_CIRCLE, OSL_MB_NO, 0, 0)) == OSL_MB_YES)
 				SetState(TITLE_SCREEN);
+}
+
+void Game::RenderGameOverScreen()
+{
+	Resources::mGameBackground->Render();
+	Resources::mEnemyList->Render();
+	if(oslMessageBox(
+		Resources::STR_GAME_OVER_MESSAGE.c_str(),
+		Resources::STR_GAME_OVER_TITLE.c_str(),
+		oslMake3Buttons(OSL_KEY_CROSS, OSL_MB_OK, 0, 0, 0, 0)) == OSL_MB_OK)
+			SetState(TITLE_SCREEN);
 }
 
 void Game::DebugScreen()

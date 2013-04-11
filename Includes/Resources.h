@@ -22,9 +22,9 @@
 #include <time.h>
 using namespace std;
 
-#define PLAYER_FRAME_WIDTH_SIZE 68
-#define PLAYER_FRAME_HEIGHT_SIZE 64
-#define PLAYER_FRAMERATE 15
+#define PLAYER_SHIP_FRAME_WIDTH_SIZE 68
+#define PLAYER_SHIP_FRAME_HEIGHT_SIZE 64
+#define PLAYER_SHIP_FRAMERATE 15
 
 #define ASTEROID_S_FRAME_WIDTH_SIZE 17
 #define ASTEROID_S_FRAME_HEIGHT_SIZE 17
@@ -52,6 +52,7 @@ public:
 	static string IMG_PARALLAX_BACKGROUND;
 	static string IMG_GAME_LOGO;
 	static string IMG_PLAYER_SHIP;
+	static string IMG_PLAYER_SHIP_EXPLOSION;
 	static string IMG_DROP_DOWN_MENU;
 	static string IMG_UP_DOWN_BUTTONS;
 	static string IMG_CROSS_BUTTON;
@@ -66,6 +67,8 @@ public:
 
 	static string STR_QUIT_TITLE;
 	static string STR_QUIT_MESSAGE;
+	static string STR_GAME_OVER_TITLE;
+	static string STR_GAME_OVER_MESSAGE;
 	static string STR_PRESS_X_TO_START;
 	static string STR_MENU_ITEMS[3];
 	static int MENU_ITEMS_COUNT;

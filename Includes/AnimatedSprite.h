@@ -29,6 +29,7 @@ public:
 	void SetAnimationSpeed(int framesPerSecond); //sets an animation speed in frames/second
 	int GetAnimationSpeed(); //returns the animation speed in frames/second
 
+	int GetCurrentFrame();
 	int GetFrameCount(); //returns the number of frames for the animated sprite
 
 	void Render(); //renders the animation

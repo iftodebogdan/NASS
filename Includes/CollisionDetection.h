@@ -13,7 +13,7 @@
 class CollisionDetection
 {
 public:
-	static void CheckForCollisions(Player* playerObject, EnemyList* enemyListObject);
+	static bool CheckForCollisions(Player* playerObject, EnemyList* enemyListObject);
 };
 
 #endif /* COLLISIONDETECTION_H_ */

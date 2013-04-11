@@ -9,16 +9,24 @@
 #include "../Includes/Player.h"
 
 Player::Player(
-		string pathToImgFile,
+		string pathToShipImgFile,
+		string pathToShipExplosionImgFile,
 		int frameWidthSize,
 		int frameHeigthSize,
 		int framesPerSecond)
 			:AnimatedSprite(
-					pathToImgFile,
+					pathToShipImgFile,
 					frameWidthSize,
 					frameHeigthSize,
 					framesPerSecond)
 {
+	mPlayerShipExplosion = new AnimatedSprite(
+									pathToShipExplosionImgFile,
+									frameWidthSize,
+									frameHeigthSize,
+									framesPerSecond
+									);
+
 	Reset();
 }
 
@@ -41,7 +49,6 @@ void Player::Reset()
 void Player::Render()
 {
 	EvaluateState();
-	AnimatedSprite::Render();
 }
 
 PlayerState Player::GetState()
@@ -93,4 +100,20 @@ void Player::EvaluateState()
 					SetPositionX(PSP_SCREEN_WIDTH - GetFrameWidth());
 			}
 	}
+
+	if(GetState() == DYING)
+	{
+		mPlayerShipExplosion->SetPositionXY(GetPositionX(), GetPositionY());
+		mPlayerShipExplosion->Render();
+
+		if(mPlayerShipExplosion->GetCurrentFrame() == mPlayerShipExplosion->GetFrameCount())
+			SetState(DEAD);
+
+		return;
+	}
+
+	if(GetState() == DEAD)
+		return;
+
+	AnimatedSprite::Render();
 }

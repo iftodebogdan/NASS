@@ -11,6 +11,7 @@ string Resources::IMG_PRIMARY_BACKGROUND = "Res/img/PrimaryBackground.png";
 string Resources::IMG_PARALLAX_BACKGROUND = "Res/img/ParallaxBackground.png";
 string Resources::IMG_GAME_LOGO = "Res/img/GameLogo.png";
 string Resources::IMG_PLAYER_SHIP = "Res/img/PlayerShip.png";
+string Resources::IMG_PLAYER_SHIP_EXPLOSION = "Res/img/PlayerShipExplosion.png";
 string Resources::IMG_DROP_DOWN_MENU = "Res/img/DropDownMenu.png";
 string Resources::IMG_UP_DOWN_BUTTONS = "Res/img/UpDownButtons.png";
 string Resources::IMG_CROSS_BUTTON = "Res/img/CrossButton.png";
@@ -25,6 +26,8 @@ string Resources::FNT_COPPERPLATE = "Res/fnt/copperplate.png";
 
 string Resources::STR_QUIT_TITLE = "Quit?";
 string Resources::STR_QUIT_MESSAGE = "Would you like to quit and return to the title screen?";
+string Resources::STR_GAME_OVER_TITLE = "Game Over!";
+string Resources::STR_GAME_OVER_MESSAGE = "You have died!";
 string Resources::STR_PRESS_X_TO_START = "Press       to start";
 string Resources::STR_MENU_ITEMS[3] = {"Item1", "Item2", "Item3"};
 int Resources::MENU_ITEMS_COUNT = 3;
@@ -59,9 +62,10 @@ void Resources::LoadResources()
 	mCrossButton = new Drawable(IMG_CROSS_BUTTON);
 	mPlayer = new Player(
 					IMG_PLAYER_SHIP,
-					PLAYER_FRAME_WIDTH_SIZE,
-					PLAYER_FRAME_HEIGHT_SIZE,
-					PLAYER_FRAMERATE);
+					IMG_PLAYER_SHIP_EXPLOSION,
+					PLAYER_SHIP_FRAME_WIDTH_SIZE,
+					PLAYER_SHIP_FRAME_HEIGHT_SIZE,
+					PLAYER_SHIP_FRAMERATE);
 	mMoonRock = new AnimatedSprite(
 						IMG_MOON_ROCK,
 						MOON_ROCK_FRAME_WIDTH_SIZE,
