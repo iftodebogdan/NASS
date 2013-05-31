@@ -77,6 +77,7 @@ void Game::SetState(GameState newState)
 	{
 		Resources::mGameLogo->Reset();
 		Resources::mDropDownMenu->Reset();
+		Resources::mSaveLoad->AutoSaveGame();
 	}
 
 	if(newState == GAME_SCREEN)
@@ -110,7 +111,8 @@ void Game::RenderTitleScreen()
 	else
 		if(Resources::mDropDownMenu->GetState() == RETRACTED && Resources::mGameLogo->GetState() == ENTERED)
 		{
-			Resources::mParafontFont->DrawTextCentered(Resources::STR_PRESS_X_TO_START, 240, 240);
+			Resources::mParafontFont->DrawTextCentered(Resources::STR_PRESS_X_TO_START, 240);
+			Resources::mParafontFont->DrawTextAlignedRight(Resources::STR_XP_OSD + string(static_cast<ostringstream*>( &(ostringstream() << Resources::mSkillsSystem->GetExperiencePoints()) )->str()), 5);
 			Resources::mCrossButton->Draw(210, 235);
 
 			if(Resources::mController->IsPressed(CROSS))
@@ -128,6 +130,7 @@ void Game::RenderGameScreen()
 	Resources::mGameBackground->Render();
 	Resources::mPlayer->Render();
 	Resources::mEnemyList->Render();
+	Resources::mSkillsSystem->RenderScore();
 	if(CollisionDetection::CheckForCollisions(Resources::mPlayer, Resources::mEnemyList) &&
 	   GetState() != TRANSITION_GAME_OVER_SCREEN)
 			SetState(TRANSITION_GAME_OVER_SCREEN);
@@ -145,8 +148,13 @@ void Game::RenderGameOverScreen()
 {
 	Resources::mGameBackground->Render();
 	Resources::mEnemyList->Render();
+	Resources::mSkillsSystem->RenderScore();
+	string strGameOverMessage = Resources::STR_GAME_OVER_MESSAGE +
+								string(static_cast<ostringstream*>( &(ostringstream() << Resources::mSkillsSystem->GetPlayerScore()) )->str());
+	Resources::mSkillsSystem->UpdateExperiencePoints();
+
 	if(oslMessageBox(
-		Resources::STR_GAME_OVER_MESSAGE.c_str(),
+		strGameOverMessage.c_str(),
 		Resources::STR_GAME_OVER_TITLE.c_str(),
 		oslMake3Buttons(OSL_KEY_CROSS, OSL_MB_OK, 0, 0, 0, 0)) == OSL_MB_OK)
 			SetState(TITLE_SCREEN);
@@ -162,4 +170,5 @@ void Game::DebugScreen()
 	oslPrintf("DropDownMenu state: %d\n", Resources::mDropDownMenu->GetState());
 	oslPrintf("Enemy count: %d\n", Resources::mEnemyList->GetEnemyCount());
 	oslPrintf("mEnemySpeedModifier: %d\n", Resources::mEnemyList->GetEnemySpeedModifier());
+	oslPrintf("timewarp level: %d\n", Resources::mSkillsSystem->GetTimeWarpLevel());
 }

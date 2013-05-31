@@ -17,6 +17,8 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "CollisionDetection.h"
+#include "SkillsSystem.h"
+#include "SaveLoad.h"
 #include <string>
 #include <list>
 #include <time.h>
@@ -41,6 +43,9 @@ using namespace std;
 #define MOON_ROCK_FRAME_WIDTH_SIZE 27
 #define MOON_ROCK_FRAME_HEIGHT_SIZE 27
 #define MOON_ROCK_FRAMERATE 8
+
+#define PSP_SCREEN_WIDTH 480
+#define PSP_SCREEN_HEIGHT 272
 
 class Resources	//holds string resources for easy editing
 {
@@ -71,6 +76,8 @@ public:
 	static string STR_GAME_OVER_MESSAGE;
 	static string STR_PRESS_X_TO_START;
 	static string STR_MENU_ITEMS[3];
+	static string STR_SCORE_OSD;
+	static string STR_XP_OSD;
 	static int MENU_ITEMS_COUNT;
 
 	static Font* mParafontFont;
@@ -88,6 +95,8 @@ public:
 	static AnimatedSprite* mAsteroidM;
 	static AnimatedSprite* mAsteroidS;
 	static EnemyList* mEnemyList;
+	static SkillsSystem* mSkillsSystem;
+	static SaveLoad* mSaveLoad;
 };
 
 #endif /* RESOURCE_H_ */

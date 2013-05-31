@@ -9,7 +9,7 @@
 
 bool CollisionDetection::CheckForCollisions(Player *playerObject, EnemyList *enemyListObject)
 {
-	float playerObjectRadius = (float)playerObject->GetWidth() / 2.0f;
+	float playerObjectRadius = (float)(playerObject->GetWidth() - 15) / 2.0f;
 	float playerObjectCenterX = (float)playerObject->GetPositionX() + (float)playerObject->GetWidth() / 2.0f;
 	float playerObjectCenterY = (float)playerObject->GetPositionY() + (float)playerObject->GetHeight() / 2.0f;
 
@@ -25,7 +25,11 @@ bool CollisionDetection::CheckForCollisions(Player *playerObject, EnemyList *ene
 		float squareDist = pow(distX, 2) + pow(distY, 2);
 
 		if(squareDist <= pow(playerObjectRadius + enemyObjectRadius, 2))
+		{
+			delete ((Enemy*)(*i));
+			i = enemyListObject->mEnemyList.erase(i);
 			return true;	//oslPrintf("Objects are colliding\n");
+		}
 	}
 
 	return false;

@@ -5,6 +5,7 @@
  *      Author: Bogdan
  */
 
+#include "../Includes/Resources.h"
 #include "../Includes/Font.h"
 
 Font::Font(string fontFile)
@@ -28,9 +29,14 @@ void Font::DrawText(string text, int posX, int posY)
 	oslSFontDrawText(mFont, posX, posY, (char*)text.c_str());
 }
 
-void Font::DrawTextCentered(string text, int posX, int posY)
+void Font::DrawTextCentered(string text, int posY)
 {
-	DrawText(text, posX - GetTextWidth(text) / 2, posY);
+	DrawText(text, PSP_SCREEN_WIDTH / 2 - GetTextWidth(text) / 2, posY);
+}
+
+void Font::DrawTextAlignedRight(string text, int posY)
+{
+	DrawText(text, PSP_SCREEN_WIDTH - GetTextWidth(text), posY);
 }
 
 int Font::GetTextWidth(string text)

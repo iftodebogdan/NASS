@@ -6,6 +6,7 @@
  */
 
 #include "../Includes/SkillsSystem.h"
+#include "../Includes/Resources.h"
 
 #define PER_LEVEL_EXP 1250
 #define BASE_LEVEL_EXP 3000

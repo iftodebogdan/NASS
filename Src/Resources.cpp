@@ -27,9 +27,11 @@ string Resources::FNT_COPPERPLATE = "Res/fnt/copperplate.png";
 string Resources::STR_QUIT_TITLE = "Quit?";
 string Resources::STR_QUIT_MESSAGE = "Would you like to quit and return to the title screen?";
 string Resources::STR_GAME_OVER_TITLE = "Game Over!";
-string Resources::STR_GAME_OVER_MESSAGE = "You have died!";
+string Resources::STR_GAME_OVER_MESSAGE = "Your ship has been destroyed!\nXP earned: ";
 string Resources::STR_PRESS_X_TO_START = "Press       to start";
 string Resources::STR_MENU_ITEMS[3] = {"Quit"};
+string Resources::STR_SCORE_OSD = "Score: ";
+string Resources::STR_XP_OSD = "XP: ";
 int Resources::MENU_ITEMS_COUNT = 1;
 
 Font* Resources::mParafontFont = NULL;
@@ -47,6 +49,8 @@ AnimatedSprite* Resources::mAsteroidM = NULL;
 AnimatedSprite* Resources::mAsteroidS = NULL;
 AnimatedSprite* Resources::mMoonRock = NULL;
 EnemyList* Resources::mEnemyList = NULL;
+SkillsSystem* Resources::mSkillsSystem = NULL;
+SaveLoad* Resources::mSaveLoad = NULL;
 
 void Resources::LoadResources()
 {
@@ -87,6 +91,9 @@ void Resources::LoadResources()
 						ASTEROID_S_FRAME_HEIGHT_SIZE,
 						ASTEROID_S_FRAMERATE);
 	mEnemyList = new EnemyList();
+	mSkillsSystem = new SkillsSystem();
+	mSaveLoad = new SaveLoad();
+	mSaveLoad->LoadSaveGame();
 }
 
 void Resources::AssertResources()
@@ -106,4 +113,5 @@ void Resources::AssertResources()
 	oslAssert(mAsteroidM != NULL);
 	oslAssert(mAsteroidS != NULL);
 	oslAssert(mEnemyList != NULL);
+	oslAssert(mSkillsSystem != NULL);
 }

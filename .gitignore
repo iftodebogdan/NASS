@@ -5,3 +5,4 @@
 *.[Pp][Rr][Xx]
 *.hist
 Thumbs.db
+/savegame.bin

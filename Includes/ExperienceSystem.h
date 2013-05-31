@@ -8,6 +8,12 @@
 #ifndef EXPERIENCESYSTEM_H_
 #define EXPERIENCESYSTEM_H_
 
+#include <iomanip>
+#include <locale>
+#include <sstream>
+#include <string>
+using namespace std;
+
 class ExperienceSystem
 {
 public:
@@ -22,11 +28,12 @@ public:
 	void ResetPlayerScore();
 	unsigned GetExperiencePoints();
 	void SetExperiencePoints(unsigned newExperiencePoints);
+	void RenderScore();
 
 private:
-
 	unsigned mPlayerScore;
 	unsigned mExperiencePoints;
+	int mUpdateScoreFlag;
 };
 
 #endif /* EXPERIENCESYSTEM_H_ */

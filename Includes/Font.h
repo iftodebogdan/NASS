@@ -26,7 +26,8 @@ public:
 
 	void LoadFont(string fontFile);
 	void DrawText(string text, int posX, int posY);
-	void DrawTextCentered(string text, int posX, int posY);
+	void DrawTextCentered(string text, int posY);
+	void DrawTextAlignedRight(string text, int posY);
 	int GetTextWidth(string text);
 
 	OSL_SFONT* mFont;

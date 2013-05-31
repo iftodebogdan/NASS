@@ -107,7 +107,10 @@ void Player::EvaluateState()
 		mPlayerShipExplosion->Render();
 
 		if(mPlayerShipExplosion->GetCurrentFrame() == mPlayerShipExplosion->GetFrameCount())
+		{
 			SetState(DEAD);
+			mPlayerShipExplosion->ResetAnimation();
+		}
 
 		return;
 	}
