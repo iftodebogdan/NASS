@@ -84,6 +84,7 @@ void Game::SetState(GameState newState)
 	{
 		Resources::mPlayer->Reset();
 		Resources::mEnemyList->Reset();
+		Resources::mSkillsSystem->ResetPlayerScore();
 	}
 
 	if(newState == TRANSITION_GAME_OVER_SCREEN)
@@ -170,5 +171,4 @@ void Game::DebugScreen()
 	oslPrintf("DropDownMenu state: %d\n", Resources::mDropDownMenu->GetState());
 	oslPrintf("Enemy count: %d\n", Resources::mEnemyList->GetEnemyCount());
 	oslPrintf("mEnemySpeedModifier: %d\n", Resources::mEnemyList->GetEnemySpeedModifier());
-	oslPrintf("timewarp level: %d\n", Resources::mSkillsSystem->GetTimeWarpLevel());
 }
