@@ -78,6 +78,7 @@ public:
 	static string STR_MENU_ITEMS[3];
 	static string STR_SCORE_OSD;
 	static string STR_XP_OSD;
+	static string STR_ENERGY_OSD;
 	static int MENU_ITEMS_COUNT;
 
 	static Font* mParafontFont;

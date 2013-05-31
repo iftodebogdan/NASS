@@ -23,16 +23,16 @@ public:
 	void UpdatePlayerScore(unsigned addPlayerScorePoints);
 	void UpdateExperiencePoints();
 	bool DeductExperiencePoints(unsigned expPoints);
-	unsigned GetPlayerScore();
+	unsigned long GetPlayerScore();
 	void SetPlayerScore(unsigned newPlayerScore);
 	void ResetPlayerScore();
-	unsigned GetExperiencePoints();
+	unsigned long GetExperiencePoints();
 	void SetExperiencePoints(unsigned newExperiencePoints);
 	void RenderScore();
 
 private:
-	unsigned mPlayerScore;
-	unsigned mExperiencePoints;
+	unsigned long mPlayerScore;
+	unsigned long mExperiencePoints;
 	int mUpdateScoreFlag;
 };
 

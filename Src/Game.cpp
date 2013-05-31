@@ -85,6 +85,7 @@ void Game::SetState(GameState newState)
 		Resources::mPlayer->Reset();
 		Resources::mEnemyList->Reset();
 		Resources::mSkillsSystem->ResetPlayerScore();
+		Resources::mSkillsSystem->ResetEnergy();
 	}
 
 	if(newState == TRANSITION_GAME_OVER_SCREEN)
@@ -131,7 +132,7 @@ void Game::RenderGameScreen()
 	Resources::mGameBackground->Render();
 	Resources::mPlayer->Render();
 	Resources::mEnemyList->Render();
-	Resources::mSkillsSystem->RenderScore();
+	Resources::mSkillsSystem->Render();
 	if(CollisionDetection::CheckForCollisions(Resources::mPlayer, Resources::mEnemyList) &&
 	   GetState() != TRANSITION_GAME_OVER_SCREEN)
 			SetState(TRANSITION_GAME_OVER_SCREEN);
@@ -171,4 +172,5 @@ void Game::DebugScreen()
 	oslPrintf("DropDownMenu state: %d\n", Resources::mDropDownMenu->GetState());
 	oslPrintf("Enemy count: %d\n", Resources::mEnemyList->GetEnemyCount());
 	oslPrintf("mEnemySpeedModifier: %d\n", Resources::mEnemyList->GetEnemySpeedModifier());
+	oslPrintf("mEnergy: %d\n", Resources::mSkillsSystem->GetEnergy());
 }

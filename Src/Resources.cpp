@@ -32,6 +32,7 @@ string Resources::STR_PRESS_X_TO_START = "Press       to start";
 string Resources::STR_MENU_ITEMS[3] = {"Quit"};
 string Resources::STR_SCORE_OSD = "Score: ";
 string Resources::STR_XP_OSD = "XP: ";
+string Resources::STR_ENERGY_OSD = "Energy";
 int Resources::MENU_ITEMS_COUNT = 1;
 
 Font* Resources::mParafontFont = NULL;

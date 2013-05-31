@@ -10,6 +10,16 @@
 
 #include "../Includes/ExperienceSystem.h"
 
+#define PER_LEVEL_EXP 1250
+#define BASE_LEVEL_EXP 3000
+
+#define ENERGY_BAR_X0 125
+#define ENERGY_BAR_Y0 240
+#define ENERGY_BAR_X1 460
+#define ENERGY_BAR_Y1 265
+
+#define MAX_ENERGY 1000
+
 class SkillsSystem : public ExperienceSystem
 {
 public:
@@ -18,7 +28,7 @@ public:
 				 unsigned dematerializeLevel,
 				 unsigned overdriveLevel,
 				 unsigned forceFieldLevel,
-				 unsigned expPointsAvailable);
+				 unsigned long expPointsAvailable);
 
 	unsigned GetTimeWarpLevel();
 	unsigned GetDematerializeLevel();
@@ -35,11 +45,21 @@ public:
 	void LevelUpOverdrive();
 	void LevelUpForceField();
 
+	void ResetEnergy();
+	unsigned GetEnergy();
+	void SetEnergy(unsigned newEnergy);
+	void Render();
+
 private:
+	void RegenEnergy(unsigned regenValue);
+	bool DepleteEnergy(unsigned requiredEnergy);
+	int EnergyBarX1();
+
 	unsigned mTimeWarpLevel;
 	unsigned mDematerializeLevel;
 	unsigned mOverdriveLevel;
 	unsigned mForceFieldLevel;
+	unsigned mEnergy;
 };
 
 #endif /* SKILLSSYSTEM_H_ */

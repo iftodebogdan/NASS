@@ -31,12 +31,12 @@ bool ExperienceSystem::DeductExperiencePoints(unsigned expPoints)
 		return false;
 }
 
-unsigned ExperienceSystem::GetExperiencePoints()
+unsigned long ExperienceSystem::GetExperiencePoints()
 {
 	return mExperiencePoints;
 }
 
-unsigned ExperienceSystem::GetPlayerScore()
+unsigned long ExperienceSystem::GetPlayerScore()
 {
 	return mPlayerScore;
 }

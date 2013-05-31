@@ -8,9 +8,6 @@
 #include "../Includes/SkillsSystem.h"
 #include "../Includes/Resources.h"
 
-#define PER_LEVEL_EXP 1250
-#define BASE_LEVEL_EXP 3000
-
 SkillsSystem::SkillsSystem()
 				:ExperienceSystem()
 {
@@ -18,6 +15,8 @@ SkillsSystem::SkillsSystem()
 	SetDematerializeLevel(0);
 	SetOverdriveLevel(0);
 	SetForceFieldLevel(0);
+
+	ResetEnergy();
 }
 
 SkillsSystem::SkillsSystem(
@@ -25,13 +24,15 @@ SkillsSystem::SkillsSystem(
 				unsigned dematerializeLevel,
 				unsigned overdriveLevel,
 				unsigned forceFieldLevel,
-				unsigned expPointsAvailable)
+				unsigned long expPointsAvailable)
 					:ExperienceSystem(expPointsAvailable)
 {
 	SetTimeWarpLevel(timeWarpLevel);
 	SetDematerializeLevel(dematerializeLevel);
 	SetOverdriveLevel(overdriveLevel);
 	SetForceFieldLevel(forceFieldLevel);
+
+	ResetEnergy();
 }
 
 unsigned SkillsSystem::GetTimeWarpLevel()
@@ -116,4 +117,67 @@ void SkillsSystem::SetForceFieldLevel(unsigned newForceFieldLevel)
 {
 	if(newForceFieldLevel <= 5)
 		mForceFieldLevel = newForceFieldLevel;
+}
+
+void SkillsSystem::ResetEnergy()
+{
+	mEnergy = 0;
+}
+
+unsigned SkillsSystem::GetEnergy()
+{
+	return mEnergy;
+}
+
+void SkillsSystem::SetEnergy(unsigned newEnergy)
+{
+	if(newEnergy <= MAX_ENERGY)
+		mEnergy = newEnergy;
+}
+
+void SkillsSystem::RegenEnergy(unsigned regenValue)
+{
+	if(GetEnergy() + regenValue <= MAX_ENERGY)
+		mEnergy += regenValue;
+	else
+		mEnergy = MAX_ENERGY;
+}
+
+bool SkillsSystem::DepleteEnergy(unsigned requiredEnergy)
+{
+	if(requiredEnergy <= GetEnergy())
+	{
+		mEnergy -= requiredEnergy;
+		return true;
+	}
+	else
+		return false;
+}
+
+int SkillsSystem::EnergyBarX1()
+{
+	unsigned currentEnergy = GetEnergy();
+	unsigned maxEnergy = MAX_ENERGY;
+	unsigned currentBarLength;
+	unsigned maxBarLength = ENERGY_BAR_X1 - ENERGY_BAR_X0;
+
+	currentBarLength = (currentEnergy * maxBarLength) / maxEnergy;
+
+	return currentBarLength + ENERGY_BAR_X0;
+}
+
+void SkillsSystem::Render()
+{
+	RenderScore();
+
+	RegenEnergy(1);
+
+	Resources::mParafontFont->DrawText(Resources::STR_ENERGY_OSD, 5, 240);
+	oslDrawFillRect(
+			ENERGY_BAR_X0,
+			ENERGY_BAR_Y0,
+			EnergyBarX1(),
+			ENERGY_BAR_Y1,
+			RGBA(255, 255, 255, 128));
+	oslDrawRect(ENERGY_BAR_X0, ENERGY_BAR_Y0, ENERGY_BAR_X1, ENERGY_BAR_Y1, COLOR_WHITE);
 }
