@@ -67,6 +67,9 @@ void Game::Run()
 		case SKILLS_SCREEN:
 			RenderSkillsScreen();
 			break;
+		case CONTROLS_SCREEN:
+			RenderControlsScreen();
+			break;
 		}
 
 		if(DEBUG_MODE)
@@ -87,13 +90,15 @@ void Game::SetState(GameState newState)
 {
 	if(newState == TITLE_SCREEN)
 	{
-		Resources::mGameLogo->Reset();
-		Resources::mDropDownMenu->Reset();
+		//Resources::mGameLogo->Reset();
+		//Resources::mDropDownMenu->Reset();
 		Resources::mSaveLoad->AutoSaveGame();
 	}
 
 	if(newState == GAME_SCREEN)
 	{
+		Resources::mGameLogo->Reset();
+
 		Resources::mPlayer->Reset();
 		Resources::mEnemyList->Reset();
 		Resources::mSkillsSystem->ResetPlayerScore();
@@ -106,9 +111,7 @@ void Game::SetState(GameState newState)
 	}
 
 	if(newState == SKILLS_SCREEN)
-	{
 		mSkillsScreenCursor = 1;
-	}
 
 	mGameState = newState;
 }
@@ -353,6 +356,22 @@ void Game::RenderSkillsScreen()
 						break;
 					};
 	}
+}
+
+void Game::RenderControlsScreen()
+{
+	Resources::mGameBackground->Render();
+
+	oslDrawFillRect(20, 20, PSP_SCREEN_WIDTH - 20, PSP_SCREEN_HEIGHT - 20, RGBA(255, 255, 255, 150));
+	oslDrawRect(20, 20, PSP_SCREEN_WIDTH - 20, PSP_SCREEN_HEIGHT - 20, RGBA(255, 255, 255, 255));
+
+	Resources::mPSPControls->Draw(0, 0);
+
+	Resources::mParafontFont->DrawTextAlignedRight(Resources::STR_PRESS_O_TO_GO_BACK, 240);
+	Resources::mCircleButton->Draw(PSP_SCREEN_WIDTH - Resources::mCircleButton->GetWidth() - 5, 240);
+
+	if(Resources::mController->IsPressed(CIRCLE))
+		Resources::mGameApp->SetState(TITLE_SCREEN);
 }
 
 void Game::DebugScreen()

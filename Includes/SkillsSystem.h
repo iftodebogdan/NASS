@@ -8,7 +8,8 @@
 #ifndef SKILLSSYSTEM_H_
 #define SKILLSSYSTEM_H_
 
-#include "../Includes/ExperienceSystem.h"
+#include "ExperienceSystem.h"
+#include "SkillWarp.h"
 
 #define PER_LEVEL_EXP 2250
 #define BASE_LEVEL_EXP 3750
@@ -23,6 +24,8 @@
 
 class SkillsSystem : public ExperienceSystem
 {
+	friend class SkillWarp;
+
 public:
 	SkillsSystem();
 	SkillsSystem(unsigned warpLevel,
@@ -58,9 +61,11 @@ public:
 	void ResetEnergy();
 	unsigned GetEnergy();
 	void SetEnergy(unsigned newEnergy);
+	void RenderEnergy();
 	void Render();
 
 private:
+	bool NoSkillActivated();
 	void RegenerateEnergy(unsigned regenValue);
 	bool DepleteEnergy(unsigned requiredEnergy);
 	int EnergyBarX1();
@@ -70,6 +75,8 @@ private:
 	unsigned mOverdriveLevel;
 	unsigned mForceFieldLevel;
 	unsigned mEnergy;
+
+	SkillWarp *mSkillWarp;
 };
 
 #endif /* SKILLSSYSTEM_H_ */

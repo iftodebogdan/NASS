@@ -45,6 +45,14 @@ using namespace std;
 #define MOON_ROCK_FRAME_HEIGHT_SIZE 27
 #define MOON_ROCK_FRAMERATE 8
 
+#define WARP_CROSSHAIR_FRAME_WIDTH_SIZE 100
+#define WARP_CROSSHAIR_FRAME_HEIGHT_SIZE 100
+#define WARP_CROSSHAIR_FRAMERATE 10
+
+#define WARP_EFFECT_FRAME_WIDTH_SIZE 100
+#define WARP_EFFECT_FRAME_HEIGHT_SIZE 100
+#define WARP_EFFECT_FRAMERATE 10
+
 #define PSP_SCREEN_WIDTH 480
 #define PSP_SCREEN_HEIGHT 272
 
@@ -65,10 +73,13 @@ public:
 	static string IMG_CROSS_BUTTON_SMALL;
 	static string IMG_CIRCLE_BUTTON;
 	static string IMG_SQUARE_BUTTON_SMALL;
+	static string IMG_PSP_CONTROLS;
 	static string IMG_ASTEROID_S;
 	static string IMG_ASTEROID_M;
 	static string IMG_ASTEROID_L;
 	static string IMG_MOON_ROCK;
+	static string IMG_WARP_CROSSHAIR;
+	static string IMG_WARP_EFFECT;
 
 	static string FNT_PARAFONT;
 	static string FNT_SMALLSTONE;
@@ -119,6 +130,7 @@ public:
 	static Drawable* mCrossButton_small;
 	static Drawable* mCircleButton;
 	static Drawable* mSquareButton_small;
+	static Drawable* mPSPControls;
 	static Player* mPlayer;
 	static AnimatedSprite* mMoonRock;
 	static AnimatedSprite* mAsteroidL;

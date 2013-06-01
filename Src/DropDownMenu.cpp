@@ -106,7 +106,7 @@ void DropDownMenu::EvaluateState()
 		SetState(EXTENDED);
 	if(GetState() == EXTENDED && GetScrollSpeedY() != 0)
 		SetScrollSpeedY(0);
-	if(GetState() == EXTENDED && Resources::mController->IsPressed(TRIANGLE))
+	if(GetState() == EXTENDED && (Resources::mController->IsPressed(TRIANGLE) || Resources::mController->IsPressed(CIRCLE)))
 		SetState(RETRACTING);
 
 	if(GetState() == EXTENDED && Resources::mController->IsPressed(DPAD_DOWN) && mMenuItemIndex < Resources::MENU_ITEMS_COUNT - 1)
@@ -121,6 +121,9 @@ void DropDownMenu::EvaluateState()
 			Resources::mGameApp->SetState(SKILLS_SCREEN);
 			break;
 		case 1:
+			Resources::mGameApp->SetState(CONTROLS_SCREEN);
+			break;
+		case 2:
 			oslQuit();
 			break;
 		default:

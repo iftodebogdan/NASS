@@ -18,10 +18,13 @@ string Resources::IMG_CROSS_BUTTON = "Res/img/CrossButton.png";
 string Resources::IMG_CROSS_BUTTON_SMALL = "Res/img/CrossButton_small.png";
 string Resources::IMG_CIRCLE_BUTTON = "Res/img/CircleButton.png";
 string Resources::IMG_SQUARE_BUTTON_SMALL = "Res/img/SquareButton_small.png";
+string Resources::IMG_PSP_CONTROLS = "Res/img/PSPControls.png";
 string Resources::IMG_ASTEROID_S = "Res/img/AsteroidS.png";
 string Resources::IMG_ASTEROID_M = "Res/img/AsteroidM.png";
 string Resources::IMG_ASTEROID_L = "Res/img/AsteroidL.png";
 string Resources::IMG_MOON_ROCK = "Res/img/MoonRock.png";
+string Resources::IMG_WARP_CROSSHAIR = "Res/img/WarpCrosshair.png";
+string Resources::IMG_WARP_EFFECT = "Res/img/WarpEffect.png";
 
 string Resources::FNT_PARAFONT = "Res/fnt/parafont.png";
 string Resources::FNT_SMALLSTONE = "Res/fnt/smallstone.png";
@@ -56,8 +59,8 @@ string Resources::STR_SKILL_LEVEL_5_MESSAGE = "This skill is already at its maxi
 string Resources::STR_SKILL_LEVEL_5_TITLE = "Cannot level up!";
 string Resources::STR_SKILL_LEVEL_0_MESSAGE = "You haven't invested any points in this skill. It cannot be refunded.";
 string Resources::STR_SKILL_LEVEL_0_TITLE = "Cannot refund!";
-string Resources::STR_MENU_ITEMS[3] = {"Skills", "Quit"};
-int Resources::MENU_ITEMS_COUNT = 2;
+string Resources::STR_MENU_ITEMS[3] = {"Skills", "Controls", "Quit"};
+int Resources::MENU_ITEMS_COUNT = 3;
 
 Game* Resources::mGameApp = NULL;
 Font* Resources::mParafontFont = NULL;
@@ -71,6 +74,7 @@ Drawable* Resources::mCrossButton = NULL;
 Drawable* Resources::mCrossButton_small = NULL;
 Drawable* Resources::mCircleButton = NULL;
 Drawable* Resources::mSquareButton_small = NULL;
+Drawable* Resources::mPSPControls = NULL;
 DropDownMenu* Resources::mDropDownMenu = NULL;
 Player* Resources::mPlayer = NULL;
 AnimatedSprite* Resources::mAsteroidL = NULL;
@@ -96,6 +100,7 @@ void Resources::LoadResources()
 	mCrossButton_small = new Drawable(IMG_CROSS_BUTTON_SMALL);
 	mCircleButton = new Drawable(IMG_CIRCLE_BUTTON);
 	mSquareButton_small = new Drawable(IMG_SQUARE_BUTTON_SMALL);
+	mPSPControls = new Drawable(IMG_PSP_CONTROLS);
 	mPlayer = new Player(
 					IMG_PLAYER_SHIP,
 					IMG_PLAYER_SHIP_EXPLOSION,
@@ -139,11 +144,14 @@ void Resources::AssertResources()
 	oslAssert(mDropDownMenu != NULL);
 	oslAssert(mUpDownButtons != NULL);
 	oslAssert(mCrossButton != NULL);
+	oslAssert(mCrossButton_small != NULL);
+	oslAssert(mCircleButton != NULL);
+	oslAssert(mSquareButton_small != NULL);
 	oslAssert(mPlayer != NULL);
 	oslAssert(mMoonRock != NULL);
 	oslAssert(mAsteroidL != NULL);
 	oslAssert(mAsteroidM != NULL);
 	oslAssert(mAsteroidS != NULL);
 	oslAssert(mEnemyList != NULL);
-	oslAssert(mSkillsSystem != NULL);
+	oslAssert(mPSPControls != NULL);
 }

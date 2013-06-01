@@ -20,7 +20,8 @@ enum GameState	//holds the possible states of the game
 		GAME_SCREEN,		//the game is at the game screen
 		TRANSITION_GAME_OVER_SCREEN,
 		GAME_OVER_SCREEN,	//the game is at the game over screen
-		SKILLS_SCREEN		//the game is at the skills screen
+		SKILLS_SCREEN,		//the game is at the skills screen
+		CONTROLS_SCREEN
 	};
 
 class Game
@@ -41,6 +42,7 @@ private:
 	void RenderGameOverScreen();
 	void DisplaySkillLevel(unsigned skillLevel, int posX, int posY);
 	void RenderSkillsScreen();
+	void RenderControlsScreen();
 
 	void DebugScreen();
 

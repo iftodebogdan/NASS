@@ -17,6 +17,8 @@ SkillsSystem::SkillsSystem()
 	SetForceFieldLevel(0);
 
 	ResetEnergy();
+
+	mSkillWarp = new SkillWarp();
 }
 
 SkillsSystem::SkillsSystem(
@@ -33,6 +35,8 @@ SkillsSystem::SkillsSystem(
 	SetForceFieldLevel(forceFieldLevel);
 
 	ResetEnergy();
+
+	mSkillWarp = new SkillWarp();
 }
 
 unsigned SkillsSystem::GetWarpLevel()
@@ -193,6 +197,14 @@ void SkillsSystem::SetEnergy(unsigned newEnergy)
 		mEnergy = newEnergy;
 }
 
+bool SkillsSystem::NoSkillActivated()
+{
+	if(mSkillWarp->IsActivated())
+		return false;
+
+	return true;
+}
+
 void SkillsSystem::RegenerateEnergy(unsigned regenValue)
 {
 	if(GetEnergy() + regenValue <= MAX_ENERGY)
@@ -224,12 +236,8 @@ int SkillsSystem::EnergyBarX1()
 	return currentBarLength + ENERGY_BAR_X0;
 }
 
-void SkillsSystem::Render()
+void SkillsSystem::RenderEnergy()
 {
-	RenderScore();
-
-	RegenerateEnergy(ENERGY_REGEN_RATE);
-
 	Resources::mParafontFont->DrawText(Resources::STR_ENERGY_OSD, 5, 240);
 	oslDrawFillRect(
 			ENERGY_BAR_X0,
@@ -238,4 +246,15 @@ void SkillsSystem::Render()
 			ENERGY_BAR_Y1,
 			RGBA(255, 255, 255, 128));
 	oslDrawRect(ENERGY_BAR_X0, ENERGY_BAR_Y0, ENERGY_BAR_X1, ENERGY_BAR_Y1, COLOR_WHITE);
+}
+
+void SkillsSystem::Render()
+{
+	RenderScore();
+	RenderEnergy();
+
+	if(NoSkillActivated())
+		RegenerateEnergy(ENERGY_REGEN_RATE);
+
+	mSkillWarp->Render();
 }
