@@ -12,7 +12,7 @@
 
 struct SaveGame
 {
-	unsigned timeWarpLevel;
+	unsigned warpLevel;
 	unsigned dematerializeLevel;
 	unsigned overdriveLevel;
 	unsigned forceFieldLevel;

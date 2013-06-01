@@ -214,8 +214,8 @@ void Game::RenderSkillsScreen()
 						RGBA(0, 0, 255, 127),
 						RGBA(255, 255, 255, 0));
 
-	Resources::mCopperPlateFont->DrawText(Resources::STR_TIME_WARP_SKILL, 40, 40);
-	DisplaySkillLevel(Resources::mSkillsSystem->GetTimeWarpLevel(), 300, 40);
+	Resources::mCopperPlateFont->DrawText(Resources::STR_WARP_SKILL, 40, 40);
+	DisplaySkillLevel(Resources::mSkillsSystem->GetWarpLevel(), 300, 40);
 
 	Resources::mCopperPlateFont->DrawText(Resources::STR_DEMATERIALIZE_SKILL, 40, 65);
 	DisplaySkillLevel(Resources::mSkillsSystem->GetDematerializeLevel(), 300, 65);
@@ -233,7 +233,7 @@ void Game::RenderSkillsScreen()
 	switch(mSkillsScreenCursor)
 	{
 	case 1:
-		selectedSkillLevel = Resources::mSkillsSystem->GetTimeWarpLevel();
+		selectedSkillLevel = Resources::mSkillsSystem->GetWarpLevel();
 		break;
 	case 2:
 		selectedSkillLevel = Resources::mSkillsSystem->GetDematerializeLevel();
@@ -262,7 +262,7 @@ void Game::RenderSkillsScreen()
 										 Resources::STR_SKILLS_SCREEN_REFUND_2,
 										 60 + Resources::mSquareButton_small->GetWidth() + 2, PSP_SCREEN_HEIGHT / 2 + 20 + 10 + 15);
 
-	unsigned driveCoreLoad =(Resources::mSkillsSystem->GetTimeWarpLevel() +
+	unsigned driveCoreLoad =(Resources::mSkillsSystem->GetWarpLevel() +
 							 Resources::mSkillsSystem->GetDematerializeLevel() +
 							 Resources::mSkillsSystem->GetOverdriveLevel() +
 							 Resources::mSkillsSystem->GetForceFieldLevel() ) * 10;
@@ -312,7 +312,7 @@ void Game::RenderSkillsScreen()
 						switch(mSkillsScreenCursor)
 						{
 						case 1:
-							Resources::mSkillsSystem->LevelUpTimeWarp();
+							Resources::mSkillsSystem->LevelUpWarp();
 							break;
 						case 2:
 							Resources::mSkillsSystem->LevelUpDematerialize();
@@ -340,7 +340,7 @@ void Game::RenderSkillsScreen()
 					switch(mSkillsScreenCursor)
 					{
 					case 1:
-						Resources::mSkillsSystem->RefundTimeWarp();
+						Resources::mSkillsSystem->RefundWarp();
 						break;
 					case 2:
 						Resources::mSkillsSystem->RefundDematerialize();

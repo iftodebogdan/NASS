@@ -11,7 +11,7 @@
 SkillsSystem::SkillsSystem()
 				:ExperienceSystem()
 {
-	SetTimeWarpLevel(0);
+	SetWarpLevel(0);
 	SetDematerializeLevel(0);
 	SetOverdriveLevel(0);
 	SetForceFieldLevel(0);
@@ -20,14 +20,14 @@ SkillsSystem::SkillsSystem()
 }
 
 SkillsSystem::SkillsSystem(
-				unsigned timeWarpLevel,
+				unsigned warpLevel,
 				unsigned dematerializeLevel,
 				unsigned overdriveLevel,
 				unsigned forceFieldLevel,
 				unsigned long expPointsAvailable)
 					:ExperienceSystem(expPointsAvailable)
 {
-	SetTimeWarpLevel(timeWarpLevel);
+	SetWarpLevel(warpLevel);
 	SetDematerializeLevel(dematerializeLevel);
 	SetOverdriveLevel(overdriveLevel);
 	SetForceFieldLevel(forceFieldLevel);
@@ -35,9 +35,9 @@ SkillsSystem::SkillsSystem(
 	ResetEnergy();
 }
 
-unsigned SkillsSystem::GetTimeWarpLevel()
+unsigned SkillsSystem::GetWarpLevel()
 {
-	return mTimeWarpLevel;
+	return mWarpLevel;
 }
 
 unsigned SkillsSystem::GetDematerializeLevel()
@@ -60,7 +60,7 @@ unsigned SkillsSystem::GetSkillLevelByIndex(unsigned skillIndex)
 	switch(skillIndex)
 	{
 	case 1:
-		return GetTimeWarpLevel();
+		return GetWarpLevel();
 	case 2:
 		return GetDematerializeLevel();
 	case 3:
@@ -85,11 +85,11 @@ unsigned long SkillsSystem::SkillRefundValue(unsigned skillLevel)
 	return skillLevel * BASE_LEVEL_EXP;
 }
 
-void SkillsSystem::LevelUpTimeWarp()
+void SkillsSystem::LevelUpWarp()
 {
-	if(	GetTimeWarpLevel() < 5 &&
-		DeductExperiencePoints( SkillLevelUpCost(GetTimeWarpLevel()) ))
-					mTimeWarpLevel++;
+	if(	GetWarpLevel() < 5 &&
+		DeductExperiencePoints( SkillLevelUpCost(GetWarpLevel()) ))
+					mWarpLevel++;
 
 }
 
@@ -117,12 +117,12 @@ void SkillsSystem::LevelUpForceField()
 
 }
 
-void SkillsSystem::RefundTimeWarp()
+void SkillsSystem::RefundWarp()
 {
-	if(	GetTimeWarpLevel() > 0)
+	if(	GetWarpLevel() > 0)
 	{
-		AddExperiencePoints(SkillRefundValue(GetTimeWarpLevel()));
-		mTimeWarpLevel--;
+		AddExperiencePoints(SkillRefundValue(GetWarpLevel()));
+		mWarpLevel--;
 	}
 }
 
@@ -153,10 +153,10 @@ void SkillsSystem::RefundForceField()
 	}
 }
 
-void SkillsSystem::SetTimeWarpLevel(unsigned newTimeWarpLevel)
+void SkillsSystem::SetWarpLevel(unsigned newWarpLevel)
 {
-	if(newTimeWarpLevel <= 5)
-		mTimeWarpLevel = newTimeWarpLevel;
+	if(newWarpLevel <= 5)
+		mWarpLevel = newWarpLevel;
 }
 
 void SkillsSystem::SetDematerializeLevel(unsigned newDematerializeLevel)
@@ -193,7 +193,7 @@ void SkillsSystem::SetEnergy(unsigned newEnergy)
 		mEnergy = newEnergy;
 }
 
-void SkillsSystem::RegenEnergy(unsigned regenValue)
+void SkillsSystem::RegenerateEnergy(unsigned regenValue)
 {
 	if(GetEnergy() + regenValue <= MAX_ENERGY)
 		mEnergy += regenValue;
@@ -228,7 +228,7 @@ void SkillsSystem::Render()
 {
 	RenderScore();
 
-	RegenEnergy(ENERGY_REGEN_RATE);
+	RegenerateEnergy(ENERGY_REGEN_RATE);
 
 	Resources::mParafontFont->DrawText(Resources::STR_ENERGY_OSD, 5, 240);
 	oslDrawFillRect(

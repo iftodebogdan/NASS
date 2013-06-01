@@ -25,19 +25,19 @@ class SkillsSystem : public ExperienceSystem
 {
 public:
 	SkillsSystem();
-	SkillsSystem(unsigned timeWarpLevel,
+	SkillsSystem(unsigned warpLevel,
 				 unsigned dematerializeLevel,
 				 unsigned overdriveLevel,
 				 unsigned forceFieldLevel,
 				 unsigned long expPointsAvailable);
 
-	unsigned GetTimeWarpLevel();
+	unsigned GetWarpLevel();
 	unsigned GetDematerializeLevel();
 	unsigned GetOverdriveLevel();
 	unsigned GetForceFieldLevel();
 	unsigned GetSkillLevelByIndex(unsigned skillIndex);
 
-	void SetTimeWarpLevel(unsigned newTimeWarpLevel);
+	void SetWarpLevel(unsigned newWarpLevel);
 	void SetDematerializeLevel(unsigned newDematerializeLevel);
 	void SetOverdriveLevel(unsigned newOverdriveLevel);
 	void SetForceFieldLevel(unsigned newForceFieldLevel);
@@ -45,12 +45,12 @@ public:
 	unsigned long SkillLevelUpCost(unsigned skillLevel);
 	unsigned long SkillRefundValue(unsigned skillLevel);
 
-	void LevelUpTimeWarp();
+	void LevelUpWarp();
 	void LevelUpDematerialize();
 	void LevelUpOverdrive();
 	void LevelUpForceField();
 
-	void RefundTimeWarp();
+	void RefundWarp();
 	void RefundDematerialize();
 	void RefundOverdrive();
 	void RefundForceField();
@@ -61,11 +61,11 @@ public:
 	void Render();
 
 private:
-	void RegenEnergy(unsigned regenValue);
+	void RegenerateEnergy(unsigned regenValue);
 	bool DepleteEnergy(unsigned requiredEnergy);
 	int EnergyBarX1();
 
-	unsigned mTimeWarpLevel;
+	unsigned mWarpLevel;
 	unsigned mDematerializeLevel;
 	unsigned mOverdriveLevel;
 	unsigned mForceFieldLevel;

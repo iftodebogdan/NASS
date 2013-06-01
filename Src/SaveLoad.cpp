@@ -14,7 +14,7 @@ void SaveLoad::AutoSaveGame()
 
 	SaveGame save;
 	memset(&save, 0, sizeof(save));
-	save.timeWarpLevel = Resources::mSkillsSystem->GetTimeWarpLevel();
+	save.warpLevel = Resources::mSkillsSystem->GetWarpLevel();
 	save.dematerializeLevel = Resources::mSkillsSystem->GetDematerializeLevel();
 	save.overdriveLevel = Resources::mSkillsSystem->GetOverdriveLevel();
 	save.forceFieldLevel = Resources::mSkillsSystem->GetForceFieldLevel();
@@ -43,7 +43,7 @@ void SaveLoad::LoadSaveGame()
 	fread(&save, sizeof(save), 1, saveGameFile); // load the game save data
 	fclose(saveGameFile);
 
-	Resources::mSkillsSystem->SetTimeWarpLevel(save.timeWarpLevel);
+	Resources::mSkillsSystem->SetWarpLevel(save.warpLevel);
 	Resources::mSkillsSystem->SetDematerializeLevel(save.dematerializeLevel);
 	Resources::mSkillsSystem->SetOverdriveLevel(save.overdriveLevel);
 	Resources::mSkillsSystem->SetForceFieldLevel(save.forceFieldLevel);

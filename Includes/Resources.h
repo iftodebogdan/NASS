@@ -83,7 +83,7 @@ public:
 	static string STR_SCORE_OSD;
 	static string STR_XP_OSD;
 	static string STR_ENERGY_OSD;
-	static string STR_TIME_WARP_SKILL;
+	static string STR_WARP_SKILL;
 	static string STR_DEMATERIALIZE_SKILL;
 	static string STR_OVERDRIVE_SKILL;
 	static string STR_FORCE_FIELD_SKILL;
