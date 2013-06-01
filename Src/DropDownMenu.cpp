@@ -118,6 +118,9 @@ void DropDownMenu::EvaluateState()
 		switch(mMenuItemIndex)
 		{
 		case 0:
+			Resources::mGameApp->SetState(SKILLS_SCREEN);
+			break;
+		case 1:
 			oslQuit();
 			break;
 		default:

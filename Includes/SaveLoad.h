@@ -16,7 +16,7 @@ struct SaveGame
 	unsigned dematerializeLevel;
 	unsigned overdriveLevel;
 	unsigned forceFieldLevel;
-	unsigned expPointsAvailable;
+	unsigned long expPointsAvailable;
 };
 
 class SaveLoad

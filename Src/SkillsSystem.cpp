@@ -55,12 +55,40 @@ unsigned SkillsSystem::GetForceFieldLevel()
 	return mForceFieldLevel;
 }
 
+unsigned SkillsSystem::GetSkillLevelByIndex(unsigned skillIndex)
+{
+	switch(skillIndex)
+	{
+	case 1:
+		return GetTimeWarpLevel();
+	case 2:
+		return GetDematerializeLevel();
+	case 3:
+		return GetOverdriveLevel();
+	case 4:
+		return GetForceFieldLevel();
+	}
+
+	return NULL;
+}
+
+unsigned long SkillsSystem::SkillLevelUpCost(unsigned skillLevel)
+{
+	if(skillLevel >= 5)
+		return 0;
+
+	return skillLevel * (skillLevel + 1) * PER_LEVEL_EXP + (skillLevel + 1) * BASE_LEVEL_EXP;
+}
+
+unsigned long SkillsSystem::SkillRefundValue(unsigned skillLevel)
+{
+	return skillLevel * BASE_LEVEL_EXP;
+}
+
 void SkillsSystem::LevelUpTimeWarp()
 {
 	if(	GetTimeWarpLevel() < 5 &&
-		DeductExperiencePoints(
-				(GetTimeWarpLevel() + 1) * PER_LEVEL_EXP +
-				(GetTimeWarpLevel() + 1) * BASE_LEVEL_EXP))
+		DeductExperiencePoints( SkillLevelUpCost(GetTimeWarpLevel()) ))
 					mTimeWarpLevel++;
 
 }
@@ -68,9 +96,7 @@ void SkillsSystem::LevelUpTimeWarp()
 void SkillsSystem::LevelUpDematerialize()
 {
 	if(	GetDematerializeLevel() < 5 &&
-		DeductExperiencePoints(
-				(GetDematerializeLevel() + 1) * PER_LEVEL_EXP +
-				(GetDematerializeLevel() + 1) * BASE_LEVEL_EXP))
+		DeductExperiencePoints( SkillLevelUpCost(GetDematerializeLevel()) ))
 					mDematerializeLevel++;
 
 }
@@ -78,9 +104,7 @@ void SkillsSystem::LevelUpDematerialize()
 void SkillsSystem::LevelUpOverdrive()
 {
 	if(	GetOverdriveLevel() < 5 &&
-		DeductExperiencePoints(
-				(GetOverdriveLevel() + 1) * PER_LEVEL_EXP +
-				(GetOverdriveLevel() + 1) * BASE_LEVEL_EXP))
+		DeductExperiencePoints( SkillLevelUpCost(GetOverdriveLevel()) ))
 					mOverdriveLevel++;
 
 }
@@ -88,11 +112,45 @@ void SkillsSystem::LevelUpOverdrive()
 void SkillsSystem::LevelUpForceField()
 {
 	if(	GetForceFieldLevel() < 5 &&
-		DeductExperiencePoints(
-				(GetForceFieldLevel() + 1) * PER_LEVEL_EXP +
-				(GetForceFieldLevel() + 1) * BASE_LEVEL_EXP))
+		DeductExperiencePoints( SkillLevelUpCost(GetForceFieldLevel()) ))
 					mForceFieldLevel++;
 
+}
+
+void SkillsSystem::RefundTimeWarp()
+{
+	if(	GetTimeWarpLevel() > 0)
+	{
+		AddExperiencePoints(SkillRefundValue(GetTimeWarpLevel()));
+		mTimeWarpLevel--;
+	}
+}
+
+void SkillsSystem::RefundDematerialize()
+{
+	if(	GetDematerializeLevel() > 0)
+	{
+		AddExperiencePoints(SkillRefundValue(GetDematerializeLevel()));
+		mDematerializeLevel--;
+	}
+}
+
+void SkillsSystem::RefundOverdrive()
+{
+	if(	GetOverdriveLevel() > 0)
+	{
+		AddExperiencePoints(SkillRefundValue(GetOverdriveLevel()));
+		mOverdriveLevel--;
+	}
+}
+
+void SkillsSystem::RefundForceField()
+{
+	if(	GetForceFieldLevel() > 0)
+	{
+		AddExperiencePoints(SkillRefundValue(GetForceFieldLevel()));
+		mForceFieldLevel--;
+	}
 }
 
 void SkillsSystem::SetTimeWarpLevel(unsigned newTimeWarpLevel)
@@ -170,7 +228,7 @@ void SkillsSystem::Render()
 {
 	RenderScore();
 
-	RegenEnergy(1);
+	RegenEnergy(ENERGY_REGEN_RATE);
 
 	Resources::mParafontFont->DrawText(Resources::STR_ENERGY_OSD, 5, 240);
 	oslDrawFillRect(

@@ -14,15 +14,20 @@ ExperienceSystem::ExperienceSystem()
 	SetExperiencePoints(0);
 }
 
-ExperienceSystem::ExperienceSystem(unsigned expPointsAvailable)
+ExperienceSystem::ExperienceSystem(unsigned long expPointsAvailable)
 {
 	ResetPlayerScore();
 	SetExperiencePoints(expPointsAvailable);
 }
 
-bool ExperienceSystem::DeductExperiencePoints(unsigned expPoints)
+void ExperienceSystem::AddExperiencePoints(unsigned long expPoints)
 {
-	if(expPoints >= mExperiencePoints)
+	mExperiencePoints += expPoints;
+}
+
+bool ExperienceSystem::DeductExperiencePoints(unsigned long expPoints)
+{
+	if(expPoints <= mExperiencePoints)
 	{
 		mExperiencePoints -= expPoints;
 		return true;
@@ -47,7 +52,7 @@ void ExperienceSystem::ResetPlayerScore()
 	mUpdateScoreFlag = 60;
 }
 
-void ExperienceSystem::SetExperiencePoints(unsigned newExperiencePoints)
+void ExperienceSystem::SetExperiencePoints(unsigned long newExperiencePoints)
 {
 	mExperiencePoints = newExperiencePoints;
 }

@@ -18,16 +18,17 @@ class ExperienceSystem
 {
 public:
 	ExperienceSystem();
-	ExperienceSystem(unsigned expPointsAvailable);
+	ExperienceSystem(unsigned long expPointsAvailable);
 
 	void UpdatePlayerScore(unsigned addPlayerScorePoints);
 	void UpdateExperiencePoints();
-	bool DeductExperiencePoints(unsigned expPoints);
+	void AddExperiencePoints(unsigned long expPoints);
+	bool DeductExperiencePoints(unsigned long expPoints);
 	unsigned long GetPlayerScore();
 	void SetPlayerScore(unsigned newPlayerScore);
 	void ResetPlayerScore();
 	unsigned long GetExperiencePoints();
-	void SetExperiencePoints(unsigned newExperiencePoints);
+	void SetExperiencePoints(unsigned long newExperiencePoints);
 	void RenderScore();
 
 private:

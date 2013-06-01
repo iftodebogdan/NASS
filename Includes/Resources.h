@@ -14,6 +14,7 @@
 #include "DropDownMenu.h"
 #include "Controller.h"
 #include "Font.h"
+#include "Game.h"
 #include "Player.h"
 #include "Enemy.h"
 #include "CollisionDetection.h"
@@ -61,6 +62,9 @@ public:
 	static string IMG_DROP_DOWN_MENU;
 	static string IMG_UP_DOWN_BUTTONS;
 	static string IMG_CROSS_BUTTON;
+	static string IMG_CROSS_BUTTON_SMALL;
+	static string IMG_CIRCLE_BUTTON;
+	static string IMG_SQUARE_BUTTON_SMALL;
 	static string IMG_ASTEROID_S;
 	static string IMG_ASTEROID_M;
 	static string IMG_ASTEROID_L;
@@ -75,12 +79,34 @@ public:
 	static string STR_GAME_OVER_TITLE;
 	static string STR_GAME_OVER_MESSAGE;
 	static string STR_PRESS_X_TO_START;
-	static string STR_MENU_ITEMS[3];
+	static string STR_PRESS_O_TO_GO_BACK;
 	static string STR_SCORE_OSD;
 	static string STR_XP_OSD;
 	static string STR_ENERGY_OSD;
+	static string STR_TIME_WARP_SKILL;
+	static string STR_DEMATERIALIZE_SKILL;
+	static string STR_OVERDRIVE_SKILL;
+	static string STR_FORCE_FIELD_SKILL;
+	static string STR_SKILLS_SCREEN_XP_COST;
+	static string STR_SKILLS_SCREEN_REFUND;
+	static string STR_SKILLS_SCREEN_XP_COST_2;
+	static string STR_SKILLS_SCREEN_REFUND_2;
+	static string STR_DRIVE_CORE_LOAD;
+	static string STR_SKILLS_SCREEN_AVAILABLE_XP;
+	static string STR_DRIVE_CORE_OVERLOADED_MESSAGE;
+	static string STR_DRIVE_CORE_OVERLOADED_TITLE;
+	static string STR_SKILL_LEVEL_UP_CONFIRMATION_MESSAGE;
+	static string STR_SKILL_LEVEL_UP_CONFIRMATION_TITLE;
+	static string STR_SKILL_REFUND_CONFIRMATION_MESSAGE;
+	static string STR_SKILL_REFUND_CONFIRMATION_TITLE;
+	static string STR_SKILL_LEVEL_5_MESSAGE;
+	static string STR_SKILL_LEVEL_5_TITLE;
+	static string STR_SKILL_LEVEL_0_MESSAGE;
+	static string STR_SKILL_LEVEL_0_TITLE;
+	static string STR_MENU_ITEMS[3];
 	static int MENU_ITEMS_COUNT;
 
+	static Game* mGameApp;
 	static Font* mParafontFont;
 	static Font* mSmallStoneFont;
 	static Font* mCopperPlateFont;
@@ -90,6 +116,9 @@ public:
 	static DropDownMenu* mDropDownMenu;
 	static Drawable* mUpDownButtons;
 	static Drawable* mCrossButton;
+	static Drawable* mCrossButton_small;
+	static Drawable* mCircleButton;
+	static Drawable* mSquareButton_small;
 	static Player* mPlayer;
 	static AnimatedSprite* mMoonRock;
 	static AnimatedSprite* mAsteroidL;
