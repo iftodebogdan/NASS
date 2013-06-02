@@ -61,6 +61,8 @@ string Resources::STR_SKILL_LEVEL_5_MESSAGE = "This skill is already at its maxi
 string Resources::STR_SKILL_LEVEL_5_TITLE = "Cannot level up!";
 string Resources::STR_SKILL_LEVEL_0_MESSAGE = "You haven't invested any points in this skill. It cannot be refunded.";
 string Resources::STR_SKILL_LEVEL_0_TITLE = "Cannot refund!";
+string Resources::STR_SKILL_NO_XP_MESSAGE = "You do not have enough XP points to upgrade this skill.";
+string Resources::STR_SKILL_NO_XP_TITLE = "Not enough XP!";
 string Resources::STR_MENU_ITEMS[3] = {"Skills", "Controls", "Quit"};
 int Resources::MENU_ITEMS_COUNT = 3;
 

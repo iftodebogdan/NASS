@@ -66,7 +66,7 @@ using namespace std;
 #define OVERDRIVE_EFFECT_FRAMERATE 15
 
 #define MAX_ENERGY 1000
-#define ENERGY_REGEN_RATE 10
+#define ENERGY_REGEN_RATE 1
 
 #define PSP_SCREEN_WIDTH 480
 #define PSP_SCREEN_HEIGHT 272
@@ -131,6 +131,8 @@ public:
 	static string STR_SKILL_LEVEL_5_TITLE;
 	static string STR_SKILL_LEVEL_0_MESSAGE;
 	static string STR_SKILL_LEVEL_0_TITLE;
+	static string STR_SKILL_NO_XP_MESSAGE;
+	static string STR_SKILL_NO_XP_TITLE;
 	static string STR_MENU_ITEMS[3];
 	static int MENU_ITEMS_COUNT;
 

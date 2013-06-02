@@ -43,15 +43,15 @@ public:
 	unsigned long SkillLevelUpCost(unsigned skillLevel);
 	unsigned long SkillRefundValue(unsigned skillLevel);
 
-	void LevelUpWarp();
-	void LevelUpDematerialize();
-	void LevelUpOverdrive();
-	void LevelUpForceField();
+	bool LevelUpWarp();
+	bool LevelUpDematerialize();
+	bool LevelUpOverdrive();
+	bool LevelUpForceField();
 
-	void RefundWarp();
-	void RefundDematerialize();
-	void RefundOverdrive();
-	void RefundForceField();
+	bool RefundWarp();
+	bool RefundDematerialize();
+	bool RefundOverdrive();
+	bool RefundForceField();
 
 	void ResetEnergy();
 	unsigned GetEnergy();

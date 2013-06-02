@@ -313,25 +313,31 @@ void Game::RenderSkillsScreen()
 					Resources::STR_DRIVE_CORE_OVERLOADED_TITLE.c_str(),
 					oslMake3Buttons(OSL_KEY_CROSS, OSL_MB_OK, 0, 0, 0, 0));
 			else
-				if(oslMessageBox(
-					Resources::STR_SKILL_LEVEL_UP_CONFIRMATION_MESSAGE.c_str(),
-					Resources::STR_SKILL_LEVEL_UP_CONFIRMATION_TITLE.c_str(),
-					oslMake3Buttons(OSL_KEY_CROSS, OSL_MB_YES, OSL_KEY_CIRCLE, OSL_MB_NO, 0, 0)) == OSL_MB_YES)
-						switch(mSkillsScreenCursor)
-						{
-						case 1:
-							Resources::mSkillsSystem->LevelUpWarp();
-							break;
-						case 2:
-							Resources::mSkillsSystem->LevelUpDematerialize();
-							break;
-						case 3:
-							Resources::mSkillsSystem->LevelUpOverdrive();
-							break;
-						case 4:
-							Resources::mSkillsSystem->LevelUpForceField();
-							break;
-						};
+				if(Resources::mSkillsSystem->SkillLevelUpCost(selectedSkillLevel) > Resources::mSkillsSystem->GetExperiencePoints())
+					oslMessageBox(
+						Resources::STR_SKILL_NO_XP_MESSAGE.c_str(),
+						Resources::STR_SKILL_NO_XP_TITLE.c_str(),
+						oslMake3Buttons(OSL_KEY_CROSS, OSL_MB_OK, 0, 0, 0, 0));
+				else
+					if(oslMessageBox(
+						Resources::STR_SKILL_LEVEL_UP_CONFIRMATION_MESSAGE.c_str(),
+						Resources::STR_SKILL_LEVEL_UP_CONFIRMATION_TITLE.c_str(),
+						oslMake3Buttons(OSL_KEY_CROSS, OSL_MB_YES, OSL_KEY_CIRCLE, OSL_MB_NO, 0, 0)) == OSL_MB_YES)
+							switch(mSkillsScreenCursor)
+							{
+							case 1:
+								Resources::mSkillsSystem->LevelUpWarp();
+								break;
+							case 2:
+								Resources::mSkillsSystem->LevelUpDematerialize();
+								break;
+							case 3:
+								Resources::mSkillsSystem->LevelUpOverdrive();
+								break;
+							case 4:
+								Resources::mSkillsSystem->LevelUpForceField();
+								break;
+							};
 	}
 	if(Resources::mController->IsPressed(Controller::SQUARE))
 	{

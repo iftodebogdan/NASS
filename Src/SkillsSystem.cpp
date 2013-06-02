@@ -101,72 +101,100 @@ unsigned long SkillsSystem::SkillRefundValue(unsigned skillLevel)
 	return skillLevel * BASE_LEVEL_EXP;
 }
 
-void SkillsSystem::LevelUpWarp()
+bool SkillsSystem::LevelUpWarp()
 {
 	if(	GetWarpLevel() < 5 &&
 		DeductExperiencePoints( SkillLevelUpCost(GetWarpLevel()) ))
-					mWarpLevel++;
+	{
+		mWarpLevel++;
+		return true;
+	}
 
+	return false;
 }
 
-void SkillsSystem::LevelUpDematerialize()
+bool SkillsSystem::LevelUpDematerialize()
 {
 	if(	GetDematerializeLevel() < 5 &&
 		DeductExperiencePoints( SkillLevelUpCost(GetDematerializeLevel()) ))
-					mDematerializeLevel++;
+	{
+		mDematerializeLevel++;
+		return true;
+	}
 
+	return false;
 }
 
-void SkillsSystem::LevelUpOverdrive()
+bool SkillsSystem::LevelUpOverdrive()
 {
 	if(	GetOverdriveLevel() < 5 &&
 		DeductExperiencePoints( SkillLevelUpCost(GetOverdriveLevel()) ))
-					mOverdriveLevel++;
+	{
+		mOverdriveLevel++;
+		return true;
+	}
 
+	return false;
 }
 
-void SkillsSystem::LevelUpForceField()
+bool SkillsSystem::LevelUpForceField()
 {
 	if(	GetForceFieldLevel() < 5 &&
 		DeductExperiencePoints( SkillLevelUpCost(GetForceFieldLevel()) ))
-					mForceFieldLevel++;
+	{
+		mForceFieldLevel++;
+		return true;
+	}
 
+	return false;
 }
 
-void SkillsSystem::RefundWarp()
+bool SkillsSystem::RefundWarp()
 {
 	if(	GetWarpLevel() > 0)
 	{
 		AddExperiencePoints(SkillRefundValue(GetWarpLevel()));
 		mWarpLevel--;
+		return true;
 	}
+
+	return false;
 }
 
-void SkillsSystem::RefundDematerialize()
+bool SkillsSystem::RefundDematerialize()
 {
 	if(	GetDematerializeLevel() > 0)
 	{
 		AddExperiencePoints(SkillRefundValue(GetDematerializeLevel()));
 		mDematerializeLevel--;
+		return true;
 	}
+
+	return false;
 }
 
-void SkillsSystem::RefundOverdrive()
+bool SkillsSystem::RefundOverdrive()
 {
 	if(	GetOverdriveLevel() > 0)
 	{
 		AddExperiencePoints(SkillRefundValue(GetOverdriveLevel()));
 		mOverdriveLevel--;
+		return true;
 	}
+
+	return false;
 }
 
-void SkillsSystem::RefundForceField()
+bool SkillsSystem::RefundForceField()
 {
 	if(	GetForceFieldLevel() > 0)
 	{
 		AddExperiencePoints(SkillRefundValue(GetForceFieldLevel()));
 		mForceFieldLevel--;
+		return true;
 	}
+
+	return false;
 }
 
 void SkillsSystem::SetWarpLevel(unsigned newWarpLevel)
