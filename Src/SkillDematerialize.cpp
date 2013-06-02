@@ -9,17 +9,16 @@
 #include "../Includes/Resources.h"
 
 #define DEMATERIALIZE_LV1 MAX_ENERGY * 100.0f / 100.0f / 60.0f
-#define DEMATERIALIZE_LV2 MAX_ENERGY * 85.0f / 100.0f / 60.0f
-#define DEMATERIALIZE_LV3 MAX_ENERGY * 70.0f / 100.0f / 60.0f
-#define DEMATERIALIZE_LV4 MAX_ENERGY * 50.0f / 100.0f / 60.0f
-#define DEMATERIALIZE_LV5 MAX_ENERGY * 30.0f / 100.0f / 60.0f
+#define DEMATERIALIZE_LV2 MAX_ENERGY * 90.0f / 100.0f / 60.0f
+#define DEMATERIALIZE_LV3 MAX_ENERGY * 80.0f / 100.0f / 60.0f
+#define DEMATERIALIZE_LV4 MAX_ENERGY * 70.0f / 100.0f / 60.0f
+#define DEMATERIALIZE_LV5 MAX_ENERGY * 60.0f / 100.0f / 60.0f
 
 SkillDematerialize::SkillDematerialize()
 {
 	SetState(READY);
 
 	mPlayerShip_dematerialized = new Drawable(Resources::IMG_PLAYER_SHIP_DEMATERIALIZED);
-
 	oslAssert(mPlayerShip_dematerialized != NULL);
 }
 
@@ -46,14 +45,14 @@ bool SkillDematerialize::IsActivated()
 
 void SkillDematerialize::Evaluate()
 {
-	if(Resources::mController->IsPressed(CIRCLE) &&
+	if(Resources::mController->IsPressed(Controller::CIRCLE) &&
 	   GetState() == READY)
 	{
 		SetState(ACTIVATED);
 		return;
 	}
 
-	if(Resources::mController->IsHeld(CIRCLE) &&
+	if(Resources::mController->IsHeld(Controller::CIRCLE) &&
 	   GetState() == ACTIVATED)
 	{
 		switch(Resources::mSkillsSystem->GetDematerializeLevel())

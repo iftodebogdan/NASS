@@ -8,6 +8,14 @@
 #include "../Includes/SkillsSystem.h"
 #include "../Includes/Resources.h"
 
+#define PER_LEVEL_EXP 2250
+#define BASE_LEVEL_EXP 3750
+
+#define ENERGY_BAR_X0 125
+#define ENERGY_BAR_Y0 240
+#define ENERGY_BAR_X1 460
+#define ENERGY_BAR_Y1 265
+
 SkillsSystem::SkillsSystem()
 				:ExperienceSystem()
 {
@@ -20,6 +28,7 @@ SkillsSystem::SkillsSystem()
 
 	mSkillWarp = new SkillWarp();
 	mSkillDematerialize = new SkillDematerialize();
+	mSkillOverdrive = new SkillOverdrive();
 }
 
 SkillsSystem::SkillsSystem(
@@ -39,6 +48,7 @@ SkillsSystem::SkillsSystem(
 
 	mSkillWarp = new SkillWarp();
 	mSkillDematerialize = new SkillDematerialize();
+	mSkillOverdrive = new SkillOverdrive();
 }
 
 unsigned SkillsSystem::GetWarpLevel()
@@ -202,7 +212,8 @@ void SkillsSystem::SetEnergy(unsigned newEnergy)
 bool SkillsSystem::NoSkillActivated()
 {
 	if(mSkillWarp->IsActivated() ||
-	   mSkillDematerialize->IsActivated())
+	   mSkillDematerialize->IsActivated() ||
+	   mSkillOverdrive->IsActivated())
 		return false;
 
 	return true;
@@ -253,12 +264,13 @@ void SkillsSystem::RenderEnergy()
 
 void SkillsSystem::Render()
 {
-	RenderScore();
-	RenderEnergy();
-
 	if(NoSkillActivated())
 		RegenerateEnergy(ENERGY_REGEN_RATE);
 
 	mSkillWarp->Render();
 	mSkillDematerialize->Render();
+	mSkillOverdrive->Render();
+
+	RenderScore();
+	RenderEnergy();
 }

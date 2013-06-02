@@ -64,7 +64,7 @@ void ExperienceSystem::SetPlayerScore(unsigned newPlayerScore)
 
 void ExperienceSystem::UpdateExperiencePoints()
 {
-	mExperiencePoints += mPlayerScore;
+	mExperiencePoints += mPlayerScore / SCORE_TO_XP_RATIO;
 	ResetPlayerScore();
 }
 

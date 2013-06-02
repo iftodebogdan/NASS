@@ -6,6 +6,7 @@
  */
 
 #include "../Includes/Background.h"
+#include "../Includes/Resources.h"
 
 Background::Background(string pathToPrimaryBgImgFile)
 {

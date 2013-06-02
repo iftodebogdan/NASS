@@ -42,7 +42,7 @@ void Enemy::Reset()
 	SetState(SPAWNED);
 }
 
-EnemyState Enemy::GetState()
+Enemy::EnemyState Enemy::GetState()
 {
 	return mEnemyState;
 }

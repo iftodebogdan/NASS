@@ -11,16 +11,16 @@
 #include <list>
 using namespace std;
 
-enum EnemyState
-{
-	SPAWNED,
-	DESTROYED,
-	EXPLODING
-};
-
 class Enemy : public AnimatedSprite
 {
 public:
+	enum EnemyState
+	{
+		SPAWNED,
+		DESTROYED,
+		EXPLODING
+	};
+
 	Enemy(AnimatedSprite *enemySprite, int posY, int scrollSpeed);
 	Enemy(AnimatedSprite *enemySprite, int posY, int scrollSpeed, int frameRate, bool invertedAnimation);
 

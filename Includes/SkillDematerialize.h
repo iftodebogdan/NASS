@@ -13,13 +13,13 @@
 
 class SkillDematerialize
 {
+public:
 	enum SkillDematerializeState
 	{
 		ACTIVATED,
 		READY
 	};
 
-public:
 	SkillDematerialize();
 
 	void SetState(SkillDematerializeState newSkillDematerializeState);

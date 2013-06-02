@@ -9,25 +9,17 @@
 #define SKILLSSYSTEM_H_
 
 #include "ExperienceSystem.h"
-#include "SkillDematerialize.h"
 #include "SkillWarp.h"
-
-#define PER_LEVEL_EXP 2250
-#define BASE_LEVEL_EXP 3750
-
-#define ENERGY_BAR_X0 125
-#define ENERGY_BAR_Y0 240
-#define ENERGY_BAR_X1 460
-#define ENERGY_BAR_Y1 265
-
-#define MAX_ENERGY 1000
-#define ENERGY_REGEN_RATE 1
+#include "SkillDematerialize.h"
+#include "SkillOverdrive.h"
 
 class SkillsSystem : public ExperienceSystem
 {
 	friend class SkillWarp;
 	friend class SkillDematerialize;
+	friend class SkillOverdrive;
 	friend class CollisionDetection;
+	friend class Player;
 
 public:
 	SkillsSystem();
@@ -81,6 +73,7 @@ private:
 
 	SkillWarp* mSkillWarp;
 	SkillDematerialize* mSkillDematerialize;
+	SkillOverdrive* mSkillOverdrive;
 };
 
 #endif /* SKILLSSYSTEM_H_ */

@@ -8,6 +8,8 @@
 #include "../Includes/Game.h"
 #include "../Includes/Resources.h"
 
+#define DEBUG_MODE 0
+
 Game::Game()
 {
 	oslInit(0);
@@ -58,7 +60,7 @@ void Game::Run()
 			break;
 		case TRANSITION_GAME_OVER_SCREEN:
 			RenderGameScreen();
-			if(Resources::mPlayer->GetState() == DEAD)
+			if(Resources::mPlayer->GetState() == Player::DEAD)
 				SetState(GAME_OVER_SCREEN);
 			break;
 		case GAME_OVER_SCREEN:
@@ -107,7 +109,7 @@ void Game::SetState(GameState newState)
 
 	if(newState == TRANSITION_GAME_OVER_SCREEN)
 	{
-		Resources::mPlayer->SetState(DYING);
+		Resources::mPlayer->SetState(Player::DYING);
 	}
 
 	if(newState == SKILLS_SCREEN)
@@ -116,7 +118,7 @@ void Game::SetState(GameState newState)
 	mGameState = newState;
 }
 
-GameState Game::GetState()
+Game::GameState Game::GetState()
 {
 	return mGameState;
 }
@@ -125,13 +127,13 @@ void Game::RenderTitleScreen()
 {
 	Resources::mGameBackground->Render();
 	Resources::mGameLogo->Render();
-	if(Resources::mGameLogo->GetState() != EXITING && Resources::mGameLogo->GetState() != EXITED)
+	if(Resources::mGameLogo->GetState() != GameLogo::EXITING && Resources::mGameLogo->GetState() != GameLogo::EXITED)
 		Resources::mDropDownMenu->Render();
 
-	if(Resources::mGameLogo->GetState() == ENTERING && Resources::mController->IsPressed(CROSS))
-		Resources::mGameLogo->SetState(ENTERED);
+	if(Resources::mGameLogo->GetState() == GameLogo::ENTERING && Resources::mController->IsPressed(Controller::CROSS))
+		Resources::mGameLogo->SetState(GameLogo::ENTERED);
 	else
-		if(Resources::mDropDownMenu->GetState() == RETRACTED && Resources::mGameLogo->GetState() == ENTERED)
+		if(Resources::mDropDownMenu->GetState() == DropDownMenu::RETRACTED && Resources::mGameLogo->GetState() == GameLogo::ENTERED)
 		{
 			Resources::mParafontFont->DrawTextCentered(Resources::STR_PRESS_X_TO_START, 240);
 			Resources::mParafontFont->DrawTextAlignedRight(Resources::STR_XP_OSD +
@@ -140,13 +142,13 @@ void Game::RenderTitleScreen()
 														   ->str()), 5);
 			Resources::mCrossButton->Draw(210, 235);
 
-			if(Resources::mController->IsPressed(CROSS))
+			if(Resources::mController->IsPressed(Controller::CROSS))
 			{
-				Resources::mGameLogo->SetState(EXITING);
+				Resources::mGameLogo->SetState(GameLogo::EXITING);
 			}
 		}
 
-	if(Resources::mGameLogo->GetState() == EXITED)
+	if(Resources::mGameLogo->GetState() == GameLogo::EXITED)
 		SetState(GAME_SCREEN);
 }
 
@@ -155,13 +157,16 @@ void Game::RenderGameScreen()
 	Resources::mGameBackground->Render();
 	Resources::mPlayer->Render();
 	Resources::mEnemyList->Render();
-	Resources::mSkillsSystem->Render();
+
+	if(Resources::mPlayer->GetState() == Player::ALIVE)
+		Resources::mSkillsSystem->Render();
+
 	if(CollisionDetection::CheckForCollisions(Resources::mPlayer, Resources::mEnemyList) &&
 	   GetState() != TRANSITION_GAME_OVER_SCREEN)
 			SetState(TRANSITION_GAME_OVER_SCREEN);
 
 
-	if(Resources::mController->IsPressed(START))
+	if(Resources::mController->IsPressed(Controller::START))
 		if(oslMessageBox(
 			Resources::STR_QUIT_MESSAGE.c_str(),
 			Resources::STR_QUIT_TITLE.c_str(),
@@ -175,7 +180,7 @@ void Game::RenderGameOverScreen()
 	Resources::mEnemyList->Render();
 	Resources::mSkillsSystem->RenderScore();
 	string strGameOverMessage = Resources::STR_GAME_OVER_MESSAGE +
-								string(static_cast<ostringstream*>( &(ostringstream() << Resources::mSkillsSystem->GetPlayerScore()) )->str());
+								string(static_cast<ostringstream*>( &(ostringstream() << Resources::mSkillsSystem->GetPlayerScore() / SCORE_TO_XP_RATIO) )->str());
 	Resources::mSkillsSystem->UpdateExperiencePoints();
 
 	if(oslMessageBox(
@@ -284,17 +289,17 @@ void Game::RenderSkillsScreen()
 	Resources::mParafontFont->DrawTextAlignedRight(Resources::STR_PRESS_O_TO_GO_BACK, 240);
 	Resources::mCircleButton->Draw(PSP_SCREEN_WIDTH - Resources::mCircleButton->GetWidth() - 5, 240);
 
-	if(Resources::mController->IsPressed(CIRCLE))
+	if(Resources::mController->IsPressed(Controller::CIRCLE))
 		Resources::mGameApp->SetState(TITLE_SCREEN);
 
-	if(Resources::mController->IsPressed(DPAD_UP))
+	if(Resources::mController->IsPressed(Controller::DPAD_UP))
 		if(mSkillsScreenCursor > 1)
 			mSkillsScreenCursor--;
-	if(Resources::mController->IsPressed(DPAD_DOWN))
+	if(Resources::mController->IsPressed(Controller::DPAD_DOWN))
 		if(mSkillsScreenCursor < 4)
 			mSkillsScreenCursor++;
 
-	if(Resources::mController->IsPressed(CROSS))
+	if(Resources::mController->IsPressed(Controller::CROSS))
 	{
 		if(Resources::mSkillsSystem->GetSkillLevelByIndex(mSkillsScreenCursor) == 5)
 			oslMessageBox(
@@ -328,7 +333,7 @@ void Game::RenderSkillsScreen()
 							break;
 						};
 	}
-	if(Resources::mController->IsPressed(SQUARE))
+	if(Resources::mController->IsPressed(Controller::SQUARE))
 	{
 		if(Resources::mSkillsSystem->GetSkillLevelByIndex(mSkillsScreenCursor) == 0)
 			oslMessageBox(
@@ -370,7 +375,7 @@ void Game::RenderControlsScreen()
 	Resources::mParafontFont->DrawTextAlignedRight(Resources::STR_PRESS_O_TO_GO_BACK, 240);
 	Resources::mCircleButton->Draw(PSP_SCREEN_WIDTH - Resources::mCircleButton->GetWidth() - 5, 240);
 
-	if(Resources::mController->IsPressed(CIRCLE))
+	if(Resources::mController->IsPressed(Controller::CIRCLE))
 		Resources::mGameApp->SetState(TITLE_SCREEN);
 }
 

@@ -10,38 +10,36 @@
 
 #include <oslib/oslib.h>
 
-#define ANALOG_SENSITIVITY 80
-
-enum Keys
-{
-	DPAD_UP,
-	DPAD_LEFT,
-	DPAD_DOWN,
-	DPAD_RIGHT,
-	TRIANGLE,
-	SQUARE,
-	CROSS,
-	CIRCLE,
-	L,
-	R,
-	START,
-	SELECT,
-	HOLD
-};
-
-enum RemoteKeys
-{
-	PLAYPAUSE,
-	FORWARD,
-	BACK,
-	VOL_UP,
-	VOL_DOWN,
-	RM_HOLD
-};
-
 class Controller
 {
 public:
+	enum Keys
+	{
+		DPAD_UP,
+		DPAD_LEFT,
+		DPAD_DOWN,
+		DPAD_RIGHT,
+		TRIANGLE,
+		SQUARE,
+		CROSS,
+		CIRCLE,
+		L,
+		R,
+		START,
+		SELECT,
+		HOLD
+	};
+
+	enum RemoteKeys
+	{
+		PLAYPAUSE,
+		FORWARD,
+		BACK,
+		VOL_UP,
+		VOL_DOWN,
+		RM_HOLD
+	};
+
 	Controller();
 
 	void ReadKeys();

@@ -8,6 +8,8 @@
 #include "../Includes/DropDownMenu.h"
 #include "../Includes/Resources.h"
 
+#define POS_Y_RETRACTED -GetHeight() + 16 -1
+
 DropDownMenu::DropDownMenu(string pathToImgFile)
 				:ScrollingDrawable(pathToImgFile, 0, 0)
 {
@@ -70,7 +72,7 @@ void DropDownMenu::SetState(DropDownMenuState newState)
 	mDropDownMenuState = newState;
 }
 
-DropDownMenuState DropDownMenu::GetState()
+DropDownMenu::DropDownMenuState DropDownMenu::GetState()
 {
 	return mDropDownMenuState;
 }
@@ -99,29 +101,29 @@ void DropDownMenu::EvaluateState()
 		Reset(); //SetState(RETRACTED);
 	if(GetState() == RETRACTED && GetScrollSpeedY() != 0)
 		SetScrollSpeedY(0);
-	if(GetState() == RETRACTED && Resources::mController->IsPressed(TRIANGLE))
+	if(GetState() == RETRACTED && Resources::mController->IsPressed(Controller::TRIANGLE))
 		SetState(EXTENDING);
 
 	if(GetState() == EXTENDING && GetPositionY() >= 0)
 		SetState(EXTENDED);
 	if(GetState() == EXTENDED && GetScrollSpeedY() != 0)
 		SetScrollSpeedY(0);
-	if(GetState() == EXTENDED && (Resources::mController->IsPressed(TRIANGLE) || Resources::mController->IsPressed(CIRCLE)))
+	if(GetState() == EXTENDED && (Resources::mController->IsPressed(Controller::TRIANGLE) || Resources::mController->IsPressed(Controller::CIRCLE)))
 		SetState(RETRACTING);
 
-	if(GetState() == EXTENDED && Resources::mController->IsPressed(DPAD_DOWN) && mMenuItemIndex < Resources::MENU_ITEMS_COUNT - 1)
+	if(GetState() == EXTENDED && Resources::mController->IsPressed(Controller::DPAD_DOWN) && mMenuItemIndex < Resources::MENU_ITEMS_COUNT - 1)
 		mMenuItemIndex++;
-	if(GetState() == EXTENDED && Resources::mController->IsPressed(DPAD_UP) && mMenuItemIndex > 0)
+	if(GetState() == EXTENDED && Resources::mController->IsPressed(Controller::DPAD_UP) && mMenuItemIndex > 0)
 		mMenuItemIndex--;
 
-	if(GetState() == EXTENDED && Resources::mController->IsPressed(CROSS))
+	if(GetState() == EXTENDED && Resources::mController->IsPressed(Controller::CROSS))
 		switch(mMenuItemIndex)
 		{
 		case 0:
-			Resources::mGameApp->SetState(SKILLS_SCREEN);
+			Resources::mGameApp->SetState(Game::SKILLS_SCREEN);
 			break;
 		case 1:
-			Resources::mGameApp->SetState(CONTROLS_SCREEN);
+			Resources::mGameApp->SetState(Game::CONTROLS_SCREEN);
 			break;
 		case 2:
 			oslQuit();

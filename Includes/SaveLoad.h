@@ -10,17 +10,17 @@
 
 #include <fstream>
 
-struct SaveGame
-{
-	unsigned warpLevel;
-	unsigned dematerializeLevel;
-	unsigned overdriveLevel;
-	unsigned forceFieldLevel;
-	unsigned long expPointsAvailable;
-};
-
 class SaveLoad
 {
+	struct SaveGame
+	{
+		unsigned warpLevel;
+		unsigned dematerializeLevel;
+		unsigned overdriveLevel;
+		unsigned forceFieldLevel;
+		unsigned long expPointsAvailable;
+	};
+
 public:
 	void AutoSaveGame();
 	void LoadSaveGame();

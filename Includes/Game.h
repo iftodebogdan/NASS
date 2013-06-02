@@ -12,9 +12,14 @@
 #include <string>
 using namespace std;
 
-#define DEBUG_MODE 0
 
-enum GameState	//holds the possible states of the game
+
+class Game
+{
+	friend class DropDownMenu;
+
+public:
+	enum GameState	//holds the possible states of the game
 	{
 		TITLE_SCREEN,		//the game is at the title screen
 		GAME_SCREEN,		//the game is at the game screen
@@ -24,11 +29,6 @@ enum GameState	//holds the possible states of the game
 		CONTROLS_SCREEN
 	};
 
-class Game
-{
-	friend class DropDownMenu;
-
-public:
 	Game();	//creates the game
 	~Game();	//destroys the game
 	void Run();	//runs the game

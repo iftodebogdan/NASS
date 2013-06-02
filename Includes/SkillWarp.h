@@ -10,14 +10,9 @@
 
 #include "AnimatedSprite.h"
 
-#define WARP_LV1 100
-#define WARP_LV2 110
-#define WARP_LV3 125
-#define WARP_LV4 150
-#define WARP_LV5 180
-
 class SkillWarp
 {
+public:
 	enum SkillWarpState
 	{
 		ACTIVATED,
@@ -25,7 +20,6 @@ class SkillWarp
 		READY
 	};
 
-public:
 	SkillWarp();
 
 	void SetState(SkillWarpState newSkillWarpState);

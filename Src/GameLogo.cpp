@@ -6,6 +6,7 @@
  */
 
 #include "../Includes/GameLogo.h"
+#include "../Includes/Resources.h"
 
 GameLogo::GameLogo(string pathToImgFile, int scrollSpeedX, int scrollSpeedY)
 			:ScrollingDrawable(pathToImgFile, scrollSpeedX, scrollSpeedY)
@@ -78,7 +79,7 @@ void GameLogo::SetState(GameLogoState newState)
 	}
 }
 
-GameLogoState GameLogo::GetState()
+GameLogo::GameLogoState GameLogo::GetState()
 {
 	return mGameLogoState;
 }

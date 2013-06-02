@@ -8,6 +8,12 @@
 #include "../Includes/SkillWarp.h"
 #include "../Includes/Resources.h"
 
+#define WARP_LV1 100
+#define WARP_LV2 110
+#define WARP_LV3 125
+#define WARP_LV4 150
+#define WARP_LV5 180
+
 SkillWarp::SkillWarp()
 {
 	mWarpCrosshair = new AnimatedSprite(
@@ -47,7 +53,7 @@ bool SkillWarp::IsActivated()
 
 void SkillWarp::Evaluate()
 {
-	if(Resources::mController->IsPressed(TRIANGLE) &&
+	if(Resources::mController->IsPressed(Controller::TRIANGLE) &&
 	   GetState() == ACTIVATED)
 	{
 		Resources::mSkillsSystem->SetEnergy(0);
@@ -81,7 +87,7 @@ void SkillWarp::Evaluate()
 		SetState(WARPING);
 	}
 
-	if(Resources::mController->IsPressed(TRIANGLE) &&
+	if(Resources::mController->IsPressed(Controller::TRIANGLE) &&
 	   Resources::mSkillsSystem->GetEnergy() == MAX_ENERGY &&
 	   Resources::mSkillsSystem->DepleteEnergy(MAX_ENERGY / 2) &&
 	   GetState() == READY)

@@ -12,7 +12,6 @@ string Resources::IMG_PARALLAX_BACKGROUND = "Res/img/ParallaxBackground.png";
 string Resources::IMG_GAME_LOGO = "Res/img/GameLogo.png";
 string Resources::IMG_PLAYER_SHIP = "Res/img/PlayerShip.png";
 string Resources::IMG_PLAYER_SHIP_EXPLOSION = "Res/img/PlayerShipExplosion.png";
-string Resources::IMG_PLAYER_SHIP_DEMATERIALIZED = "Res/img/PlayerShip_dematerialized.png";
 string Resources::IMG_DROP_DOWN_MENU = "Res/img/DropDownMenu.png";
 string Resources::IMG_UP_DOWN_BUTTONS = "Res/img/UpDownButtons.png";
 string Resources::IMG_CROSS_BUTTON = "Res/img/CrossButton.png";
@@ -26,6 +25,8 @@ string Resources::IMG_ASTEROID_L = "Res/img/AsteroidL.png";
 string Resources::IMG_MOON_ROCK = "Res/img/MoonRock.png";
 string Resources::IMG_WARP_CROSSHAIR = "Res/img/WarpCrosshair.png";
 string Resources::IMG_WARP_EFFECT = "Res/img/WarpEffect.png";
+string Resources::IMG_PLAYER_SHIP_DEMATERIALIZED = "Res/img/PlayerShip_dematerialized.png";
+string Resources::IMG_OVERDRIVE_EFFECT = "Res/img/OverdriveEffect.png";
 
 string Resources::FNT_PARAFONT = "Res/fnt/parafont.png";
 string Resources::FNT_SMALLSTONE = "Res/fnt/smallstone.png";
@@ -95,7 +96,7 @@ void Resources::LoadResources()
 	mController = new Controller();
 	mGameBackground = new Background(IMG_PRIMARY_BACKGROUND, IMG_PARALLAX_BACKGROUND, -30, 0, -60, 0);
 	mGameLogo = new GameLogo(IMG_GAME_LOGO, -200, 0);
-	mDropDownMenu = new DropDownMenu(IMG_DROP_DOWN_MENU, 200, RETRACTED);
+	mDropDownMenu = new DropDownMenu(IMG_DROP_DOWN_MENU, 200, DropDownMenu::RETRACTED);
 	mUpDownButtons = new Drawable(IMG_UP_DOWN_BUTTONS);
 	mCrossButton = new Drawable(IMG_CROSS_BUTTON);
 	mCrossButton_small = new Drawable(IMG_CROSS_BUTTON_SMALL);

@@ -7,6 +7,9 @@
 
 #include "../Includes/ScrollingDrawable.h"
 
+#define PSP_SCREEN_WIDTH 480	//the width of the PSP's screen in pixels
+#define PSP_SCREEN_HEIGHT 272	//the height of the PSP's screen in pixels
+
 ScrollingDrawable::ScrollingDrawable(string pathToImgFile)
 					:Drawable(pathToImgFile)
 {

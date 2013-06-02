@@ -8,6 +8,8 @@
 #include "../Includes/Resources.h"
 #include "../Includes/Player.h"
 
+#define PLAYER_SPEED 2
+
 Player::Player(
 		string pathToShipImgFile,
 		string pathToShipExplosionImgFile,
@@ -51,7 +53,7 @@ void Player::Render()
 	EvaluateState();
 }
 
-PlayerState Player::GetState()
+Player::PlayerState Player::GetState()
 {
 	return mPlayerState;
 }
@@ -72,30 +74,30 @@ void Player::EvaluateState()
 
 	if(GetState() == ALIVE)
 	{
-		if(Resources::mController->IsHeld(DPAD_UP))
+		if(Resources::mController->IsHeld(Controller::DPAD_UP))
 		{
-			MoveY(-PLAYER_SPEED);
+			MoveY(-PLAYER_SPEED * Resources::mSkillsSystem->mSkillOverdrive->SpeedModifier());
 			if(GetPositionY() < 0)
 				SetPositionY(0);
 		}
 		else
-			if(Resources::mController->IsHeld(DPAD_DOWN))
+			if(Resources::mController->IsHeld(Controller::DPAD_DOWN))
 			{
-				MoveY(PLAYER_SPEED);
+				MoveY(PLAYER_SPEED * Resources::mSkillsSystem->mSkillOverdrive->SpeedModifier());
 				if(GetPositionY() > PSP_SCREEN_HEIGHT - GetFrameHeight())
 					SetPositionY(PSP_SCREEN_HEIGHT - GetFrameHeight());
 			}
 
-		if(Resources::mController->IsHeld(DPAD_LEFT))
+		if(Resources::mController->IsHeld(Controller::DPAD_LEFT))
 		{
-			MoveX(-PLAYER_SPEED);
+			MoveX(-PLAYER_SPEED * Resources::mSkillsSystem->mSkillOverdrive->SpeedModifier());
 			if(GetPositionX() < 0)
 				SetPositionX(0);
 		}
 		else
-			if(Resources::mController->IsHeld(DPAD_RIGHT))
+			if(Resources::mController->IsHeld(Controller::DPAD_RIGHT))
 			{
-				MoveX(PLAYER_SPEED);
+				MoveX(PLAYER_SPEED * Resources::mSkillsSystem->mSkillOverdrive->SpeedModifier());
 				if(GetPositionX() > PSP_SCREEN_WIDTH - GetFrameWidth())
 					SetPositionX(PSP_SCREEN_WIDTH - GetFrameWidth());
 			}

@@ -8,19 +8,17 @@
 #ifndef PLAYER_H_
 #define PLAYER_H_
 
-#define PLAYER_SPEED 2
-
-enum PlayerState
-{
-	ALIVE,
-	DEAD,
-	SPAWNING,
-	DYING
-};
-
 class Player : public AnimatedSprite
 {
 public:
+	enum PlayerState
+	{
+		ALIVE,
+		DEAD,
+		SPAWNING,
+		DYING
+	};
+
 	Player(									//creates an animated sprite
 		string pathToShipImgFile,			//an image file in png format
 		string pathToShipExplosionImgFile,
