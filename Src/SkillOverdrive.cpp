@@ -95,6 +95,8 @@ void SkillOverdrive::Render()
 {
 	if(Resources::mSkillsSystem->GetOverdriveLevel())
 		Evaluate();
+	else
+		return;
 
 	if(GetState() == ACTIVATED)
 	{

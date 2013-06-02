@@ -53,6 +53,9 @@ bool SkillWarp::IsActivated()
 
 void SkillWarp::Evaluate()
 {
+	if(Resources::mPlayer->GetState() == Player::SPAWNING)
+		SetState(READY);	//so as to reset the skills state when starting the game
+
 	if(Resources::mController->IsPressed(Controller::TRIANGLE) &&
 	   GetState() == ACTIVATED)
 	{
