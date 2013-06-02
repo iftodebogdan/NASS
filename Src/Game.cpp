@@ -384,5 +384,5 @@ void Game::DebugScreen()
 	oslPrintf("DropDownMenu state: %d\n", Resources::mDropDownMenu->GetState());
 	oslPrintf("Enemy count: %d\n", Resources::mEnemyList->GetEnemyCount());
 	oslPrintf("mEnemySpeedModifier: %d\n", Resources::mEnemyList->GetEnemySpeedModifier());
-	oslPrintf("mEnergy: %d\n", Resources::mSkillsSystem->GetEnergy());
+	//oslPrintf("mDematerializeEnergyCost: %f\n", Resources::mSkillsSystem->mSkillDematerialize->mEnergyCost);
 }

@@ -9,6 +9,7 @@
 #define SKILLSSYSTEM_H_
 
 #include "ExperienceSystem.h"
+#include "SkillDematerialize.h"
 #include "SkillWarp.h"
 
 #define PER_LEVEL_EXP 2250
@@ -25,6 +26,8 @@
 class SkillsSystem : public ExperienceSystem
 {
 	friend class SkillWarp;
+	friend class SkillDematerialize;
+	friend class CollisionDetection;
 
 public:
 	SkillsSystem();
@@ -76,7 +79,8 @@ private:
 	unsigned mForceFieldLevel;
 	unsigned mEnergy;
 
-	SkillWarp *mSkillWarp;
+	SkillWarp* mSkillWarp;
+	SkillDematerialize* mSkillDematerialize;
 };
 
 #endif /* SKILLSSYSTEM_H_ */

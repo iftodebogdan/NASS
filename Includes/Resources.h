@@ -67,6 +67,7 @@ public:
 	static string IMG_GAME_LOGO;
 	static string IMG_PLAYER_SHIP;
 	static string IMG_PLAYER_SHIP_EXPLOSION;
+	static string IMG_PLAYER_SHIP_DEMATERIALIZED;
 	static string IMG_DROP_DOWN_MENU;
 	static string IMG_UP_DOWN_BUTTONS;
 	static string IMG_CROSS_BUTTON;

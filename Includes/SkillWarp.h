@@ -16,15 +16,15 @@
 #define WARP_LV4 150
 #define WARP_LV5 180
 
-enum SkillWarpState
-{
-	ACTIVATED,
-	WARPING,
-	READY
-};
-
 class SkillWarp
 {
+	enum SkillWarpState
+	{
+		ACTIVATED,
+		WARPING,
+		READY
+	};
+
 public:
 	SkillWarp();
 

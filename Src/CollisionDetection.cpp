@@ -9,6 +9,9 @@
 
 bool CollisionDetection::CheckForCollisions(Player *playerObject, EnemyList *enemyListObject)
 {
+	if(Resources::mSkillsSystem->mSkillDematerialize->IsActivated())
+		return false;
+
 	float playerObjectRadius = (float)(playerObject->GetWidth() - 15) / 2.0f;
 	float playerObjectCenterX = (float)playerObject->GetPositionX() + (float)playerObject->GetWidth() / 2.0f;
 	float playerObjectCenterY = (float)playerObject->GetPositionY() + (float)playerObject->GetHeight() / 2.0f;

@@ -12,6 +12,7 @@ string Resources::IMG_PARALLAX_BACKGROUND = "Res/img/ParallaxBackground.png";
 string Resources::IMG_GAME_LOGO = "Res/img/GameLogo.png";
 string Resources::IMG_PLAYER_SHIP = "Res/img/PlayerShip.png";
 string Resources::IMG_PLAYER_SHIP_EXPLOSION = "Res/img/PlayerShipExplosion.png";
+string Resources::IMG_PLAYER_SHIP_DEMATERIALIZED = "Res/img/PlayerShip_dematerialized.png";
 string Resources::IMG_DROP_DOWN_MENU = "Res/img/DropDownMenu.png";
 string Resources::IMG_UP_DOWN_BUTTONS = "Res/img/UpDownButtons.png";
 string Resources::IMG_CROSS_BUTTON = "Res/img/CrossButton.png";

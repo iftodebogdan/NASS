@@ -19,6 +19,7 @@ SkillsSystem::SkillsSystem()
 	ResetEnergy();
 
 	mSkillWarp = new SkillWarp();
+	mSkillDematerialize = new SkillDematerialize();
 }
 
 SkillsSystem::SkillsSystem(
@@ -37,6 +38,7 @@ SkillsSystem::SkillsSystem(
 	ResetEnergy();
 
 	mSkillWarp = new SkillWarp();
+	mSkillDematerialize = new SkillDematerialize();
 }
 
 unsigned SkillsSystem::GetWarpLevel()
@@ -199,7 +201,8 @@ void SkillsSystem::SetEnergy(unsigned newEnergy)
 
 bool SkillsSystem::NoSkillActivated()
 {
-	if(mSkillWarp->IsActivated())
+	if(mSkillWarp->IsActivated() ||
+	   mSkillDematerialize->IsActivated())
 		return false;
 
 	return true;
@@ -257,4 +260,5 @@ void SkillsSystem::Render()
 		RegenerateEnergy(ENERGY_REGEN_RATE);
 
 	mSkillWarp->Render();
+	mSkillDematerialize->Render();
 }

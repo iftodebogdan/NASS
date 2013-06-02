@@ -32,7 +32,7 @@ void SkillWarp::SetState(SkillWarpState newSkillWarpState)
 	mSkillWarpState = newSkillWarpState;
 }
 
-SkillWarpState SkillWarp::GetState()
+SkillWarp::SkillWarpState SkillWarp::GetState()
 {
 	return mSkillWarpState;
 }
