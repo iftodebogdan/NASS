@@ -302,3 +302,10 @@ void SkillsSystem::Render()
 	RenderScore();
 	RenderEnergy();
 }
+
+void SkillsSystem::ResetSkills()
+{
+	mSkillWarp->SetState(SkillWarp::READY);
+	mSkillDematerialize->SetState(SkillDematerialize::READY);
+	mSkillOverdrive->SetState(SkillOverdrive::READY);
+}

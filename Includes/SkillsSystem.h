@@ -59,6 +59,8 @@ public:
 	void RenderEnergy();
 	void Render();
 
+	void ResetSkills();
+
 private:
 	bool NoSkillActivated();
 	void RegenerateEnergy(unsigned regenValue);

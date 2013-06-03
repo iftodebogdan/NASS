@@ -8,11 +8,11 @@
 #include "../Includes/SkillWarp.h"
 #include "../Includes/Resources.h"
 
-#define WARP_LV1 100
-#define WARP_LV2 110
-#define WARP_LV3 125
-#define WARP_LV4 150
-#define WARP_LV5 180
+#define WARP_LV1 50
+#define WARP_LV2 70
+#define WARP_LV3 100
+#define WARP_LV4 140
+#define WARP_LV5 190
 
 SkillWarp::SkillWarp()
 {
@@ -53,9 +53,6 @@ bool SkillWarp::IsActivated()
 
 void SkillWarp::Evaluate()
 {
-	if(Resources::mPlayer->GetState() == Player::SPAWNING)
-		SetState(READY);	//so as to reset the skills state when starting the game
-
 	if(Resources::mController->IsPressed(Controller::TRIANGLE) &&
 	   GetState() == ACTIVATED)
 	{

@@ -160,6 +160,8 @@ void Game::RenderGameScreen()
 
 	if(Resources::mPlayer->GetState() == Player::ALIVE)
 		Resources::mSkillsSystem->Render();
+	else
+		Resources::mSkillsSystem->ResetSkills();
 
 	if(CollisionDetection::CheckForCollisions(Resources::mPlayer, Resources::mEnemyList) &&
 	   GetState() != TRANSITION_GAME_OVER_SCREEN)
