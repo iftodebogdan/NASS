@@ -54,7 +54,7 @@ bool SkillWarp::IsActivated()
 void SkillWarp::Evaluate()
 {
 	if(Resources::mController->IsPressed(Controller::TRIANGLE) &&
-	   GetState() == ACTIVATED)
+	   GetState() == ACTIVE)
 	{
 		Resources::mSkillsSystem->SetEnergy(0);
 
@@ -92,11 +92,11 @@ void SkillWarp::Evaluate()
 	   Resources::mSkillsSystem->DepleteEnergy(MAX_ENERGY / 2) &&
 	   GetState() == READY)
 	{
-		SetState(ACTIVATED);
+		SetState(ACTIVE);
 		mWarpCrosshair->ResetAnimation();
 	}
 
-	if(GetState() == ACTIVATED)
+	if(GetState() == ACTIVE)
 	{
 		unsigned warpCrosshairXOffset = 0;
 		switch(Resources::mSkillsSystem->GetWarpLevel())
@@ -123,7 +123,7 @@ void SkillWarp::Evaluate()
 									  Resources::mPlayer->GetPositionY() - (WARP_CROSSHAIR_FRAME_HEIGHT_SIZE - PLAYER_SHIP_FRAME_HEIGHT_SIZE) / 2);
 	}
 
-	if(GetState() == ACTIVATED && mWarpCrosshair->GetCurrentFrame() == mWarpCrosshair->GetFrameCount())
+	if(GetState() == ACTIVE && mWarpCrosshair->GetCurrentFrame() == mWarpCrosshair->GetFrameCount())
 		SetState(READY);
 
 	if(GetState() == WARPING && mWarpEffect->GetCurrentFrame() == mWarpEffect->GetFrameCount())
@@ -137,7 +137,7 @@ void SkillWarp::Render()
 	else
 		return;
 
-	if(GetState() == ACTIVATED)
+	if(GetState() == ACTIVE)
 		mWarpCrosshair->Render();
 
 	if(GetState() == WARPING)

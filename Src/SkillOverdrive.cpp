@@ -73,12 +73,12 @@ void SkillOverdrive::Evaluate()
 	if(Resources::mController->IsPressed(Controller::SQUARE) &&
 	   GetState() == READY)
 	{
-		SetState(ACTIVATED);
+		SetState(ACTIVE);
 		return;
 	}
 
 	if(Resources::mController->IsHeld(Controller::SQUARE) &&
-	   GetState() == ACTIVATED)
+	   GetState() == ACTIVE)
 	{
 		mEnergyCost += OVERDRIVE_ENERGY_COST;
 
@@ -98,7 +98,7 @@ void SkillOverdrive::Render()
 	else
 		return;
 
-	if(GetState() == ACTIVATED)
+	if(GetState() == ACTIVE)
 	{
 		mOverdriveEffect->SetPositionXY(Resources::mPlayer->GetPositionX() -
 										OVERDRIVE_EFFECT_FRAME_WIDTH_SIZE + 10,

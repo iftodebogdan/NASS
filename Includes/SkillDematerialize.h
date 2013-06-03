@@ -8,7 +8,7 @@
 #ifndef SKILLDEMATERIALIZE_H_
 #define SKILLDEMATERIALIZE_H_
 
-#include "Drawable.h"
+#include "AnimatedSprite.h"
 #include <math.h>
 
 class SkillDematerialize
@@ -16,7 +16,7 @@ class SkillDematerialize
 public:
 	enum SkillDematerializeState
 	{
-		ACTIVATED,
+		ACTIVE,
 		READY
 	};
 
@@ -31,7 +31,7 @@ public:
 private:
 	void Evaluate();
 
-	Drawable* mPlayerShip_dematerialized;
+	AnimatedSprite* mDematerializeEffect;
 
 	SkillDematerializeState mSkillDematerializeState;
 	float mEnergyCost;

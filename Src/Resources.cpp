@@ -25,7 +25,7 @@ string Resources::IMG_ASTEROID_L = "Res/img/AsteroidL.png";
 string Resources::IMG_MOON_ROCK = "Res/img/MoonRock.png";
 string Resources::IMG_WARP_CROSSHAIR = "Res/img/WarpCrosshair.png";
 string Resources::IMG_WARP_EFFECT = "Res/img/WarpEffect.png";
-string Resources::IMG_PLAYER_SHIP_DEMATERIALIZED = "Res/img/PlayerShip_dematerialized.png";
+string Resources::IMG_DEMATERIALIZE_EFFECT = "Res/img/DematerializeEffect.png";
 string Resources::IMG_OVERDRIVE_EFFECT = "Res/img/OverdriveEffect.png";
 
 string Resources::FNT_PARAFONT = "Res/fnt/parafont.png";

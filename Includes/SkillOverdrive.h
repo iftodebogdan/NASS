@@ -15,7 +15,7 @@ class SkillOverdrive
 public:
 	enum SkillOverdriveState
 	{
-		ACTIVATED,
+		ACTIVE,
 		READY
 	};
 

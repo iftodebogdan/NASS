@@ -15,7 +15,7 @@ class SkillWarp
 public:
 	enum SkillWarpState
 	{
-		ACTIVATED,
+		ACTIVE,
 		WARPING,
 		READY
 	};

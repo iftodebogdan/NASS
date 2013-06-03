@@ -18,8 +18,11 @@ SkillDematerialize::SkillDematerialize()
 {
 	SetState(READY);
 
-	mPlayerShip_dematerialized = new Drawable(Resources::IMG_PLAYER_SHIP_DEMATERIALIZED);
-	oslAssert(mPlayerShip_dematerialized != NULL);
+	mDematerializeEffect = new AnimatedSprite(Resources::IMG_DEMATERIALIZE_EFFECT,
+											  DEMATERIALIZE_EFFECT_FRAME_WIDTH_SIZE,
+											  DEMATERIALIZE_EFFECT_FRAME_HEIGHT_SIZE,
+											  DEMATERIALIZE_EFFECT_FRAMERATE);
+	oslAssert(mDematerializeEffect != NULL);
 }
 
 void SkillDematerialize::SetState(SkillDematerializeState newSkillDematerializeState)
@@ -48,12 +51,12 @@ void SkillDematerialize::Evaluate()
 	if(Resources::mController->IsPressed(Controller::CIRCLE) &&
 	   GetState() == READY)
 	{
-		SetState(ACTIVATED);
+		SetState(ACTIVE);
 		return;
 	}
 
 	if(Resources::mController->IsHeld(Controller::CIRCLE) &&
-	   GetState() == ACTIVATED)
+	   GetState() == ACTIVE)
 	{
 		switch(Resources::mSkillsSystem->GetDematerializeLevel())
 		{
@@ -75,10 +78,7 @@ void SkillDematerialize::Evaluate()
 		}
 
 		if(Resources::mSkillsSystem->DepleteEnergy(floor(mEnergyCost)))
-		{
 			mEnergyCost -= floor(mEnergyCost);
-			mPlayerShip_dematerialized->Draw(Resources::mPlayer->GetPositionX(), Resources::mPlayer->GetPositionY());
-		}
 		else
 			SetState(READY);
 	}
@@ -92,4 +92,15 @@ void SkillDematerialize::Render()
 		Evaluate();
 	else
 		return;
+
+	if(GetState() == ACTIVE)
+	{
+		mDematerializeEffect->SetPositionXY(Resources::mPlayer->GetPositionX() -
+											(DEMATERIALIZE_EFFECT_FRAME_WIDTH_SIZE -
+											PLAYER_SHIP_FRAME_WIDTH_SIZE) / 2,
+											Resources::mPlayer->GetPositionY() -
+											(DEMATERIALIZE_EFFECT_FRAME_HEIGHT_SIZE -
+											PLAYER_SHIP_FRAME_HEIGHT_SIZE) / 2);
+		mDematerializeEffect->Render();
+	}
 }
