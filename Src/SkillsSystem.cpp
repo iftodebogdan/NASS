@@ -291,6 +291,30 @@ void SkillsSystem::RenderEnergy()
 			ENERGY_BAR_Y1,
 			RGBA(255, 255, 255, 128));
 	oslDrawRect(ENERGY_BAR_X0, ENERGY_BAR_Y0, ENERGY_BAR_X1, ENERGY_BAR_Y1, COLOR_WHITE);
+
+	oslSetTextColor(COLOR_WHITE);
+	oslSetBkColor(RGBA(0,0,0,0));
+	oslDrawString(ENERGY_BAR_X0, ENERGY_BAR_Y0 - 8, "0");
+
+	for(int i = 1; i <= 9; i++)
+		if(i != 5)
+			oslDrawLine(ENERGY_BAR_X0 +
+						(ENERGY_BAR_X1 - ENERGY_BAR_X0) * i / 10,
+						ENERGY_BAR_Y0,
+						ENERGY_BAR_X0 +
+						(ENERGY_BAR_X1 - ENERGY_BAR_X0) * i / 10,
+						ENERGY_BAR_Y0 - 5,
+						COLOR_WHITE);
+		else
+			oslDrawLine(ENERGY_BAR_X0 +
+						(ENERGY_BAR_X1 - ENERGY_BAR_X0) * i / 10,
+						ENERGY_BAR_Y0,
+						ENERGY_BAR_X0 +
+						(ENERGY_BAR_X1 - ENERGY_BAR_X0) * i / 10,
+						ENERGY_BAR_Y0 - 8,
+						COLOR_WHITE);
+
+	oslDrawString(ENERGY_BAR_X1 - oslGetStringWidth("100") + 2, ENERGY_BAR_Y0 - 8, "100");
 }
 
 void SkillsSystem::Render()
