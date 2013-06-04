@@ -142,7 +142,9 @@ public:
 	static string STR_SKILL_LEVEL_0_TITLE;
 	static string STR_SKILL_NO_XP_MESSAGE;
 	static string STR_SKILL_NO_XP_TITLE;
-	static string STR_MENU_ITEMS[3];
+	static string STR_RESET_PROGRESS_MESSAGE;
+	static string STR_RESET_PROGRESS_TITLE;
+	static string STR_MENU_ITEMS[4];
 	static int MENU_ITEMS_COUNT;
 
 	static Game* mGameApp;

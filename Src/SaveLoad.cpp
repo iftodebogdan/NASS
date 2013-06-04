@@ -49,3 +49,20 @@ void SaveLoad::LoadSaveGame()
 	Resources::mSkillsSystem->SetForceFieldLevel(save.forceFieldLevel);
 	Resources::mSkillsSystem->SetExperiencePoints(save.expPointsAvailable);
 }
+
+void SaveLoad::ResetProgress()
+{
+	if(oslMessageBox(
+		Resources::STR_RESET_PROGRESS_MESSAGE.c_str(),
+		Resources::STR_RESET_PROGRESS_TITLE.c_str(),
+		oslMake3Buttons(OSL_KEY_CROSS, OSL_MB_YES, OSL_KEY_CIRCLE, OSL_MB_NO, 0, 0)) == OSL_MB_NO)
+			return;
+
+	Resources::mSkillsSystem->SetWarpLevel(0);
+	Resources::mSkillsSystem->SetDematerializeLevel(0);
+	Resources::mSkillsSystem->SetOverdriveLevel(0);
+	Resources::mSkillsSystem->SetForceFieldLevel(0);
+	Resources::mSkillsSystem->SetExperiencePoints(0);
+
+	AutoSaveGame();
+}

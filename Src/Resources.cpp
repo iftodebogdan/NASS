@@ -64,8 +64,10 @@ string Resources::STR_SKILL_LEVEL_0_MESSAGE = "You haven't invested any points i
 string Resources::STR_SKILL_LEVEL_0_TITLE = "Cannot refund!";
 string Resources::STR_SKILL_NO_XP_MESSAGE = "You do not have enough XP points to upgrade this skill.";
 string Resources::STR_SKILL_NO_XP_TITLE = "Not enough XP!";
-string Resources::STR_MENU_ITEMS[3] = {"Skills", "Controls", "Quit"};
-int Resources::MENU_ITEMS_COUNT = 3;
+string Resources::STR_RESET_PROGRESS_MESSAGE = "This will remove all purchased upgrades and reset the XP to 0 points.\n\nThis operation cannot be undone. Are you sure you want to continue?";
+string Resources::STR_RESET_PROGRESS_TITLE = "Reset progress";
+string Resources::STR_MENU_ITEMS[4] = {"Skills", "Controls", "Reset progress", "Quit"};
+int Resources::MENU_ITEMS_COUNT = 4;
 
 Game* Resources::mGameApp = NULL;
 Font* Resources::mParafontFont = NULL;

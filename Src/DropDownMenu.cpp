@@ -126,6 +126,9 @@ void DropDownMenu::EvaluateState()
 			Resources::mGameApp->SetState(Game::CONTROLS_SCREEN);
 			break;
 		case 2:
+			Resources::mSaveLoad->ResetProgress();
+			break;
+		case 3:
 			oslQuit();
 			break;
 		default:

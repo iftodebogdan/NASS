@@ -24,6 +24,7 @@ class SaveLoad
 public:
 	void AutoSaveGame();
 	void LoadSaveGame();
+	void ResetProgress();
 };
 
 #endif /* SAVELOAD_H_ */
