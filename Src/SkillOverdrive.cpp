@@ -8,7 +8,17 @@
 #include "../Includes/SkillOverdrive.h"
 #include "../Includes/Resources.h"
 
-#define OVERDRIVE_ENERGY_COST 500.0f / 60.0f
+#define OVERDRIVE_ENERGY_COST_LV1 MAX_ENERGY * 50 / 100
+#define OVERDRIVE_ENERGY_COST_LV2 MAX_ENERGY * 50 / 100
+#define OVERDRIVE_ENERGY_COST_LV3 MAX_ENERGY * 50 / 100
+#define OVERDRIVE_ENERGY_COST_LV4 MAX_ENERGY * 50 / 100
+#define OVERDRIVE_ENERGY_COST_LV5 MAX_ENERGY * 50 / 100
+
+#define OVERDRIVE_BOOST_LV1 1.5f
+#define OVERDRIVE_BOOST_LV2 2.0f
+#define OVERDRIVE_BOOST_LV3 2.5f
+#define OVERDRIVE_BOOST_LV4 3.0f
+#define OVERDRIVE_BOOST_LV5 3.5f
 
 SkillOverdrive::SkillOverdrive()
 {
@@ -19,11 +29,32 @@ SkillOverdrive::SkillOverdrive()
 								OVERDRIVE_EFFECT_FRAMERATE);
 	oslAssert(mOverdriveEffect != NULL);
 
-	SetState(READY);
+	mSkillOverdriveState = READY;
+	mEnergyCost = 0;
+	mEnergyCostPerSecond = 0;
 }
 
 void SkillOverdrive::SetState(SkillOverdriveState newSkillOverdriveState)
 {
+	switch(Resources::mSkillsSystem->GetOverdriveLevel())
+	{
+	case 1:
+		mEnergyCostPerSecond = OVERDRIVE_ENERGY_COST_LV1;
+		break;
+	case 2:
+		mEnergyCostPerSecond = OVERDRIVE_ENERGY_COST_LV2;
+		break;
+	case 3:
+		mEnergyCostPerSecond = OVERDRIVE_ENERGY_COST_LV3;
+		break;
+	case 4:
+		mEnergyCostPerSecond = OVERDRIVE_ENERGY_COST_LV4;
+		break;
+	case 5:
+		mEnergyCostPerSecond = OVERDRIVE_ENERGY_COST_LV5;
+		break;
+	}
+
 	if(newSkillOverdriveState == READY)
 	{
 		mEnergyCost = 0;
@@ -38,7 +69,7 @@ SkillOverdrive::SkillOverdriveState SkillOverdrive::GetState()
 	return mSkillOverdriveState;
 }
 
-bool SkillOverdrive::IsActivated()
+bool SkillOverdrive::IsActive()
 {
 	if(GetState() == READY)
 		return false;
@@ -54,15 +85,15 @@ float SkillOverdrive::SpeedModifier()
 	switch(Resources::mSkillsSystem->GetOverdriveLevel())
 	{
 	case 1:
-		return 1.5f;
+		return OVERDRIVE_BOOST_LV1;
 	case 2:
-		return 2.0f;
+		return OVERDRIVE_BOOST_LV2;
 	case 3:
-		return 2.5f;
+		return OVERDRIVE_BOOST_LV3;
 	case 4:
-		return 3.0f;
+		return OVERDRIVE_BOOST_LV4;
 	case 5:
-		return 3.5f;
+		return OVERDRIVE_BOOST_LV5;
 	}
 
 	return 1.0f;
@@ -80,7 +111,7 @@ void SkillOverdrive::Evaluate()
 	if(Resources::mController->IsHeld(Controller::SQUARE) &&
 	   GetState() == ACTIVE)
 	{
-		mEnergyCost += OVERDRIVE_ENERGY_COST;
+		mEnergyCost += (float)mEnergyCostPerSecond / 60.0f;
 
 		if(Resources::mSkillsSystem->DepleteEnergy(floor(mEnergyCost)))
 			mEnergyCost -= floor(mEnergyCost);

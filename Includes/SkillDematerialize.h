@@ -24,7 +24,7 @@ public:
 
 	void SetState(SkillDematerializeState newSkillDematerializeState);
 	SkillDematerializeState GetState();
-	bool IsActivated();
+	bool IsActive();
 
 	void Render();
 
@@ -35,6 +35,7 @@ private:
 
 	SkillDematerializeState mSkillDematerializeState;
 	float mEnergyCost;
+	unsigned mEnergyCostPerSecond;
 };
 
 #endif /* SKILLDEMATERIALIZE_H_ */

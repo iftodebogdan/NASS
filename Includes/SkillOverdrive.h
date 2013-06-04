@@ -23,7 +23,7 @@ public:
 
 	void SetState(SkillOverdriveState newSkillOverdriveState);
 	SkillOverdriveState GetState();
-	bool IsActivated();
+	bool IsActive();
 	float SpeedModifier();
 
 	void Render();
@@ -35,6 +35,7 @@ private:
 
 	SkillOverdriveState mSkillOverdriveState;
 	float mEnergyCost;
+	unsigned mEnergyCostPerSecond;
 };
 
 #endif /* SKILLOVERDRIVE_H_ */

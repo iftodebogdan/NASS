@@ -29,6 +29,7 @@ SkillsSystem::SkillsSystem()
 	mSkillWarp = new SkillWarp();
 	mSkillDematerialize = new SkillDematerialize();
 	mSkillOverdrive = new SkillOverdrive();
+	mSkillForceField = new SkillForceField();
 }
 
 SkillsSystem::SkillsSystem(
@@ -49,6 +50,7 @@ SkillsSystem::SkillsSystem(
 	mSkillWarp = new SkillWarp();
 	mSkillDematerialize = new SkillDematerialize();
 	mSkillOverdrive = new SkillOverdrive();
+	mSkillForceField = new SkillForceField();
 }
 
 unsigned SkillsSystem::GetWarpLevel()
@@ -237,11 +239,12 @@ void SkillsSystem::SetEnergy(unsigned newEnergy)
 		mEnergy = newEnergy;
 }
 
-bool SkillsSystem::NoSkillActivated()
+bool SkillsSystem::NoSkillActive()
 {
-	if(mSkillWarp->IsActivated() ||
-	   mSkillDematerialize->IsActivated() ||
-	   mSkillOverdrive->IsActivated())
+	if(mSkillWarp->IsActive() ||
+	   mSkillDematerialize->IsActive() ||
+	   mSkillOverdrive->IsActive() ||
+	   mSkillForceField->IsActive())
 		return false;
 
 	return true;
@@ -292,12 +295,13 @@ void SkillsSystem::RenderEnergy()
 
 void SkillsSystem::Render()
 {
-	if(NoSkillActivated())
+	if(NoSkillActive())
 		RegenerateEnergy(ENERGY_REGEN_RATE);
 
 	mSkillWarp->Render();
 	mSkillDematerialize->Render();
 	mSkillOverdrive->Render();
+	mSkillForceField->Render();
 
 	RenderScore();
 	RenderEnergy();
@@ -308,4 +312,5 @@ void SkillsSystem::ResetSkills()
 	mSkillWarp->SetState(SkillWarp::READY);
 	mSkillDematerialize->SetState(SkillDematerialize::READY);
 	mSkillOverdrive->SetState(SkillOverdrive::READY);
+	mSkillForceField->SetState(SkillForceField::READY);
 }

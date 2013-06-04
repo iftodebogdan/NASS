@@ -8,11 +8,17 @@
 #include "../Includes/SkillWarp.h"
 #include "../Includes/Resources.h"
 
-#define WARP_LV1 50
-#define WARP_LV2 70
-#define WARP_LV3 100
-#define WARP_LV4 140
-#define WARP_LV5 190
+#define WARP_DISTANCE_LV1 PLAYER_SHIP_FRAME_WIDTH_SIZE + 50
+#define WARP_DISTANCE_LV2 PLAYER_SHIP_FRAME_WIDTH_SIZE + 70
+#define WARP_DISTANCE_LV3 PLAYER_SHIP_FRAME_WIDTH_SIZE + 100
+#define WARP_DISTANCE_LV4 PLAYER_SHIP_FRAME_WIDTH_SIZE + 140
+#define WARP_DISTANCE_LV5 PLAYER_SHIP_FRAME_WIDTH_SIZE + 190
+
+#define WARP_ACTIVATION_ENERGY_COST_LV1 MAX_ENERGY * 50 / 100
+#define WARP_ACTIVATION_ENERGY_COST_LV2 MAX_ENERGY * 50 / 100
+#define WARP_ACTIVATION_ENERGY_COST_LV3 MAX_ENERGY * 50 / 100
+#define WARP_ACTIVATION_ENERGY_COST_LV4 MAX_ENERGY * 50 / 100
+#define WARP_ACTIVATION_ENERGY_COST_LV5 MAX_ENERGY * 50 / 100
 
 SkillWarp::SkillWarp()
 {
@@ -30,11 +36,51 @@ SkillWarp::SkillWarp()
 	oslAssert(mWarpCrosshair != NULL);
 	oslAssert(mWarpEffect != NULL);
 
-	SetState(READY);
+	mSkillWarpState = READY;
+	mEnergyCost = 0;
+	mWarpCrosshairXOffset = 0;
 }
 
 void SkillWarp::SetState(SkillWarpState newSkillWarpState)
 {
+	switch(Resources::mSkillsSystem->GetWarpLevel())
+	{
+	case 1:
+		mWarpCrosshairXOffset = WARP_DISTANCE_LV1;
+		break;
+	case 2:
+		mWarpCrosshairXOffset = WARP_DISTANCE_LV2;
+		break;
+	case 3:
+		mWarpCrosshairXOffset = WARP_DISTANCE_LV3;
+		break;
+	case 4:
+		mWarpCrosshairXOffset = WARP_DISTANCE_LV4;
+		break;
+	case 5:
+		mWarpCrosshairXOffset = WARP_DISTANCE_LV5;
+		break;
+	}
+
+	switch(Resources::mSkillsSystem->GetWarpLevel())
+	{
+	case 1:
+		mEnergyCost = WARP_ACTIVATION_ENERGY_COST_LV1;
+		break;
+	case 2:
+		mEnergyCost = WARP_ACTIVATION_ENERGY_COST_LV2;
+		break;
+	case 3:
+		mEnergyCost = WARP_ACTIVATION_ENERGY_COST_LV3;
+		break;
+	case 4:
+		mEnergyCost = WARP_ACTIVATION_ENERGY_COST_LV4;
+		break;
+	case 5:
+		mEnergyCost = WARP_ACTIVATION_ENERGY_COST_LV5;
+		break;
+	}
+
 	mSkillWarpState = newSkillWarpState;
 }
 
@@ -43,7 +89,7 @@ SkillWarp::SkillWarpState SkillWarp::GetState()
 	return mSkillWarpState;
 }
 
-bool SkillWarp::IsActivated()
+bool SkillWarp::IsActive()
 {
 	if(GetState() == READY)
 		return false;
@@ -65,19 +111,19 @@ void SkillWarp::Evaluate()
 		switch(Resources::mSkillsSystem->GetWarpLevel())
 		{
 		case 1:
-			Resources::mPlayer->MoveX(WARP_LV1 + PLAYER_SHIP_FRAME_WIDTH_SIZE);
+			Resources::mPlayer->MoveX(WARP_DISTANCE_LV1);
 			break;
 		case 2:
-			Resources::mPlayer->MoveX(WARP_LV2 + PLAYER_SHIP_FRAME_WIDTH_SIZE);
+			Resources::mPlayer->MoveX(WARP_DISTANCE_LV2);
 			break;
 		case 3:
-			Resources::mPlayer->MoveX(WARP_LV3 + PLAYER_SHIP_FRAME_WIDTH_SIZE);
+			Resources::mPlayer->MoveX(WARP_DISTANCE_LV3);
 			break;
 		case 4:
-			Resources::mPlayer->MoveX(WARP_LV4 + PLAYER_SHIP_FRAME_WIDTH_SIZE);
+			Resources::mPlayer->MoveX(WARP_DISTANCE_LV4);
 			break;
 		case 5:
-			Resources::mPlayer->MoveX(WARP_LV5 + PLAYER_SHIP_FRAME_WIDTH_SIZE);
+			Resources::mPlayer->MoveX(WARP_DISTANCE_LV5);
 			break;
 		}
 
@@ -89,7 +135,7 @@ void SkillWarp::Evaluate()
 
 	if(Resources::mController->IsPressed(Controller::TRIANGLE) &&
 	   Resources::mSkillsSystem->GetEnergy() == MAX_ENERGY &&
-	   Resources::mSkillsSystem->DepleteEnergy(MAX_ENERGY / 2) &&
+	   Resources::mSkillsSystem->DepleteEnergy(mEnergyCost) &&
 	   GetState() == READY)
 	{
 		SetState(ACTIVE);
@@ -97,31 +143,9 @@ void SkillWarp::Evaluate()
 	}
 
 	if(GetState() == ACTIVE)
-	{
-		unsigned warpCrosshairXOffset = 0;
-		switch(Resources::mSkillsSystem->GetWarpLevel())
-		{
-		case 1:
-			warpCrosshairXOffset = WARP_LV1;
-			break;
-		case 2:
-			warpCrosshairXOffset = WARP_LV2;
-			break;
-		case 3:
-			warpCrosshairXOffset = WARP_LV3;
-			break;
-		case 4:
-			warpCrosshairXOffset = WARP_LV4;
-			break;
-		case 5:
-			warpCrosshairXOffset = WARP_LV5;
-			break;
-		}
-
-		mWarpCrosshair->SetPositionXY(Resources::mPlayer->GetPositionX() + PLAYER_SHIP_FRAME_WIDTH_SIZE + warpCrosshairXOffset -
+		mWarpCrosshair->SetPositionXY(Resources::mPlayer->GetPositionX() + mWarpCrosshairXOffset -
 										(WARP_CROSSHAIR_FRAME_WIDTH_SIZE - PLAYER_SHIP_FRAME_WIDTH_SIZE) / 2,
 									  Resources::mPlayer->GetPositionY() - (WARP_CROSSHAIR_FRAME_HEIGHT_SIZE - PLAYER_SHIP_FRAME_HEIGHT_SIZE) / 2);
-	}
 
 	if(GetState() == ACTIVE && mWarpCrosshair->GetCurrentFrame() == mWarpCrosshair->GetFrameCount())
 		SetState(READY);

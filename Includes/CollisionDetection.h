@@ -10,6 +10,9 @@
 
 #include "Resources.h"
 
+#include <list>
+using namespace std;
+
 class CollisionDetection
 {
 public:

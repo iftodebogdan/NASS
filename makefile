@@ -4,7 +4,7 @@ OBJS = Src/main.o Src/Drawable.o Src/Game.o Src/AnimatedSprite.o \
 	   Src/DropDownMenu.o Src/Controller.o Src/Font.o Src/Resources.o \
 	   Src/Player.o Src/Enemy.o Src/CollisionDetection.o Src/ExperienceSystem.o \
 	   Src/SkillsSystem.o Src/SaveLoad.o Src/SkillWarp.o Src/SkillDematerialize.o \
-	   Src/SkillOverdrive.o
+	   Src/SkillOverdrive.o Src/SkillForceField.o
  
 INCDIR = 
 CFLAGS = -O2 -g -G0 -Wall 

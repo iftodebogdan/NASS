@@ -24,7 +24,7 @@ public:
 
 	void SetState(SkillWarpState newSkillWarpState);
 	SkillWarpState GetState();
-	bool IsActivated();
+	bool IsActive();
 
 	void Render();
 
@@ -35,6 +35,8 @@ private:
 	AnimatedSprite* mWarpEffect;
 
 	SkillWarpState mSkillWarpState;
+	int mWarpCrosshairXOffset;
+	unsigned mEnergyCost;
 };
 
 #endif /* SKILLWARP_H_ */

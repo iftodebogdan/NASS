@@ -12,12 +12,14 @@
 #include "SkillWarp.h"
 #include "SkillDematerialize.h"
 #include "SkillOverdrive.h"
+#include "SkillForceField.h"
 
 class SkillsSystem : public ExperienceSystem
 {
 	friend class SkillWarp;
 	friend class SkillDematerialize;
 	friend class SkillOverdrive;
+	friend class SkillForceField;
 	friend class CollisionDetection;
 	friend class Player;
 
@@ -62,7 +64,7 @@ public:
 	void ResetSkills();
 
 private:
-	bool NoSkillActivated();
+	bool NoSkillActive();
 	void RegenerateEnergy(unsigned regenValue);
 	bool DepleteEnergy(unsigned requiredEnergy);
 	int EnergyBarX1();
@@ -76,6 +78,7 @@ private:
 	SkillWarp* mSkillWarp;
 	SkillDematerialize* mSkillDematerialize;
 	SkillOverdrive* mSkillOverdrive;
+	SkillForceField* mSkillForceField;
 };
 
 #endif /* SKILLSSYSTEM_H_ */

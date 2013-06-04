@@ -27,6 +27,7 @@ string Resources::IMG_WARP_CROSSHAIR = "Res/img/WarpCrosshair.png";
 string Resources::IMG_WARP_EFFECT = "Res/img/WarpEffect.png";
 string Resources::IMG_DEMATERIALIZE_EFFECT = "Res/img/DematerializeEffect.png";
 string Resources::IMG_OVERDRIVE_EFFECT = "Res/img/OverdriveEffect.png";
+string Resources::IMG_FORCE_FIELD_EFFECT = "Res/img/ForceFieldEffect.png";
 
 string Resources::FNT_PARAFONT = "Res/fnt/parafont.png";
 string Resources::FNT_SMALLSTONE = "Res/fnt/smallstone.png";
@@ -133,6 +134,7 @@ void Resources::LoadResources()
 						ASTEROID_S_FRAMERATE);
 	mEnemyList = new EnemyList();
 	mSkillsSystem = new SkillsSystem();
+	mSkillsSystem->ResetSkills();
 	mSaveLoad = new SaveLoad();
 	mSaveLoad->LoadSaveGame();
 }

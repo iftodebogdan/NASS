@@ -8,27 +8,51 @@
 #include "../Includes/SkillDematerialize.h"
 #include "../Includes/Resources.h"
 
-#define DEMATERIALIZE_LV1 MAX_ENERGY * 100.0f / 100.0f / 60.0f
-#define DEMATERIALIZE_LV2 MAX_ENERGY * 90.0f / 100.0f / 60.0f
-#define DEMATERIALIZE_LV3 MAX_ENERGY * 80.0f / 100.0f / 60.0f
-#define DEMATERIALIZE_LV4 MAX_ENERGY * 70.0f / 100.0f / 60.0f
-#define DEMATERIALIZE_LV5 MAX_ENERGY * 60.0f / 100.0f / 60.0f
+#define DEMATERIALIZE_ENERGY_COST_LV1 MAX_ENERGY * 100.0f / 100.0f
+#define DEMATERIALIZE_ENERGY_COST_LV2 MAX_ENERGY * 90.0f / 100.0f
+#define DEMATERIALIZE_ENERGY_COST_LV3 MAX_ENERGY * 80.0f / 100.0f
+#define DEMATERIALIZE_ENERGY_COST_LV4 MAX_ENERGY * 70.0f / 100.0f
+#define DEMATERIALIZE_ENERGY_COST_LV5 MAX_ENERGY * 60.0f / 100.0f
 
 SkillDematerialize::SkillDematerialize()
 {
-	SetState(READY);
-
 	mDematerializeEffect = new AnimatedSprite(Resources::IMG_DEMATERIALIZE_EFFECT,
 											  DEMATERIALIZE_EFFECT_FRAME_WIDTH_SIZE,
 											  DEMATERIALIZE_EFFECT_FRAME_HEIGHT_SIZE,
 											  DEMATERIALIZE_EFFECT_FRAMERATE);
 	oslAssert(mDematerializeEffect != NULL);
+
+	mSkillDematerializeState = READY;
+	mEnergyCost = 0;
+	mEnergyCostPerSecond = 0;
 }
 
 void SkillDematerialize::SetState(SkillDematerializeState newSkillDematerializeState)
 {
+	switch(Resources::mSkillsSystem->GetDematerializeLevel())
+	{
+	case 1:
+		mEnergyCostPerSecond = DEMATERIALIZE_ENERGY_COST_LV1;
+		break;
+	case 2:
+		mEnergyCostPerSecond = DEMATERIALIZE_ENERGY_COST_LV2;
+		break;
+	case 3:
+		mEnergyCostPerSecond = DEMATERIALIZE_ENERGY_COST_LV3;
+		break;
+	case 4:
+		mEnergyCostPerSecond = DEMATERIALIZE_ENERGY_COST_LV4;
+		break;
+	case 5:
+		mEnergyCostPerSecond = DEMATERIALIZE_ENERGY_COST_LV5;
+		break;
+	}
+
 	if(newSkillDematerializeState == READY)
+	{
 		mEnergyCost = 0;
+		mDematerializeEffect->ResetAnimation();
+	}
 
 	mSkillDematerializeState = newSkillDematerializeState;
 }
@@ -38,7 +62,7 @@ SkillDematerialize::SkillDematerializeState SkillDematerialize::GetState()
 	return mSkillDematerializeState;
 }
 
-bool SkillDematerialize::IsActivated()
+bool SkillDematerialize::IsActive()
 {
 	if(GetState() == READY)
 		return false;
@@ -58,24 +82,7 @@ void SkillDematerialize::Evaluate()
 	if(Resources::mController->IsHeld(Controller::CIRCLE) &&
 	   GetState() == ACTIVE)
 	{
-		switch(Resources::mSkillsSystem->GetDematerializeLevel())
-		{
-		case 1:
-			mEnergyCost += DEMATERIALIZE_LV1;
-			break;
-		case 2:
-			mEnergyCost += DEMATERIALIZE_LV2;
-			break;
-		case 3:
-			mEnergyCost += DEMATERIALIZE_LV3;
-			break;
-		case 4:
-			mEnergyCost += DEMATERIALIZE_LV4;
-			break;
-		case 5:
-			mEnergyCost += DEMATERIALIZE_LV5;
-			break;
-		}
+		mEnergyCost += (float)mEnergyCostPerSecond / 60.0f;
 
 		if(Resources::mSkillsSystem->DepleteEnergy(floor(mEnergyCost)))
 			mEnergyCost -= floor(mEnergyCost);

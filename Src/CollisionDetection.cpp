@@ -9,7 +9,8 @@
 
 bool CollisionDetection::CheckForCollisions(Player *playerObject, EnemyList *enemyListObject)
 {
-	if(Resources::mSkillsSystem->mSkillDematerialize->IsActivated())
+	if(Resources::mSkillsSystem->mSkillDematerialize->IsActive() &&
+	   !Resources::mSkillsSystem->mSkillForceField->IsActive())
 		return false;
 
 	float playerObjectRadius = (float)(playerObject->GetWidth() - 15) / 2.0f;
@@ -31,6 +32,13 @@ bool CollisionDetection::CheckForCollisions(Player *playerObject, EnemyList *ene
 		{
 			delete ((Enemy*)(*i));
 			i = enemyListObject->mEnemyList.erase(i);
+
+			if(Resources::mSkillsSystem->mSkillForceField->IsActive())
+			{
+				Resources::mSkillsSystem->mSkillForceField->ForceFieldImpact();
+				return false;
+			}
+
 			return true;	//oslPrintf("Objects are colliding\n");
 		}
 	}
