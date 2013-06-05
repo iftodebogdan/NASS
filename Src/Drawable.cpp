@@ -25,8 +25,11 @@ Drawable::Drawable(const Drawable *drawableImg)
 
 Drawable::~Drawable()
 {
-	if(mDrawableImg != NULL)
-		oslDeleteImage(mDrawableImg);
+	delete mDrawableImg;
+
+	//if(mDrawableImg != NULL)
+		//oslDeleteImage(mDrawableImg);
+		//^ this is breaking something in the memory resulting in a freeze
 }
 
 int Drawable::GetPositionX()

@@ -315,6 +315,30 @@ void SkillsSystem::RenderEnergy()
 						COLOR_WHITE);
 
 	oslDrawString(ENERGY_BAR_X1 - oslGetStringWidth("100") + 2, ENERGY_BAR_Y0 - 8, "100");
+
+	if(GetForceFieldLevel())
+	{
+		int energyCostX = (float)ENERGY_BAR_X0 +
+						  ((float)ENERGY_BAR_X1 -
+						  (float)ENERGY_BAR_X0) *
+						  ((float)mSkillForceField->GetSkillEnergyCost() /
+						  (float)MAX_ENERGY);
+
+		oslDrawLine(energyCostX,
+					ENERGY_BAR_Y0,
+					energyCostX,
+					ENERGY_BAR_Y1,
+					COLOR_WHITE);
+
+		Resources::mCrossButton_small->Draw(energyCostX - Resources::mCrossButton_small->GetWidth() / 2,
+											ENERGY_BAR_Y0 + (ENERGY_BAR_Y1 - ENERGY_BAR_Y0) / 2 -
+											Resources::mCrossButton_small->GetHeight() / 2);
+	}
+
+	if(GetWarpLevel())
+		Resources::mTriangleButton_small->Draw(ENERGY_BAR_X1 - Resources::mTriangleButton_small->GetWidth() / 2,
+											   ENERGY_BAR_Y0 + (ENERGY_BAR_Y1 - ENERGY_BAR_Y0) / 2 -
+											   Resources::mTriangleButton_small->GetHeight() / 2);
 }
 
 void SkillsSystem::Render()
@@ -322,13 +346,22 @@ void SkillsSystem::Render()
 	if(NoSkillActive())
 		RegenerateEnergy(ENERGY_REGEN_RATE);
 
-	mSkillWarp->Render();
-	mSkillDematerialize->Render();
-	mSkillOverdrive->Render();
-	mSkillForceField->Render();
+	if(GetWarpLevel())
+		mSkillWarp->Render();
+	if(GetDematerializeLevel())
+		mSkillDematerialize->Render();
+	if(GetOverdriveLevel())
+		mSkillOverdrive->Render();
+	if(GetForceFieldLevel())
+		mSkillForceField->Render();
 
 	RenderScore();
-	RenderEnergy();
+
+	if(GetWarpLevel() ||
+	   GetDematerializeLevel() ||
+	   GetOverdriveLevel() ||
+	   GetForceFieldLevel())
+		RenderEnergy();
 }
 
 void SkillsSystem::ResetSkills()

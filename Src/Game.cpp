@@ -8,7 +8,8 @@
 #include "../Includes/Game.h"
 #include "../Includes/Resources.h"
 
-#define DEBUG_MODE 0
+#define DEBUG_MODE_NO_COLLISION 1
+#define DEBUG_MODE 1
 
 Game::Game()
 {
@@ -17,14 +18,17 @@ Game::Game()
 	oslInitAudio();
 	oslSetTransparentColor(RGB(255,0,255));
 	oslSetQuitOnLoadFailure(1);
-	oslSetKeyAnalogToDPad(80);
 
 	if(DEBUG_MODE)
 		oslBenchmarkTest(OSL_BENCH_INIT);
 
 	Resources::LoadResources();
 	Resources::AssertResources();
-	mGameState = TITLE_SCREEN;
+
+	Resources::mSaveLoad->LoadSaveGame();
+
+	//mGameState = TITLE_SCREEN;
+	SetState(TITLE_SCREEN);
 	mSkillsScreenCursor = 1;
 
 	Resources::mGameApp = this;
@@ -33,6 +37,7 @@ Game::Game()
 Game::~Game()
 {
 	oslEndGfx();
+	oslDeinitAudio();
 	oslQuit();
 }
 
@@ -83,6 +88,7 @@ void Game::Run()
 		}
 
 		oslEndDrawing();
+		oslEndFrame();
 		oslSyncFrame();
 		//oslSwapBuffers();
 	}
@@ -94,17 +100,30 @@ void Game::SetState(GameState newState)
 	{
 		//Resources::mGameLogo->Reset();
 		//Resources::mDropDownMenu->Reset();
+
+		if(Resources::mInGameBGM->IsPlaying())
+			Resources::mInGameBGM->Stop();
+		if(!Resources::mMainMenuBGM->IsPlaying())
+			Resources::mMainMenuBGM->PlayLooped();
+
 		Resources::mSaveLoad->AutoSaveGame();
 	}
 
 	if(newState == GAME_SCREEN)
 	{
+		if(Resources::mMainMenuBGM->IsPlaying())
+			Resources::mMainMenuBGM->Stop();
+		if(!Resources::mInGameBGM->IsPlaying())
+			Resources::mInGameBGM->PlayLooped();
+
 		Resources::mGameLogo->Reset();
 
 		Resources::mPlayer->Reset();
 		Resources::mEnemyList->Reset();
+
 		Resources::mSkillsSystem->ResetPlayerScore();
 		Resources::mSkillsSystem->ResetEnergy();
+		Resources::mSkillsSystem->ResetSkills();
 	}
 
 	if(newState == TRANSITION_GAME_OVER_SCREEN)
@@ -144,6 +163,7 @@ void Game::RenderTitleScreen()
 
 			if(Resources::mController->IsPressed(Controller::CROSS))
 			{
+				Resources::mMenuSelect->Play();
 				Resources::mGameLogo->SetState(GameLogo::EXITING);
 			}
 		}
@@ -160,20 +180,31 @@ void Game::RenderGameScreen()
 
 	if(Resources::mPlayer->GetState() == Player::ALIVE)
 		Resources::mSkillsSystem->Render();
-	else
-		Resources::mSkillsSystem->ResetSkills();
 
-	if(CollisionDetection::CheckForCollisions(Resources::mPlayer, Resources::mEnemyList) &&
-	   GetState() != TRANSITION_GAME_OVER_SCREEN)
+	if(!DEBUG_MODE_NO_COLLISION)
+		if(CollisionDetection::CheckForCollisions(Resources::mPlayer, Resources::mEnemyList) &&
+		   GetState() != TRANSITION_GAME_OVER_SCREEN)
+		{
+			Resources::mPlayerExplosion->Play();
 			SetState(TRANSITION_GAME_OVER_SCREEN);
+		}
 
 
 	if(Resources::mController->IsPressed(Controller::START))
+	{
+		Resources::mMenuSelect->Play();
+
 		if(oslMessageBox(
-			Resources::STR_QUIT_MESSAGE.c_str(),
-			Resources::STR_QUIT_TITLE.c_str(),
+			Resources::STR_RETURN_TO_TITLE_SCREEN_MESSAGE.c_str(),
+			Resources::STR_RETURN_TO_TITLE_SCREEN_TITLE.c_str(),
 			oslMake3Buttons(OSL_KEY_CROSS, OSL_MB_YES, OSL_KEY_CIRCLE, OSL_MB_NO, 0, 0)) == OSL_MB_YES)
+			{
+				Resources::mMenuSelect->Play();
 				SetState(TITLE_SCREEN);
+			}
+		else
+			Resources::mMenuCancel->Play();
+	}
 }
 
 void Game::RenderGameOverScreen()
@@ -189,7 +220,12 @@ void Game::RenderGameOverScreen()
 		strGameOverMessage.c_str(),
 		Resources::STR_GAME_OVER_TITLE.c_str(),
 		oslMake3Buttons(OSL_KEY_CROSS, OSL_MB_OK, 0, 0, 0, 0)) == OSL_MB_OK)
+		{
+			Resources::mMenuSelect->Play();
 			SetState(TITLE_SCREEN);
+		}
+	else
+		Resources::mMenuCancel->Play();
 }
 
 void Game::DisplaySkillLevel(unsigned skillLevel, int posX, int posY)
@@ -292,39 +328,60 @@ void Game::RenderSkillsScreen()
 	Resources::mCircleButton->Draw(PSP_SCREEN_WIDTH - Resources::mCircleButton->GetWidth() - 5, 240);
 
 	if(Resources::mController->IsPressed(Controller::CIRCLE))
+	{
+		Resources::mMenuCancel->Play();
 		Resources::mGameApp->SetState(TITLE_SCREEN);
+	}
 
 	if(Resources::mController->IsPressed(Controller::DPAD_UP))
 		if(mSkillsScreenCursor > 1)
+		{
+			Resources::mMenuNavigate->Play();
 			mSkillsScreenCursor--;
+		}
 	if(Resources::mController->IsPressed(Controller::DPAD_DOWN))
 		if(mSkillsScreenCursor < 4)
+		{
+			Resources::mMenuNavigate->Play();
 			mSkillsScreenCursor++;
+		}
 
 	if(Resources::mController->IsPressed(Controller::CROSS))
 	{
+		Resources::mMenuSelect->Play();
 		if(Resources::mSkillsSystem->GetSkillLevelByIndex(mSkillsScreenCursor) == 5)
+		{
 			oslMessageBox(
 				Resources::STR_SKILL_LEVEL_5_MESSAGE.c_str(),
 				Resources::STR_SKILL_LEVEL_5_TITLE.c_str(),
 				oslMake3Buttons(OSL_KEY_CROSS, OSL_MB_OK, 0, 0, 0, 0));
+			Resources::mMenuSelect->Play();
+		}
 		else
 			if(driveCoreLoad >= 100)
+			{
 				oslMessageBox(
 					Resources::STR_DRIVE_CORE_OVERLOADED_MESSAGE.c_str(),
 					Resources::STR_DRIVE_CORE_OVERLOADED_TITLE.c_str(),
 					oslMake3Buttons(OSL_KEY_CROSS, OSL_MB_OK, 0, 0, 0, 0));
+				Resources::mMenuSelect->Play();
+			}
 			else
 				if(Resources::mSkillsSystem->SkillLevelUpCost(selectedSkillLevel) > Resources::mSkillsSystem->GetExperiencePoints())
+				{
 					oslMessageBox(
 						Resources::STR_SKILL_NO_XP_MESSAGE.c_str(),
 						Resources::STR_SKILL_NO_XP_TITLE.c_str(),
 						oslMake3Buttons(OSL_KEY_CROSS, OSL_MB_OK, 0, 0, 0, 0));
+					Resources::mMenuSelect->Play();
+				}
 				else
 					if(oslMessageBox(
 						Resources::STR_SKILL_LEVEL_UP_CONFIRMATION_MESSAGE.c_str(),
 						Resources::STR_SKILL_LEVEL_UP_CONFIRMATION_TITLE.c_str(),
 						oslMake3Buttons(OSL_KEY_CROSS, OSL_MB_YES, OSL_KEY_CIRCLE, OSL_MB_NO, 0, 0)) == OSL_MB_YES)
+						{
+							Resources::mMenuSelect->Play();
 							switch(mSkillsScreenCursor)
 							{
 							case 1:
@@ -340,19 +397,29 @@ void Game::RenderSkillsScreen()
 								Resources::mSkillsSystem->LevelUpForceField();
 								break;
 							};
+						}
+					else
+						Resources::mMenuCancel->Play();
 	}
 	if(Resources::mController->IsPressed(Controller::SQUARE))
 	{
+		Resources::mMenuSelect->Play();
+
 		if(Resources::mSkillsSystem->GetSkillLevelByIndex(mSkillsScreenCursor) == 0)
+		{
 			oslMessageBox(
 				Resources::STR_SKILL_LEVEL_0_MESSAGE.c_str(),
 				Resources::STR_SKILL_LEVEL_0_TITLE.c_str(),
 				oslMake3Buttons(OSL_KEY_CROSS, OSL_MB_OK, 0, 0, 0, 0));
+			Resources::mMenuSelect->Play();
+		}
 		else
 			if(oslMessageBox(
 				Resources::STR_SKILL_REFUND_CONFIRMATION_MESSAGE.c_str(),
 				Resources::STR_SKILL_REFUND_CONFIRMATION_TITLE.c_str(),
 				oslMake3Buttons(OSL_KEY_CROSS, OSL_MB_YES, OSL_KEY_CIRCLE, OSL_MB_NO, 0, 0)) == OSL_MB_YES)
+				{
+					Resources::mMenuSelect->Play();
 					switch(mSkillsScreenCursor)
 					{
 					case 1:
@@ -368,6 +435,9 @@ void Game::RenderSkillsScreen()
 						Resources::mSkillsSystem->RefundForceField();
 						break;
 					};
+				}
+			else
+				Resources::mMenuCancel->Play();
 	}
 }
 
@@ -384,7 +454,10 @@ void Game::RenderControlsScreen()
 	Resources::mCircleButton->Draw(PSP_SCREEN_WIDTH - Resources::mCircleButton->GetWidth() - 5, 240);
 
 	if(Resources::mController->IsPressed(Controller::CIRCLE))
+	{
+		Resources::mMenuCancel->Play();
 		Resources::mGameApp->SetState(TITLE_SCREEN);
+	}
 }
 
 void Game::DebugScreen()
@@ -392,10 +465,15 @@ void Game::DebugScreen()
 	oslSetBkColor(COLOR_BLACK);
 	oslSetTextColor(COLOR_WHITE);
 
+	oslPrintf("%f KB available\n", (float)oslGetRamStatus().maxAvailable / 1024);
 	oslPrintf("Game state: %d\n", GetState());
 	oslPrintf("GameLogo state: %d\n", Resources::mGameLogo->GetState());
 	oslPrintf("DropDownMenu state: %d\n", Resources::mDropDownMenu->GetState());
 	oslPrintf("Enemy count: %d\n", Resources::mEnemyList->GetEnemyCount());
 	oslPrintf("mEnemySpeedModifier: %d\n", Resources::mEnemyList->GetEnemySpeedModifier());
-	//oslPrintf("mDematerializeEnergyCost: %f\n", Resources::mSkillsSystem->mSkillDematerialize->mEnergyCost);
+	oslPrintf("Available audio channels: ");
+	for(int i=0;i<=7;i++)
+		if(Audio::IsChannelAvailable(i))
+			oslPrintf("%i ", i);
+	oslPrintf("\n");
 }

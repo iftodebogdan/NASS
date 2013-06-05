@@ -30,6 +30,7 @@ public:
 
 private:
 	void Evaluate();
+	void RenderDurationBar();
 
 	AnimatedSprite* mWarpCrosshair;
 	AnimatedSprite* mWarpEffect;

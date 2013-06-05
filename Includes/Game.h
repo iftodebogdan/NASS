@@ -12,8 +12,6 @@
 #include <string>
 using namespace std;
 
-
-
 class Game
 {
 	friend class DropDownMenu;

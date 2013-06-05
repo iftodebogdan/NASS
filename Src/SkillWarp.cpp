@@ -81,6 +81,22 @@ void SkillWarp::SetState(SkillWarpState newSkillWarpState)
 		break;
 	}
 
+	if(newSkillWarpState == READY)
+		if(Resources::mSkillWarpTargeting->IsPlaying())
+			Resources::mSkillWarpTargeting->Stop();
+
+	if(newSkillWarpState == ACTIVE)
+		if(!Resources::mSkillWarpTargeting->IsPlaying())
+			Resources::mSkillWarpTargeting->PlayLooped();
+
+	if(newSkillWarpState == WARPING)
+	{
+		if(Resources::mSkillWarpTargeting->IsPlaying())
+			Resources::mSkillWarpTargeting->Stop();
+		if(!Resources::mSkillWarpEffect->IsPlaying())
+			Resources::mSkillWarpEffect->Play();
+	}
+
 	mSkillWarpState = newSkillWarpState;
 }
 
@@ -154,6 +170,31 @@ void SkillWarp::Evaluate()
 		SetState(READY);
 }
 
+void SkillWarp::RenderDurationBar()
+{
+	int durationBarX0 = mWarpCrosshair->GetPositionX();
+	int durationBarY0 = mWarpCrosshair->GetPositionY() + WARP_CROSSHAIR_FRAME_HEIGHT_SIZE;
+	int durationBarX1;
+	int durationBarY1 = durationBarY0 + 5;
+
+	durationBarX1 = (float)durationBarX0 +
+					(float)WARP_CROSSHAIR_FRAME_WIDTH_SIZE *
+					(((float)mWarpCrosshair->GetFrameCount() -
+					(float)mWarpCrosshair->GetCurrentFrame() - 1) /
+					(float)mWarpCrosshair->GetFrameCount());
+
+	oslDrawFillRect(durationBarX0,
+					durationBarY0,
+					durationBarX1,
+					durationBarY1,
+					COLOR_WHITE);
+	oslDrawRect(durationBarX0,
+				durationBarY0,
+				durationBarX0 + WARP_CROSSHAIR_FRAME_WIDTH_SIZE,
+				durationBarY1,
+				COLOR_WHITE);
+}
+
 void SkillWarp::Render()
 {
 	if(Resources::mSkillsSystem->GetWarpLevel())
@@ -162,7 +203,10 @@ void SkillWarp::Render()
 		return;
 
 	if(GetState() == ACTIVE)
+	{
+		RenderDurationBar();
 		mWarpCrosshair->Render();
+	}
 
 	if(GetState() == WARPING)
 		mWarpEffect->Render();

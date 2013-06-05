@@ -57,9 +57,16 @@ void SkillOverdrive::SetState(SkillOverdriveState newSkillOverdriveState)
 
 	if(newSkillOverdriveState == READY)
 	{
+		if(Resources::mSkillOverdriveEffect->IsPlaying())
+			Resources::mSkillOverdriveEffect->Stop();
+
 		mEnergyCost = 0;
 		mOverdriveEffect->ResetAnimation();
 	}
+
+	if(newSkillOverdriveState == ACTIVE)
+		if(!Resources::mSkillOverdriveEffect->IsPlaying())
+			Resources::mSkillOverdriveEffect->PlayLooped();
 
 	mSkillOverdriveState = newSkillOverdriveState;
 }

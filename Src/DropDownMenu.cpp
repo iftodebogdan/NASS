@@ -102,21 +102,36 @@ void DropDownMenu::EvaluateState()
 	if(GetState() == RETRACTED && GetScrollSpeedY() != 0)
 		SetScrollSpeedY(0);
 	if(GetState() == RETRACTED && Resources::mController->IsPressed(Controller::TRIANGLE))
+	{
+		Resources::mDropDownMenuSweep->Play();
 		SetState(EXTENDING);
+	}
 
 	if(GetState() == EXTENDING && GetPositionY() >= 0)
 		SetState(EXTENDED);
 	if(GetState() == EXTENDED && GetScrollSpeedY() != 0)
 		SetScrollSpeedY(0);
 	if(GetState() == EXTENDED && (Resources::mController->IsPressed(Controller::TRIANGLE) || Resources::mController->IsPressed(Controller::CIRCLE)))
+	{
+		Resources::mDropDownMenuSweep->Play();
 		SetState(RETRACTING);
+	}
 
 	if(GetState() == EXTENDED && Resources::mController->IsPressed(Controller::DPAD_DOWN) && mMenuItemIndex < Resources::MENU_ITEMS_COUNT - 1)
+	{
+		Resources::mMenuNavigate->Play();
 		mMenuItemIndex++;
+	}
 	if(GetState() == EXTENDED && Resources::mController->IsPressed(Controller::DPAD_UP) && mMenuItemIndex > 0)
+	{
+		Resources::mMenuNavigate->Play();
 		mMenuItemIndex--;
+	}
 
 	if(GetState() == EXTENDED && Resources::mController->IsPressed(Controller::CROSS))
+	{
+		Resources::mMenuSelect->Play();
+
 		switch(mMenuItemIndex)
 		{
 		case 0:
@@ -129,12 +144,22 @@ void DropDownMenu::EvaluateState()
 			Resources::mSaveLoad->ResetProgress();
 			break;
 		case 3:
-			oslQuit();
+			if(oslMessageBox(
+				Resources::STR_RESET_PROGRESS_MESSAGE.c_str(),
+				Resources::STR_RESET_PROGRESS_TITLE.c_str(),
+				oslMake3Buttons(OSL_KEY_CROSS, OSL_MB_YES, OSL_KEY_CIRCLE, OSL_MB_NO, 0, 0)) == OSL_MB_YES)
+				{
+					Resources::mMenuSelect->Play();
+					oslQuit();
+				}
+			else
+				Resources::mMenuCancel->Play();
 			break;
 		default:
 			mMenuItemIndex = 0;
 			break;
 		}
+	}
 }
 
 void DropDownMenu::RenderMenuItems(string* MenuItems)

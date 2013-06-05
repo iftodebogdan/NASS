@@ -109,10 +109,10 @@ int EnemyList::GetEnemyCount()
 
 void EnemyList::Render()
 {
-	EvaluateState();
-
 	for(list<Enemy*>::iterator i = mEnemyList.begin(); i != mEnemyList.end(); i++)
 		((Enemy*)(*i))->Render();
+
+	EvaluateState();
 }
 
 void EnemyList::EvaluateState()
@@ -169,10 +169,17 @@ void EnemyList::EvaluateState()
 			mEnemySpeedModifier = 500;
 	}
 
-	for(list<Enemy*>::iterator i = mEnemyList.begin(); i != mEnemyList.end(); i++)
+	//for(list<Enemy*>::iterator i = mEnemyList.begin(); i != mEnemyList.end(); ++i)
+	list<Enemy*>::iterator i = mEnemyList.begin();
+	while(i != mEnemyList.end())
+	{
 		if( ((Enemy*)(*i))->GetPositionX() <= -((Enemy*)(*i))->GetFrameWidth())
 		{
 			delete ((Enemy*)(*i));
 			i = mEnemyList.erase(i);
+			continue;
 		}
+
+		++i;
+	}
 }

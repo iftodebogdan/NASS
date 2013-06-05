@@ -11,6 +11,7 @@
 
 Controller::Controller()
 {
+	oslSetKeyAnalogToDPad(80);
 	oslSetKeyAutorepeatInit(40);
 	oslSetKeyAutorepeatInterval(10);
 }

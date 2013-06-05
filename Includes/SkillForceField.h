@@ -13,6 +13,7 @@
 class SkillForceField
 {
 	friend class CollisionDetection;
+	friend class SkillsSystem;
 
 public:
 	enum SkillForceFieldState
@@ -30,6 +31,10 @@ public:
 
 private:
 	void ForceFieldImpact();
+	void RenderDurationBar();
+	unsigned GetSkillDuration();
+	int GetForceFieldImpacts();
+	unsigned GetSkillEnergyCost();
 
 	AnimatedSprite* mForceFieldEffect;
 	SkillForceFieldState mSkillForceFieldState;

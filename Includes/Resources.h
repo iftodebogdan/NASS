@@ -8,6 +8,7 @@
 #ifndef RESOURCE_H_
 #define RESOURCE_H_
 
+#include "Audio.h"
 #include "AnimatedSprite.h"
 #include "Background.h"
 #include "GameLogo.h"
@@ -20,6 +21,7 @@
 #include "CollisionDetection.h"
 #include "SkillsSystem.h"
 #include "SaveLoad.h"
+
 #include <string>
 #include <list>
 #include <time.h>
@@ -96,6 +98,7 @@ public:
 	static string IMG_CROSS_BUTTON_SMALL;
 	static string IMG_CIRCLE_BUTTON;
 	static string IMG_SQUARE_BUTTON_SMALL;
+	static string IMG_TRIANGLE_BUTTON_SMALL;
 	static string IMG_PSP_CONTROLS;
 	static string IMG_ASTEROID_S;
 	static string IMG_ASTEROID_M;
@@ -107,12 +110,26 @@ public:
 	static string IMG_OVERDRIVE_EFFECT;
 	static string IMG_FORCE_FIELD_EFFECT;
 
+	static string SND_DROP_DOWN_MENU_SWEEP;
+	static string SND_IN_GAME_BGM;
+	static string SND_MAIN_MENU_BGM;
+	static string SND_MENU_CANCEL;
+	static string SND_MENU_NAVIGATE;
+	static string SND_MENU_SELECT;
+	static string SND_PLAYER_EXPLOSION;
+	static string SND_SKILL_DEMATERIALIZE_EFFECT;
+	static string SND_SKILL_FORCE_FIELD_EFFECT;
+	static string SND_SKILL_FORCE_FIELD_IMPACT;
+	static string SND_SKILL_OVERDRIVE_EFFECT;
+	static string SND_WARP_EFFECT;
+	static string SND_WARP_TARGETING;
+
 	static string FNT_PARAFONT;
 	static string FNT_SMALLSTONE;
 	static string FNT_COPPERPLATE;
 
-	static string STR_QUIT_TITLE;
-	static string STR_QUIT_MESSAGE;
+	static string STR_RETURN_TO_TITLE_SCREEN_TITLE;
+	static string STR_RETURN_TO_TITLE_SCREEN_MESSAGE;
 	static string STR_GAME_OVER_TITLE;
 	static string STR_GAME_OVER_MESSAGE;
 	static string STR_PRESS_X_TO_START;
@@ -144,30 +161,58 @@ public:
 	static string STR_SKILL_NO_XP_TITLE;
 	static string STR_RESET_PROGRESS_MESSAGE;
 	static string STR_RESET_PROGRESS_TITLE;
+	static string STR_QUIT_GAME_MESSAGE;
+	static string STR_QUIT_GAME_TITLE;
 	static string STR_MENU_ITEMS[4];
 	static int MENU_ITEMS_COUNT;
 
 	static Game* mGameApp;
+
 	static Font* mParafontFont;
 	static Font* mSmallStoneFont;
 	static Font* mCopperPlateFont;
+
 	static Controller* mController;
+
 	static Background* mGameBackground;
+
 	static GameLogo* mGameLogo;
+
 	static DropDownMenu* mDropDownMenu;
+
 	static Drawable* mUpDownButtons;
 	static Drawable* mCrossButton;
 	static Drawable* mCrossButton_small;
 	static Drawable* mCircleButton;
 	static Drawable* mSquareButton_small;
+	static Drawable* mTriangleButton_small;
 	static Drawable* mPSPControls;
+
 	static Player* mPlayer;
+
 	static AnimatedSprite* mMoonRock;
 	static AnimatedSprite* mAsteroidL;
 	static AnimatedSprite* mAsteroidM;
 	static AnimatedSprite* mAsteroidS;
+
+	static Sound* mDropDownMenuSweep;
+	static Sound* mInGameBGM;
+	static Sound* mMainMenuBGM;
+	static Sound* mMenuCancel;
+	static Sound* mMenuNavigate;
+	static Sound* mMenuSelect;
+	static Sound* mPlayerExplosion;
+	static Sound* mSkillDematerializeEffect;
+	static Sound* mSkillForceFieldEffect;
+	static Sound* mSkillForceFieldImpact;
+	static Sound* mSkillOverdriveEffect;
+	static Sound* mSkillWarpEffect;
+	static Sound* mSkillWarpTargeting;
+
 	static EnemyList* mEnemyList;
+
 	static SkillsSystem* mSkillsSystem;
+
 	static SaveLoad* mSaveLoad;
 };
 
