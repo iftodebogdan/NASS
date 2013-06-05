@@ -32,6 +32,7 @@ using namespace std;
 #define COLOR_GREEN RGB(0, 255, 0)
 #define COLOR_WHITE RGB(255, 255, 255)
 #define COLOR_BLACK RGB(0, 0, 0)
+#define COLOR_TRANSPARENT RGB(255,0,255)
 
 #define PLAYER_SHIP_FRAME_WIDTH_SIZE 68
 #define PLAYER_SHIP_FRAME_HEIGHT_SIZE 64
@@ -52,6 +53,10 @@ using namespace std;
 #define MOON_ROCK_FRAME_WIDTH_SIZE 27
 #define MOON_ROCK_FRAME_HEIGHT_SIZE 27
 #define MOON_ROCK_FRAMERATE 8
+
+#define ASTEROID_EXPLOSION_FRAME_WIDTH_SIZE 77
+#define ASTEROID_EXPLOSION_FREME_HEIGHT_SIZE 79
+#define ASTEROID_EXPLOSION_FRAMERATE 15
 
 #define WARP_CROSSHAIR_FRAME_WIDTH_SIZE 100
 #define WARP_CROSSHAIR_FRAME_HEIGHT_SIZE 100
@@ -74,7 +79,6 @@ using namespace std;
 #define FORCE_FIELD_EFFECT_FRAMERATE 15
 
 #define MAX_ENERGY 1000
-#define ENERGY_REGEN_RATE 1
 
 #define SCORE_TO_XP_RATIO 10
 
@@ -105,6 +109,7 @@ public:
 	static string IMG_ASTEROID_M;
 	static string IMG_ASTEROID_L;
 	static string IMG_MOON_ROCK;
+	static string IMG_ASTEROID_EXPLOSION;
 	static string IMG_WARP_CROSSHAIR;
 	static string IMG_WARP_EFFECT;
 	static string IMG_DEMATERIALIZE_EFFECT;
@@ -207,6 +212,7 @@ public:
 	static AnimatedSprite* mAsteroidL;
 	static AnimatedSprite* mAsteroidM;
 	static AnimatedSprite* mAsteroidS;
+	static AnimatedSprite* mAsteroidExplosion;
 
 	static Sound* mDropDownMenuSweep;
 	static Sound* mInGameBGM;
@@ -215,12 +221,12 @@ public:
 	static Sound* mMenuNavigate;
 	static Sound* mMenuSelect;
 	static Sound* mPlayerExplosion;
-	static Sound* mSkillDematerializeEffect;
-	static Sound* mSkillForceFieldEffect;
-	static Sound* mSkillForceFieldImpact;
-	static Sound* mSkillOverdriveEffect;
-	static Sound* mSkillWarpEffect;
-	static Sound* mSkillWarpTargeting;
+	static Sound* mSkillDematerializeSFX;
+	static Sound* mSkillForceFieldSFX;
+	static Sound* mSkillForceFieldImpactSFX;
+	static Sound* mSkillOverdriveSFX;
+	static Sound* mSkillWarpSFX;
+	static Sound* mSkillWarpTargetingSFX;
 
 	static EnemyList* mEnemyList;
 

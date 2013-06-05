@@ -72,7 +72,7 @@ void SkillForceField::SetState(SkillForceFieldState newSkillForceFieldState)
 
 	if(newSkillForceFieldState == ACTIVE)
 	{
-		Resources::mSkillForceFieldEffect->Play();
+		Resources::mSkillForceFieldSFX->Play();
 
 		mSkillDuration = GetSkillDuration();
 		mForceFieldImpacts = GetForceFieldImpacts();
@@ -100,6 +100,7 @@ void SkillForceField::ForceFieldImpact()
 {
 	if(mForceFieldImpacts)
 	{
+		Resources::mSkillForceFieldImpactSFX->Play();
 		mForceFieldImpacts--;
 		Resources::mSkillsSystem->RegenerateEnergy(mEnergyRegen);
 	}

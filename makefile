@@ -17,7 +17,7 @@ STDLIBS= -losl -lpng -lz -ljpeg \
 		 -lpspsdk -lpspctrl -lpspumd -lpsprtc -lpsppower -lpspgu -lpspaudiolib \
 		 -lpspaudio -lm -lstdc++ -lpsphprm
 LIBS=$(STDLIBS)$(YOURLIBS)
- 
+
 BUILD_PRX = 1
 EXTRA_TARGETS = EBOOT.PBP
 PSP_EBOOT_TITLE = N.A.S.S.

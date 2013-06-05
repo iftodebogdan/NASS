@@ -16,6 +16,8 @@
 #define ENERGY_BAR_X1 460
 #define ENERGY_BAR_Y1 265
 
+#define ENERGY_REGEN_RATE 1
+
 SkillsSystem::SkillsSystem()
 				:ExperienceSystem()
 {

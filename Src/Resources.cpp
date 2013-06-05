@@ -25,6 +25,7 @@ string Resources::IMG_ASTEROID_S = "Res/img/AsteroidS.png";
 string Resources::IMG_ASTEROID_M = "Res/img/AsteroidM.png";
 string Resources::IMG_ASTEROID_L = "Res/img/AsteroidL.png";
 string Resources::IMG_MOON_ROCK = "Res/img/MoonRock.png";
+string Resources::IMG_ASTEROID_EXPLOSION = "Res/img/AsteroidExplosion.png";
 string Resources::IMG_WARP_CROSSHAIR = "Res/img/WarpCrosshair.png";
 string Resources::IMG_WARP_EFFECT = "Res/img/WarpEffect.png";
 string Resources::IMG_DEMATERIALIZE_EFFECT = "Res/img/DematerializeEffect.png";
@@ -178,6 +179,7 @@ AnimatedSprite* Resources::mAsteroidL = NULL;
 AnimatedSprite* Resources::mAsteroidM = NULL;
 AnimatedSprite* Resources::mAsteroidS = NULL;
 AnimatedSprite* Resources::mMoonRock = NULL;
+AnimatedSprite* Resources::mAsteroidExplosion = NULL;
 
 Sound* Resources::mDropDownMenuSweep = NULL;
 Sound* Resources::mInGameBGM = NULL;
@@ -186,12 +188,12 @@ Sound* Resources::mMenuCancel = NULL;
 Sound* Resources::mMenuNavigate = NULL;
 Sound* Resources::mMenuSelect = NULL;
 Sound* Resources::mPlayerExplosion = NULL;
-Sound* Resources::mSkillDematerializeEffect = NULL;
-Sound* Resources::mSkillForceFieldEffect = NULL;
-Sound* Resources::mSkillForceFieldImpact = NULL;
-Sound* Resources::mSkillOverdriveEffect = NULL;
-Sound* Resources::mSkillWarpEffect = NULL;
-Sound* Resources::mSkillWarpTargeting = NULL;
+Sound* Resources::mSkillDematerializeSFX = NULL;
+Sound* Resources::mSkillForceFieldSFX = NULL;
+Sound* Resources::mSkillForceFieldImpactSFX = NULL;
+Sound* Resources::mSkillOverdriveSFX = NULL;
+Sound* Resources::mSkillWarpSFX = NULL;
+Sound* Resources::mSkillWarpTargetingSFX = NULL;
 
 EnemyList* Resources::mEnemyList = NULL;
 
@@ -250,6 +252,11 @@ void Resources::LoadResources()
 						ASTEROID_S_FRAME_WIDTH_SIZE,
 						ASTEROID_S_FRAME_HEIGHT_SIZE,
 						ASTEROID_S_FRAMERATE);
+	mAsteroidExplosion = new AnimatedSprite(
+						IMG_ASTEROID_EXPLOSION,
+						ASTEROID_EXPLOSION_FRAME_WIDTH_SIZE,
+						ASTEROID_EXPLOSION_FREME_HEIGHT_SIZE,
+						ASTEROID_EXPLOSION_FRAMERATE);
 
 	mDropDownMenuSweep = new Sound(SND_DROP_DOWN_MENU_SWEEP, false);
 	mInGameBGM = new Sound(SND_IN_GAME_BGM, false);
@@ -258,12 +265,12 @@ void Resources::LoadResources()
 	mMenuNavigate = new Sound(SND_MENU_NAVIGATE, false);
 	mMenuSelect = new Sound(SND_MENU_SELECT, false);
 	mPlayerExplosion = new Sound(SND_PLAYER_EXPLOSION, false);
-	mSkillDematerializeEffect = new Sound(SND_SKILL_DEMATERIALIZE_EFFECT, false);
-	mSkillForceFieldEffect = new Sound(SND_SKILL_FORCE_FIELD_EFFECT, false);
-	mSkillForceFieldImpact = new Sound(SND_SKILL_FORCE_FIELD_IMPACT, false);
-	mSkillOverdriveEffect = new Sound(SND_SKILL_OVERDRIVE_EFFECT, false);
-	mSkillWarpEffect = new Sound(SND_WARP_EFFECT, false);
-	mSkillWarpTargeting = new Sound(SND_WARP_TARGETING, false);
+	mSkillDematerializeSFX = new Sound(SND_SKILL_DEMATERIALIZE_EFFECT, false);
+	mSkillForceFieldSFX = new Sound(SND_SKILL_FORCE_FIELD_EFFECT, false);
+	mSkillForceFieldImpactSFX = new Sound(SND_SKILL_FORCE_FIELD_IMPACT, false);
+	mSkillOverdriveSFX = new Sound(SND_SKILL_OVERDRIVE_EFFECT, false);
+	mSkillWarpSFX = new Sound(SND_WARP_EFFECT, false);
+	mSkillWarpTargetingSFX = new Sound(SND_WARP_TARGETING, false);
 
 	mEnemyList = new EnemyList();
 
@@ -300,6 +307,7 @@ void Resources::AssertResources()
 	oslAssert(mAsteroidL != NULL);
 	oslAssert(mAsteroidM != NULL);
 	oslAssert(mAsteroidS != NULL);
+	oslAssert(mAsteroidExplosion != NULL);
 
 	oslAssert(mDropDownMenuSweep != NULL);
 	oslAssert(mInGameBGM != NULL);
@@ -308,12 +316,12 @@ void Resources::AssertResources()
 	oslAssert(mMenuNavigate != NULL);
 	oslAssert(mMenuSelect != NULL);
 	oslAssert(mPlayerExplosion != NULL);
-	oslAssert(mSkillDematerializeEffect != NULL);
-	oslAssert(mSkillForceFieldEffect != NULL);
-	oslAssert(mSkillForceFieldImpact != NULL);
-	oslAssert(mSkillOverdriveEffect != NULL);
-	oslAssert(mSkillWarpEffect != NULL);
-	oslAssert(mSkillWarpTargeting != NULL);
+	oslAssert(mSkillDematerializeSFX != NULL);
+	oslAssert(mSkillForceFieldSFX != NULL);
+	oslAssert(mSkillForceFieldImpactSFX != NULL);
+	oslAssert(mSkillOverdriveSFX != NULL);
+	oslAssert(mSkillWarpSFX != NULL);
+	oslAssert(mSkillWarpTargetingSFX != NULL);
 
 	oslAssert(mEnemyList != NULL);
 

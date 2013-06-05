@@ -23,6 +23,8 @@ public:
 	int GetFrameWidth(); //returns the width of a frame in pixels
 	int GetFrameHeight(); //returns the height of a frame in pixels
 
+	unsigned GetFramePixel(int coordX, int coordY);
+
 	void ResetAnimation(); //resets the animation sequence
 	void InvertAnimation(bool isInverted);
 	bool IsAnimationInverted();

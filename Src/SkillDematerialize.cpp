@@ -44,16 +44,16 @@ void SkillDematerialize::SetState(SkillDematerializeState newSkillDematerializeS
 
 	if(newSkillDematerializeState == READY)
 	{
-		if(Resources::mSkillDematerializeEffect->IsPlaying())
-			Resources::mSkillDematerializeEffect->Stop();
+		if(Resources::mSkillDematerializeSFX->IsPlaying())
+			Resources::mSkillDematerializeSFX->Stop();
 
 		mEnergyCost = 0;
 		mDematerializeEffect->ResetAnimation();
 	}
 
 	if(newSkillDematerializeState == ACTIVE)
-		if(!Resources::mSkillDematerializeEffect->IsPlaying())
-			Resources::mSkillDematerializeEffect->PlayLooped();
+		if(!Resources::mSkillDematerializeSFX->IsPlaying())
+			Resources::mSkillDematerializeSFX->PlayLooped();
 
 	mSkillDematerializeState = newSkillDematerializeState;
 }

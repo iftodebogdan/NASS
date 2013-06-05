@@ -23,6 +23,8 @@ public:
 	int GetWidth();	//returns the width of the image
 	int GetHeight();	//returns the height of the image
 
+	unsigned GetPixel(int coordX, int coordY);
+
 	void SetPositionX(int coordX);	//sets the position of the image on the Ox axis
 	void SetPositionY(int coordY);	//sets the position of the image on the Oy axis
 	void SetPositionXY(int coordX, int coordY);	//sets the position of the image on screen

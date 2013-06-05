@@ -23,6 +23,7 @@ public:
 
 	Enemy(AnimatedSprite *enemySprite, int posY, int scrollSpeed);
 	Enemy(AnimatedSprite *enemySprite, int posY, int scrollSpeed, int frameRate, bool invertedAnimation);
+	~Enemy();
 
 	int GetWidth();
 	int GetHeight();
@@ -40,6 +41,7 @@ private:
 	EnemyState mEnemyState;
 	int mScrollSpeed;
 	float mPixelsToScroll;
+	AnimatedSprite* mAsteroidExplosion;
 };
 
 class EnemyList

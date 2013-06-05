@@ -11,6 +11,8 @@
 Enemy::Enemy(AnimatedSprite *enemySprite, int posY, int scrollSpeed)
 				: AnimatedSprite(enemySprite)
 {
+	mAsteroidExplosion = new AnimatedSprite(Resources::mAsteroidExplosion);
+
 	SetPositionY(posY);
 	SetScrollSpeed(scrollSpeed);
 	Reset();
@@ -19,11 +21,18 @@ Enemy::Enemy(AnimatedSprite *enemySprite, int posY, int scrollSpeed)
 Enemy::Enemy(AnimatedSprite *enemySprite, int posY, int scrollSpeed, int frameRate, bool invertedAnimation)
 				: AnimatedSprite(enemySprite)
 {
+	mAsteroidExplosion = new AnimatedSprite(Resources::mAsteroidExplosion);
+
 	SetPositionY(posY);
 	SetScrollSpeed(scrollSpeed);
 	SetAnimationSpeed(frameRate);
 	InvertAnimation(invertedAnimation);
 	Reset();
+}
+
+Enemy::~Enemy()
+{
+	delete mAsteroidExplosion;
 }
 
 int Enemy::GetWidth()
@@ -49,6 +58,17 @@ Enemy::EnemyState Enemy::GetState()
 
 void Enemy::SetState(EnemyState newState)
 {
+	if(newState == EXPLODING)
+	{
+		mAsteroidExplosion->ResetAnimation();
+		mAsteroidExplosion->SetPositionXY(GetPositionX() -
+										  (mAsteroidExplosion->GetFrameWidth() -
+										  GetFrameWidth()) / 2,
+										  GetPositionY() -
+										  (mAsteroidExplosion->GetFrameHeight() -
+										  GetFrameHeight()) / 2);
+	}
+
 	mEnemyState = newState;
 }
 
@@ -65,6 +85,14 @@ void Enemy::SetScrollSpeed(float newScrollSpeed)
 
 void Enemy::Render()
 {
+	if(GetState() == EXPLODING)
+	{
+		mAsteroidExplosion->Render();
+
+		if(mAsteroidExplosion->GetCurrentFrame() == mAsteroidExplosion->GetFrameCount())
+			SetState(DESTROYED);
+	}
+
 	mPixelsToScroll += GetScrollSpeed() / 60.0f;
 	if(abs(mPixelsToScroll) >= 1)
 	{
@@ -72,7 +100,8 @@ void Enemy::Render()
 		mPixelsToScroll -= (int)mPixelsToScroll;
 	}
 
-	AnimatedSprite::Render();
+	if(GetState() == SPAWNED)
+		AnimatedSprite::Render();
 }
 
 void Enemy::EvaluateState()
@@ -88,6 +117,11 @@ EnemyList::EnemyList()
 void EnemyList::Reset()
 {
 	SetEnemySpeedModifier(0);
+	for(list<Enemy*>::iterator i = mEnemyList.begin(); i != mEnemyList.end(); i++)
+	{
+		delete ((Enemy*)(*i));
+		i = mEnemyList.erase(i);
+	}
 	mEnemyList.clear();
 }
 

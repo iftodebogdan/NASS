@@ -70,19 +70,19 @@ void SkillWarp::SetState(SkillWarpState newSkillWarpState)
 	}
 
 	if(newSkillWarpState == READY)
-		if(Resources::mSkillWarpTargeting->IsPlaying())
-			Resources::mSkillWarpTargeting->Stop();
+		if(Resources::mSkillWarpTargetingSFX->IsPlaying())
+			Resources::mSkillWarpTargetingSFX->Stop();
 
 	if(newSkillWarpState == ACTIVE)
-		if(!Resources::mSkillWarpTargeting->IsPlaying())
-			Resources::mSkillWarpTargeting->PlayLooped();
+		if(!Resources::mSkillWarpTargetingSFX->IsPlaying())
+			Resources::mSkillWarpTargetingSFX->PlayLooped();
 
 	if(newSkillWarpState == WARPING)
 	{
-		if(Resources::mSkillWarpTargeting->IsPlaying())
-			Resources::mSkillWarpTargeting->Stop();
-		if(!Resources::mSkillWarpEffect->IsPlaying())
-			Resources::mSkillWarpEffect->Play();
+		if(Resources::mSkillWarpTargetingSFX->IsPlaying())
+			Resources::mSkillWarpTargetingSFX->Stop();
+		if(!Resources::mSkillWarpSFX->IsPlaying())
+			Resources::mSkillWarpSFX->Play();
 	}
 
 	mSkillWarpState = newSkillWarpState;

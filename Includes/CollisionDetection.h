@@ -17,6 +17,7 @@ class CollisionDetection
 {
 public:
 	static bool CheckForCollisions(Player* playerObject, EnemyList* enemyListObject);
+	static bool CheckForPixelPerfectCollisions(Player* playerObject, EnemyList* enemyListObject);
 };
 
 #endif /* COLLISIONDETECTION_H_ */

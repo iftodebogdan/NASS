@@ -43,6 +43,12 @@ int AnimatedSprite::GetFrameHeight()
 	return mDrawableImg->frameSizeY;
 }
 
+unsigned AnimatedSprite::GetFramePixel(int coordX, int coordY)
+{
+	return GetPixel(coordX + GetFrameWidth() * ((GetCurrentFrame() - 1) % (GetWidth() / GetFrameWidth())),
+					coordY + GetFrameHeight() * ((GetCurrentFrame() - 1) % (GetHeight() / GetFrameHeight())));
+}
+
 void AnimatedSprite::ResetAnimation()
 {
 	mCurrentFrame = 0;

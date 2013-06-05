@@ -52,6 +52,11 @@ int Drawable::GetHeight()
 	return mDrawableImg->sizeY;
 }
 
+unsigned Drawable::GetPixel(int coordX, int coordY)
+{
+	return oslGetImagePixel(mDrawableImg, coordX, coordY);
+}
+
 void Drawable::SetPositionX(int coordX)
 {
 	mDrawableImg->x = coordX;

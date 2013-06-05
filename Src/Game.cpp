@@ -8,15 +8,14 @@
 #include "../Includes/Game.h"
 #include "../Includes/Resources.h"
 
-#define DEBUG_MODE_NO_COLLISION 0
-#define DEBUG_MODE 1
+#define DEBUG_MODE 0
 
 Game::Game()
 {
 	oslInit(0);
 	oslInitGfx(OSL_PF_8888, 1);
 	oslInitAudio();
-	oslSetTransparentColor(RGB(255,0,255));
+	oslSetTransparentColor(COLOR_TRANSPARENT);
 	oslSetQuitOnLoadFailure(1);
 
 	if(DEBUG_MODE)
@@ -186,13 +185,12 @@ void Game::RenderGameScreen()
 	if(Resources::mPlayer->GetState() == Player::ALIVE)
 		Resources::mSkillsSystem->Render();
 
-	if(!DEBUG_MODE_NO_COLLISION)
-		if(CollisionDetection::CheckForCollisions(Resources::mPlayer, Resources::mEnemyList) &&
-		   GetState() != TRANSITION_GAME_OVER_SCREEN)
-		{
-			Resources::mPlayerExplosion->Play();
-			SetState(TRANSITION_GAME_OVER_SCREEN);
-		}
+	if(CollisionDetection::CheckForPixelPerfectCollisions(Resources::mPlayer, Resources::mEnemyList) &&
+	   GetState() != TRANSITION_GAME_OVER_SCREEN)
+	{
+		Resources::mPlayerExplosion->Play();
+		SetState(TRANSITION_GAME_OVER_SCREEN);
+	}
 
 
 	if(Resources::mController->IsPressed(Controller::START))
@@ -216,21 +214,6 @@ void Game::RenderGameOverScreen()
 {
 	Resources::mGameBackground->Render();
 	Resources::mEnemyList->Render();
-	//Resources::mSkillsSystem->RenderScore();
-	//string strGameOverMessage = Resources::STR_GAME_OVER_MESSAGE +
-	//							string(static_cast<ostringstream*>( &(ostringstream() << Resources::mSkillsSystem->GetPlayerScore() / SCORE_TO_XP_RATIO) )->str());
-	//Resources::mSkillsSystem->UpdateExperiencePoints();
-
-	/*if(oslMessageBox(
-		strGameOverMessage.c_str(),
-		Resources::STR_GAME_OVER_TITLE.c_str(),
-		oslMake3Buttons(OSL_KEY_CROSS, OSL_MB_OK, 0, 0, 0, 0)) == OSL_MB_OK)
-		{
-			Resources::mMenuSelect->Play();
-			SetState(TITLE_SCREEN);
-		}
-	else
-		Resources::mMenuCancel->Play();*/
 
 	oslDrawFillRect(20, 20, PSP_SCREEN_WIDTH - 20, PSP_SCREEN_HEIGHT - 20, RGBA(255, 255, 255, 150));
 	oslDrawRect(20, 20, PSP_SCREEN_WIDTH - 20, PSP_SCREEN_HEIGHT - 20, RGBA(255, 255, 255, 255));
@@ -527,10 +510,7 @@ void Game::DebugScreen()
 	oslSetBkColor(COLOR_BLACK);
 	oslSetTextColor(COLOR_WHITE);
 
-	oslPrintf("%f KB available\n", (float)oslGetRamStatus().maxAvailable / 1024);
-	//oslPrintf("Game state: %d\n", GetState());
-	//oslPrintf("GameLogo state: %d\n", Resources::mGameLogo->GetState());
-	//oslPrintf("DropDownMenu state: %d\n", Resources::mDropDownMenu->GetState());
+	oslPrintf("RAM free: %f KB\n", (float)oslGetRamStatus().maxAvailable / 1024);
 	oslPrintf("Enemy count: %d\n", Resources::mEnemyList->GetEnemyCount());
 	oslPrintf("mEnemySpeedModifier: %d\n", Resources::mEnemyList->GetEnemySpeedModifier());
 	oslPrintf("Available audio channels: ");
