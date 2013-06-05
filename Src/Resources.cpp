@@ -18,6 +18,7 @@ string Resources::IMG_CROSS_BUTTON = "Res/img/CrossButton.png";
 string Resources::IMG_CROSS_BUTTON_SMALL = "Res/img/CrossButton_small.png";
 string Resources::IMG_CIRCLE_BUTTON = "Res/img/CircleButton.png";
 string Resources::IMG_SQUARE_BUTTON_SMALL = "Res/img/SquareButton_small.png";
+string Resources::IMG_TRIANGLE_BUTTON = "Res/img/TriangleButton.png";
 string Resources::IMG_TRIANGLE_BUTTON_SMALL = "Res/img/TriangleButton_small.png";
 string Resources::IMG_PSP_CONTROLS = "Res/img/PSPControls.png";
 string Resources::IMG_ASTEROID_S = "Res/img/AsteroidS.png";
@@ -71,6 +72,7 @@ string Resources::STR_SKILLS_SCREEN_XP_COST_2 = "XP and +10% Drive Core load";
 string Resources::STR_SKILLS_SCREEN_REFUND_2 = "XP and -10% Drive Core load";
 string Resources::STR_DRIVE_CORE_LOAD = "Drive Core load: ";
 string Resources::STR_SKILLS_SCREEN_AVAILABLE_XP = "Available XP: ";
+string Resources::STR_SKILLS_SCREEN_INFO_BUTTON_LABEL = "Info";
 string Resources::STR_DRIVE_CORE_OVERLOADED_MESSAGE = "The ship's Drive Core has a 100% load and cannot be upgraded any further.";
 string Resources::STR_DRIVE_CORE_OVERLOADED_TITLE = "Drive Core Overloaded!";
 string Resources::STR_SKILL_LEVEL_UP_CONFIRMATION_MESSAGE = "Are you sure you want to level up that skill?";
@@ -87,6 +89,63 @@ string Resources::STR_RESET_PROGRESS_MESSAGE = "This will remove all purchased u
 string Resources::STR_RESET_PROGRESS_TITLE = "Reset progress";
 string Resources::STR_QUIT_GAME_MESSAGE = "Are you sure you want to quit?";
 string Resources::STR_QUIT_GAME_TITLE = "Quit game?";
+
+string Resources::STR_WARP_INFO_MESSAGE = "Warp is activated by pressing the Triangle button. Upon activation, a crosshair appears on the screen which marks the point the ship will warp to after a second Triangle button press. Activation of the skill costs a fraction of the Energy bar, but requires it to be at 100%. After a second Triangle button press, the ship Warps to the crosshair's position and the Energy bar is reduced to 0%. Warp can be canceled by waiting for the crosshair to timeout.\n\nWarp distance: "+
+		string(static_cast<ostringstream*>( &(ostringstream() << WARP_DISTANCE_LV1 - PLAYER_SHIP_FRAME_WIDTH_SIZE) )->str())+"/"+
+		string(static_cast<ostringstream*>( &(ostringstream() << WARP_DISTANCE_LV2 - PLAYER_SHIP_FRAME_WIDTH_SIZE) )->str())+"/"+
+		string(static_cast<ostringstream*>( &(ostringstream() << WARP_DISTANCE_LV3 - PLAYER_SHIP_FRAME_WIDTH_SIZE) )->str())+"/"+
+		string(static_cast<ostringstream*>( &(ostringstream() << WARP_DISTANCE_LV4 - PLAYER_SHIP_FRAME_WIDTH_SIZE) )->str())+"/"+
+		string(static_cast<ostringstream*>( &(ostringstream() << WARP_DISTANCE_LV5 - PLAYER_SHIP_FRAME_WIDTH_SIZE) )->str())+"\n"+
+		"Activation Energy cost: "+
+		string(static_cast<ostringstream*>( &(ostringstream() << WARP_ACTIVATION_ENERGY_COST_LV1 * 100 / MAX_ENERGY) )->str())+"/"+
+		string(static_cast<ostringstream*>( &(ostringstream() << WARP_ACTIVATION_ENERGY_COST_LV2 * 100 / MAX_ENERGY) )->str())+"/"+
+		string(static_cast<ostringstream*>( &(ostringstream() << WARP_ACTIVATION_ENERGY_COST_LV3 * 100 / MAX_ENERGY) )->str())+"/"+
+		string(static_cast<ostringstream*>( &(ostringstream() << WARP_ACTIVATION_ENERGY_COST_LV4 * 100 / MAX_ENERGY) )->str())+"/"+
+		string(static_cast<ostringstream*>( &(ostringstream() << WARP_ACTIVATION_ENERGY_COST_LV5 * 100 / MAX_ENERGY) )->str())+"%\n"+
+		"Final Energy cost: 100%";
+string Resources::STR_DEMATERIALIZE_INFO_MESSAGE = "Dematerialize is activated by pressing and holding the Circle button. Through the duration of the skill, the ship becomes immune to all damage.\n\nEnergy cost: "+
+		string(static_cast<ostringstream*>( &(ostringstream() << DEMATERIALIZE_ENERGY_COST_LV1 * 100 / MAX_ENERGY) )->str())+"/"+
+		string(static_cast<ostringstream*>( &(ostringstream() << DEMATERIALIZE_ENERGY_COST_LV2 * 100 / MAX_ENERGY) )->str())+"/"+
+		string(static_cast<ostringstream*>( &(ostringstream() << DEMATERIALIZE_ENERGY_COST_LV3 * 100 / MAX_ENERGY) )->str())+"/"+
+		string(static_cast<ostringstream*>( &(ostringstream() << DEMATERIALIZE_ENERGY_COST_LV4 * 100 / MAX_ENERGY) )->str())+"/"+
+		string(static_cast<ostringstream*>( &(ostringstream() << DEMATERIALIZE_ENERGY_COST_LV5 * 100 / MAX_ENERGY) )->str())+"% per second";
+string Resources::STR_OVERDRIVE_INFO_MESSAGE = "Overdrive is activated by pressing and holding the Square button. Through the duration of the skill, the ship gains a speed boost relative to the skill's level.\n\nSpeed boost: "+
+		string(static_cast<ostringstream*>( &(ostringstream() << OVERDRIVE_BOOST_LV1) )->str())+"/"+
+		string(static_cast<ostringstream*>( &(ostringstream() << OVERDRIVE_BOOST_LV2) )->str())+"/"+
+		string(static_cast<ostringstream*>( &(ostringstream() << OVERDRIVE_BOOST_LV3) )->str())+"/"+
+		string(static_cast<ostringstream*>( &(ostringstream() << OVERDRIVE_BOOST_LV4) )->str())+"/"+
+		string(static_cast<ostringstream*>( &(ostringstream() << OVERDRIVE_BOOST_LV5) )->str())+"x\n"+
+		"Energy cost: "+
+		string(static_cast<ostringstream*>( &(ostringstream() << OVERDRIVE_ENERGY_COST_LV1 * 100 / MAX_ENERGY) )->str())+"/"+
+		string(static_cast<ostringstream*>( &(ostringstream() << OVERDRIVE_ENERGY_COST_LV2 * 100 / MAX_ENERGY) )->str())+"/"+
+		string(static_cast<ostringstream*>( &(ostringstream() << OVERDRIVE_ENERGY_COST_LV3 * 100 / MAX_ENERGY) )->str())+"/"+
+		string(static_cast<ostringstream*>( &(ostringstream() << OVERDRIVE_ENERGY_COST_LV4 * 100 / MAX_ENERGY) )->str())+"/"+
+		string(static_cast<ostringstream*>( &(ostringstream() << OVERDRIVE_ENERGY_COST_LV5 * 100 / MAX_ENERGY) )->str())+"% per second";
+string Resources::STR_FORCE_FIELD_INFO_MESSAGE = "Force Field is activated by pressing the Cross button. The skill protects the ship from damage while regenerating Energy. The shield is active for a finite number of impacts or for a few seconds, whichever comes first. When an enemy hits the shield, it converts the kinetic energy from the impact into Drive Core Energy.\n\nDuration: "+
+		string(static_cast<ostringstream*>( &(ostringstream() << FORCE_FIELD_DURATION_LV1) )->str())+"/"+
+		string(static_cast<ostringstream*>( &(ostringstream() << FORCE_FIELD_DURATION_LV2) )->str())+"/"+
+		string(static_cast<ostringstream*>( &(ostringstream() << FORCE_FIELD_DURATION_LV3) )->str())+"/"+
+		string(static_cast<ostringstream*>( &(ostringstream() << FORCE_FIELD_DURATION_LV4) )->str())+"/"+
+		string(static_cast<ostringstream*>( &(ostringstream() << FORCE_FIELD_DURATION_LV5) )->str())+" second(s)\n"+
+		"Impacts: "+
+		string(static_cast<ostringstream*>( &(ostringstream() << FORCE_FIELD_IMPACTS_LV1) )->str())+"/"+
+		string(static_cast<ostringstream*>( &(ostringstream() << FORCE_FIELD_IMPACTS_LV2) )->str())+"/"+
+		string(static_cast<ostringstream*>( &(ostringstream() << FORCE_FIELD_IMPACTS_LV3) )->str())+"/"+
+		string(static_cast<ostringstream*>( &(ostringstream() << FORCE_FIELD_IMPACTS_LV4) )->str())+"/"+
+		string(static_cast<ostringstream*>( &(ostringstream() << FORCE_FIELD_IMPACTS_LV5) )->str())+"\n"+
+		"Energy regenerated per impact: "+
+		string(static_cast<ostringstream*>( &(ostringstream() << FORCE_FIELD_ENERGY_REGEN_LV1 * 100 / MAX_ENERGY) )->str())+"/"+
+		string(static_cast<ostringstream*>( &(ostringstream() << FORCE_FIELD_ENERGY_REGEN_LV2 * 100 / MAX_ENERGY) )->str())+"/"+
+		string(static_cast<ostringstream*>( &(ostringstream() << FORCE_FIELD_ENERGY_REGEN_LV3 * 100 / MAX_ENERGY) )->str())+"/"+
+		string(static_cast<ostringstream*>( &(ostringstream() << FORCE_FIELD_ENERGY_REGEN_LV4 * 100 / MAX_ENERGY) )->str())+"/"+
+		string(static_cast<ostringstream*>( &(ostringstream() << FORCE_FIELD_ENERGY_REGEN_LV5 * 100 / MAX_ENERGY) )->str())+"%\n"+
+		"Energy cost: "+
+		string(static_cast<ostringstream*>( &(ostringstream() << FORCE_FIELD_ENERGY_COST_LV1 * 100 / MAX_ENERGY) )->str())+"/"+
+		string(static_cast<ostringstream*>( &(ostringstream() << FORCE_FIELD_ENERGY_COST_LV2 * 100 / MAX_ENERGY) )->str())+"/"+
+		string(static_cast<ostringstream*>( &(ostringstream() << FORCE_FIELD_ENERGY_COST_LV3 * 100 / MAX_ENERGY) )->str())+"/"+
+		string(static_cast<ostringstream*>( &(ostringstream() << FORCE_FIELD_ENERGY_COST_LV4 * 100 / MAX_ENERGY) )->str())+"/"+
+		string(static_cast<ostringstream*>( &(ostringstream() << FORCE_FIELD_ENERGY_COST_LV5 * 100 / MAX_ENERGY) )->str())+"%";
+
 string Resources::STR_MENU_ITEMS[4] = {"Skills", "Controls", "Reset progress", "Quit"};
 int Resources::MENU_ITEMS_COUNT = 4;
 
@@ -107,6 +166,7 @@ Drawable* Resources::mCrossButton = NULL;
 Drawable* Resources::mCrossButton_small = NULL;
 Drawable* Resources::mCircleButton = NULL;
 Drawable* Resources::mSquareButton_small = NULL;
+Drawable* Resources::mTriangleButton = NULL;
 Drawable* Resources::mTriangleButton_small = NULL;
 Drawable* Resources::mPSPControls = NULL;
 
@@ -160,6 +220,7 @@ void Resources::LoadResources()
 	mCrossButton_small = new Drawable(IMG_CROSS_BUTTON_SMALL);
 	mCircleButton = new Drawable(IMG_CIRCLE_BUTTON);
 	mSquareButton_small = new Drawable(IMG_SQUARE_BUTTON_SMALL);
+	mTriangleButton = new Drawable(IMG_TRIANGLE_BUTTON);
 	mTriangleButton_small = new Drawable(IMG_TRIANGLE_BUTTON_SMALL);
 	mPSPControls = new Drawable(IMG_PSP_CONTROLS);
 
@@ -229,6 +290,7 @@ void Resources::AssertResources()
 	oslAssert(mCrossButton_small != NULL);
 	oslAssert(mCircleButton != NULL);
 	oslAssert(mSquareButton_small != NULL);
+	oslAssert(mTriangleButton != NULL);
 	oslAssert(mTriangleButton_small != NULL);
 	oslAssert(mPSPControls != NULL);
 

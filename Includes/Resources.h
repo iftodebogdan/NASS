@@ -98,6 +98,7 @@ public:
 	static string IMG_CROSS_BUTTON_SMALL;
 	static string IMG_CIRCLE_BUTTON;
 	static string IMG_SQUARE_BUTTON_SMALL;
+	static string IMG_TRIANGLE_BUTTON;
 	static string IMG_TRIANGLE_BUTTON_SMALL;
 	static string IMG_PSP_CONTROLS;
 	static string IMG_ASTEROID_S;
@@ -151,6 +152,7 @@ public:
 	static string STR_SKILLS_SCREEN_REFUND_2;
 	static string STR_DRIVE_CORE_LOAD;
 	static string STR_SKILLS_SCREEN_AVAILABLE_XP;
+	static string STR_SKILLS_SCREEN_INFO_BUTTON_LABEL;
 	static string STR_DRIVE_CORE_OVERLOADED_MESSAGE;
 	static string STR_DRIVE_CORE_OVERLOADED_TITLE;
 	static string STR_SKILL_LEVEL_UP_CONFIRMATION_MESSAGE;
@@ -167,6 +169,12 @@ public:
 	static string STR_RESET_PROGRESS_TITLE;
 	static string STR_QUIT_GAME_MESSAGE;
 	static string STR_QUIT_GAME_TITLE;
+
+	static string STR_WARP_INFO_MESSAGE;
+	static string STR_DEMATERIALIZE_INFO_MESSAGE;
+	static string STR_OVERDRIVE_INFO_MESSAGE;
+	static string STR_FORCE_FIELD_INFO_MESSAGE;
+
 	static string STR_MENU_ITEMS[4];
 	static int MENU_ITEMS_COUNT;
 
@@ -189,6 +197,7 @@ public:
 	static Drawable* mCrossButton_small;
 	static Drawable* mCircleButton;
 	static Drawable* mSquareButton_small;
+	static Drawable* mTriangleButton;
 	static Drawable* mTriangleButton_small;
 	static Drawable* mPSPControls;
 

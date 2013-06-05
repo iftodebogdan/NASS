@@ -276,6 +276,57 @@ void Game::RenderSkillsScreen()
 	oslDrawFillRect(20, 20, PSP_SCREEN_WIDTH - 20, PSP_SCREEN_HEIGHT - 20, RGBA(255, 255, 255, 150));
 	oslDrawRect(20, 20, PSP_SCREEN_WIDTH - 20, PSP_SCREEN_HEIGHT - 20, RGBA(255, 255, 255, 255));
 
+	unsigned selectedSkillLevel = 0;
+	switch(mSkillsScreenCursor)
+	{
+	case 1:
+		selectedSkillLevel = Resources::mSkillsSystem->GetWarpLevel();
+		break;
+	case 2:
+		selectedSkillLevel = Resources::mSkillsSystem->GetDematerializeLevel();
+		break;
+	case 3:
+		selectedSkillLevel = Resources::mSkillsSystem->GetOverdriveLevel();
+		break;
+	case 4:
+		selectedSkillLevel = Resources::mSkillsSystem->GetForceFieldLevel();
+		break;
+	default:
+		mSkillsScreenCursor = 1;
+		break;
+	};
+
+	if(Resources::mController->IsHeld(Controller::TRIANGLE))
+	{
+		string infoMessage;
+		switch(mSkillsScreenCursor)
+		{
+		case 1:
+			infoMessage = Resources::STR_WARP_INFO_MESSAGE;
+			break;
+		case 2:
+			infoMessage = Resources::STR_DEMATERIALIZE_INFO_MESSAGE;
+			break;
+		case 3:
+			infoMessage = Resources::STR_OVERDRIVE_INFO_MESSAGE;
+			break;
+		case 4:
+			infoMessage = Resources::STR_FORCE_FIELD_INFO_MESSAGE;
+			break;
+		};
+
+		int textBoxHeight = oslGetTextBoxHeight(PSP_SCREEN_WIDTH - 40 * 2, PSP_SCREEN_HEIGHT, infoMessage.c_str(), 0);
+		oslSetTextColor(COLOR_BLACK);
+		oslSetBkColor(RGBA(0,0,0,0));
+		oslDrawTextBox(40,
+					   (PSP_SCREEN_HEIGHT - textBoxHeight) / 2,
+					   PSP_SCREEN_WIDTH - 40,
+					   PSP_SCREEN_HEIGHT - (PSP_SCREEN_HEIGHT - textBoxHeight) / 2,
+					   infoMessage.c_str(), 0);
+
+		return;
+	}
+
 	oslDrawGradientRect(35,
 						35 + (mSkillsScreenCursor - 1) * 25,
 						300,
@@ -299,23 +350,6 @@ void Game::RenderSkillsScreen()
 
 	oslDrawFillRect(40, PSP_SCREEN_HEIGHT / 2 + 20, PSP_SCREEN_WIDTH - 40, PSP_SCREEN_HEIGHT -40, RGBA(255, 255, 255, 127));
 	oslDrawRect(40, PSP_SCREEN_HEIGHT / 2 + 20, PSP_SCREEN_WIDTH - 40, PSP_SCREEN_HEIGHT -40, COLOR_BLACK);
-
-	unsigned selectedSkillLevel = 0;
-	switch(mSkillsScreenCursor)
-	{
-	case 1:
-		selectedSkillLevel = Resources::mSkillsSystem->GetWarpLevel();
-		break;
-	case 2:
-		selectedSkillLevel = Resources::mSkillsSystem->GetDematerializeLevel();
-		break;
-	case 3:
-		selectedSkillLevel = Resources::mSkillsSystem->GetOverdriveLevel();
-		break;
-	case 4:
-		selectedSkillLevel = Resources::mSkillsSystem->GetForceFieldLevel();
-		break;
-	};
 
 	Resources::mCrossButton_small->Draw(60, PSP_SCREEN_HEIGHT / 2 + 20 + 10);
 	Resources::mSmallStoneFont->DrawText(Resources::STR_SKILLS_SCREEN_XP_COST +
@@ -348,6 +382,9 @@ void Game::RenderSkillsScreen()
 									 	 ( &(ostringstream() << Resources::mSkillsSystem->GetExperiencePoints()) )
 									 	 ->str()),
 										 60, PSP_SCREEN_HEIGHT / 2 + 20 + 10 + 15 * 3);
+
+	Resources::mTriangleButton->Draw(5, 240);
+	Resources::mParafontFont->DrawText(Resources::STR_SKILLS_SCREEN_INFO_BUTTON_LABEL, 40, 240);
 
 	Resources::mParafontFont->DrawTextAlignedRight(Resources::STR_PRESS_O_TO_GO_BACK, 240);
 	Resources::mCircleButton->Draw(PSP_SCREEN_WIDTH - Resources::mCircleButton->GetWidth() - 5, 240);

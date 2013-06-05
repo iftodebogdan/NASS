@@ -22,7 +22,11 @@ Sound::~Sound()
 
 bool Sound::Play()
 {
-	int channel = Audio::GetAvailableChannel();
+	int channel;
+	if(IsPlaying())
+		channel = oslGetSoundChannel(mSound);
+	else
+		channel = Audio::GetAvailableChannel();
 
 	if(channel == -1)
 		return false;
@@ -36,7 +40,11 @@ bool Sound::Play()
 
 bool Sound::PlayLooped()
 {
-	int channel = Audio::GetAvailableChannel();
+	int channel;
+	if(IsPlaying())
+		channel = oslGetSoundChannel(mSound);
+	else
+		channel = Audio::GetAvailableChannel();
 
 	if(channel == -1)
 		return false;
