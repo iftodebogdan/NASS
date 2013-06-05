@@ -19,6 +19,7 @@ class SaveLoad
 		unsigned overdriveLevel;
 		unsigned forceFieldLevel;
 		unsigned long expPointsAvailable;
+		unsigned long playerHiScore;
 	};
 
 public:

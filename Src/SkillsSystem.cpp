@@ -355,13 +355,13 @@ void SkillsSystem::Render()
 	if(GetForceFieldLevel())
 		mSkillForceField->Render();
 
-	RenderScore();
-
 	if(GetWarpLevel() ||
 	   GetDematerializeLevel() ||
 	   GetOverdriveLevel() ||
 	   GetForceFieldLevel())
 		RenderEnergy();
+
+	RenderScore();
 }
 
 void SkillsSystem::ResetSkills()

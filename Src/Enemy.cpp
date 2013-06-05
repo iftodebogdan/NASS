@@ -164,7 +164,8 @@ void EnemyList::EvaluateState()
 					)
 		);
 
-		mEnemySpeedModifier += 2;
+		if(Resources::mPlayer->GetState() == Player::ALIVE)
+			mEnemySpeedModifier += 2;
 		if(mEnemySpeedModifier >= 500)
 			mEnemySpeedModifier = 500;
 	}

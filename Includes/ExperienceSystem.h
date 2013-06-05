@@ -27,12 +27,15 @@ public:
 	unsigned long GetPlayerScore();
 	void SetPlayerScore(unsigned newPlayerScore);
 	void ResetPlayerScore();
+	unsigned long GetHiScore();
+	void SetHiScore(unsigned long newHiScore);
 	unsigned long GetExperiencePoints();
 	void SetExperiencePoints(unsigned long newExperiencePoints);
 	void RenderScore();
 
 private:
 	unsigned long mPlayerScore;
+	unsigned long mPlayerHiScore;
 	unsigned long mExperiencePoints;
 	int mUpdateScoreFlag;
 };

@@ -8,7 +8,7 @@
 #include "../Includes/Game.h"
 #include "../Includes/Resources.h"
 
-#define DEBUG_MODE_NO_COLLISION 1
+#define DEBUG_MODE_NO_COLLISION 0
 #define DEBUG_MODE 1
 
 Game::Game()
@@ -111,8 +111,6 @@ void Game::SetState(GameState newState)
 
 	if(newState == GAME_SCREEN)
 	{
-		if(Resources::mMainMenuBGM->IsPlaying())
-			Resources::mMainMenuBGM->Stop();
 		if(!Resources::mInGameBGM->IsPlaying())
 			Resources::mInGameBGM->PlayLooped();
 
@@ -130,6 +128,9 @@ void Game::SetState(GameState newState)
 	{
 		Resources::mPlayer->SetState(Player::DYING);
 	}
+
+	if(newState == TITLE_SCREEN && GetState() == GAME_OVER_SCREEN)
+		Resources::mSkillsSystem->UpdateExperiencePoints();
 
 	if(newState == SKILLS_SCREEN)
 		mSkillsScreenCursor = 1;
@@ -159,6 +160,10 @@ void Game::RenderTitleScreen()
 														   string(static_cast<ostringstream*>
 														   ( &(ostringstream() << Resources::mSkillsSystem->GetExperiencePoints()) )
 														   ->str()), 5);
+			Resources::mParafontFont->DrawTextAlignedRight(Resources::STR_HI_SCORE_OSD +
+														   string(static_cast<ostringstream*>
+														   ( &(ostringstream() << Resources::mSkillsSystem->GetHiScore()) )
+														   ->str()), 35);
 			Resources::mCrossButton->Draw(210, 235);
 
 			if(Resources::mController->IsPressed(Controller::CROSS))
@@ -211,12 +216,12 @@ void Game::RenderGameOverScreen()
 {
 	Resources::mGameBackground->Render();
 	Resources::mEnemyList->Render();
-	Resources::mSkillsSystem->RenderScore();
-	string strGameOverMessage = Resources::STR_GAME_OVER_MESSAGE +
-								string(static_cast<ostringstream*>( &(ostringstream() << Resources::mSkillsSystem->GetPlayerScore() / SCORE_TO_XP_RATIO) )->str());
-	Resources::mSkillsSystem->UpdateExperiencePoints();
+	//Resources::mSkillsSystem->RenderScore();
+	//string strGameOverMessage = Resources::STR_GAME_OVER_MESSAGE +
+	//							string(static_cast<ostringstream*>( &(ostringstream() << Resources::mSkillsSystem->GetPlayerScore() / SCORE_TO_XP_RATIO) )->str());
+	//Resources::mSkillsSystem->UpdateExperiencePoints();
 
-	if(oslMessageBox(
+	/*if(oslMessageBox(
 		strGameOverMessage.c_str(),
 		Resources::STR_GAME_OVER_TITLE.c_str(),
 		oslMake3Buttons(OSL_KEY_CROSS, OSL_MB_OK, 0, 0, 0, 0)) == OSL_MB_OK)
@@ -225,7 +230,27 @@ void Game::RenderGameOverScreen()
 			SetState(TITLE_SCREEN);
 		}
 	else
-		Resources::mMenuCancel->Play();
+		Resources::mMenuCancel->Play();*/
+
+	oslDrawFillRect(20, 20, PSP_SCREEN_WIDTH - 20, PSP_SCREEN_HEIGHT - 20, RGBA(255, 255, 255, 150));
+	oslDrawRect(20, 20, PSP_SCREEN_WIDTH - 20, PSP_SCREEN_HEIGHT - 20, RGBA(255, 255, 255, 255));
+
+	string strGameOverXPEarnedMessage = Resources::STR_GAME_OVER_XP_EARNED_MESSAGE +
+								string(static_cast<ostringstream*>( &(ostringstream() << Resources::mSkillsSystem->GetPlayerScore() / SCORE_TO_XP_RATIO) )->str());
+	Resources::mParafontFont->DrawTextCentered(Resources::STR_GAME_OVER_TITLE, 70);
+	Resources::mCopperPlateFont->DrawTextCentered(Resources::STR_GAME_OVER_MESSAGE, 120);
+	Resources::mCopperPlateFont->DrawTextCentered(strGameOverXPEarnedMessage, 150);
+	if(Resources::mSkillsSystem->GetPlayerScore() > Resources::mSkillsSystem->GetHiScore())
+		Resources::mCopperPlateFont->DrawTextCentered(Resources::STR_GAME_OVER_NEW_HI_SCORE_MESSAGE, 180);
+
+	Resources::mParafontFont->DrawTextAlignedRight(Resources::STR_PRESS_X_TO_CONTINUE, 240);
+	Resources::mCrossButton->Draw(PSP_SCREEN_WIDTH - Resources::mCrossButton->GetWidth() - 5, 240);
+
+	if(Resources::mController->IsPressed(Controller::CROSS))
+	{
+		Resources::mMenuSelect->Play();
+		Resources::mGameApp->SetState(TITLE_SCREEN);
+	}
 }
 
 void Game::DisplaySkillLevel(unsigned skillLevel, int posX, int posY)
@@ -466,9 +491,9 @@ void Game::DebugScreen()
 	oslSetTextColor(COLOR_WHITE);
 
 	oslPrintf("%f KB available\n", (float)oslGetRamStatus().maxAvailable / 1024);
-	oslPrintf("Game state: %d\n", GetState());
-	oslPrintf("GameLogo state: %d\n", Resources::mGameLogo->GetState());
-	oslPrintf("DropDownMenu state: %d\n", Resources::mDropDownMenu->GetState());
+	//oslPrintf("Game state: %d\n", GetState());
+	//oslPrintf("GameLogo state: %d\n", Resources::mGameLogo->GetState());
+	//oslPrintf("DropDownMenu state: %d\n", Resources::mDropDownMenu->GetState());
 	oslPrintf("Enemy count: %d\n", Resources::mEnemyList->GetEnemyCount());
 	oslPrintf("mEnemySpeedModifier: %d\n", Resources::mEnemyList->GetEnemySpeedModifier());
 	oslPrintf("Available audio channels: ");

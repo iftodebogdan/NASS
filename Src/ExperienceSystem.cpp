@@ -12,6 +12,7 @@ ExperienceSystem::ExperienceSystem()
 {
 	ResetPlayerScore();
 	SetExperiencePoints(0);
+	SetHiScore(0);
 }
 
 ExperienceSystem::ExperienceSystem(unsigned long expPointsAvailable)
@@ -46,6 +47,11 @@ unsigned long ExperienceSystem::GetPlayerScore()
 	return mPlayerScore;
 }
 
+unsigned long ExperienceSystem::GetHiScore()
+{
+	return mPlayerHiScore;
+}
+
 void ExperienceSystem::ResetPlayerScore()
 {
 	SetPlayerScore(0);
@@ -62,9 +68,18 @@ void ExperienceSystem::SetPlayerScore(unsigned newPlayerScore)
 	mPlayerScore = newPlayerScore;
 }
 
+void ExperienceSystem::SetHiScore(unsigned long newHiScore)
+{
+	mPlayerHiScore = newHiScore;
+}
+
 void ExperienceSystem::UpdateExperiencePoints()
 {
 	mExperiencePoints += mPlayerScore / SCORE_TO_XP_RATIO;
+
+	if(GetHiScore() < mPlayerScore)
+		SetHiScore(mPlayerScore);
+
 	ResetPlayerScore();
 }
 
@@ -82,5 +97,12 @@ void ExperienceSystem::RenderScore()
 		mUpdateScoreFlag = 60;
 		mPlayerScore += Resources::mEnemyList->GetEnemySpeedModifier();
 	}
-	Resources::mParafontFont->DrawTextAlignedRight(Resources::STR_SCORE_OSD + string(static_cast<ostringstream*>( &(ostringstream() << GetPlayerScore()) )->str()), 5);
+
+	Resources::mParafontFont->DrawTextAlignedRight(Resources::STR_SCORE_OSD +
+												   string(static_cast<ostringstream*>
+												   ( &(ostringstream() << GetPlayerScore()) )->str()), 5);
+	Resources::mParafontFont->DrawTextAlignedRight(Resources::STR_HI_SCORE_OSD +
+												   string(static_cast<ostringstream*>
+												   ( &(ostringstream() << Resources::mSkillsSystem->GetHiScore()) )
+												   ->str()), 35);
 }

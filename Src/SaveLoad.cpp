@@ -19,6 +19,7 @@ void SaveLoad::AutoSaveGame()
 	save.overdriveLevel = Resources::mSkillsSystem->GetOverdriveLevel();
 	save.forceFieldLevel = Resources::mSkillsSystem->GetForceFieldLevel();
 	save.expPointsAvailable = Resources::mSkillsSystem->GetExperiencePoints();
+	save.playerHiScore = Resources::mSkillsSystem->GetHiScore();
 
 	if((saveGameFile = fopen("savegame.bin", "wb")) != NULL)
 	{
@@ -48,6 +49,7 @@ void SaveLoad::LoadSaveGame()
 	Resources::mSkillsSystem->SetOverdriveLevel(save.overdriveLevel);
 	Resources::mSkillsSystem->SetForceFieldLevel(save.forceFieldLevel);
 	Resources::mSkillsSystem->SetExperiencePoints(save.expPointsAvailable);
+	Resources::mSkillsSystem->SetHiScore(save.playerHiScore);
 }
 
 void SaveLoad::ResetProgress()
@@ -68,6 +70,7 @@ void SaveLoad::ResetProgress()
 	Resources::mSkillsSystem->SetOverdriveLevel(0);
 	Resources::mSkillsSystem->SetForceFieldLevel(0);
 	Resources::mSkillsSystem->SetExperiencePoints(0);
+	Resources::mSkillsSystem->SetHiScore(0);
 
 	AutoSaveGame();
 }

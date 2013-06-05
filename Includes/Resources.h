@@ -132,10 +132,14 @@ public:
 	static string STR_RETURN_TO_TITLE_SCREEN_MESSAGE;
 	static string STR_GAME_OVER_TITLE;
 	static string STR_GAME_OVER_MESSAGE;
+	static string STR_GAME_OVER_XP_EARNED_MESSAGE;
+	static string STR_GAME_OVER_NEW_HI_SCORE_MESSAGE;
 	static string STR_PRESS_X_TO_START;
 	static string STR_PRESS_O_TO_GO_BACK;
+	static string STR_PRESS_X_TO_CONTINUE;
 	static string STR_SCORE_OSD;
 	static string STR_XP_OSD;
+	static string STR_HI_SCORE_OSD;
 	static string STR_ENERGY_OSD;
 	static string STR_WARP_SKILL;
 	static string STR_DEMATERIALIZE_SKILL;
