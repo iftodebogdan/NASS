@@ -6,7 +6,9 @@
  */
 
 #include "../Includes/SaveLoad.h"
+
 #include "../Includes/Resources.h"
+#include <fstream>
 
 void SaveLoad::AutoSaveGame()
 {

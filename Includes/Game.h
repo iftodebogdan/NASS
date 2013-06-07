@@ -9,8 +9,6 @@
 #define GAME_H_
 
 #include <oslib/oslib.h>
-#include <string>
-using namespace std;
 
 class Game
 {
@@ -30,22 +28,13 @@ public:
 	Game();	//creates the game
 	~Game();	//destroys the game
 	void Run();	//runs the game
+	void SetState(GameState newGameState);
+	GameState GetState();
 
 private:
 	void LoadResources();
-	void SetState(GameState newGameState);
-	GameState GetState();
-	void RenderTitleScreen();
-	void RenderGameScreen();
-	void RenderGameOverScreen();
-	void DisplaySkillLevel(unsigned skillLevel, int posX, int posY);
-	void RenderSkillsScreen();
-	void RenderControlsScreen();
-
-	void DebugScreen();
 
 	GameState mGameState;
-	int mSkillsScreenCursor;
 };
 
 #endif /* GAME_H_ */

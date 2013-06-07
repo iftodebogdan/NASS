@@ -7,6 +7,8 @@
 
 #include "../Includes/Controller.h"
 
+#include <oslib/oslib.h>
+
 #define ANALOG_SENSITIVITY 80
 
 Controller::Controller()

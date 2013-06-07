@@ -6,6 +6,7 @@
  */
 
 #include "../Includes/Audio.h"
+
 #include "../Includes/Resources.h"
 
 Sound::Sound(string pathToSndFile, bool isStream)

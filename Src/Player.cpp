@@ -5,8 +5,9 @@
  *      Author: Bogdan
  */
 
-#include "../Includes/Resources.h"
 #include "../Includes/Player.h"
+
+#include "../Includes/Resources.h"
 
 #define PLAYER_SPEED 2
 

@@ -8,9 +8,9 @@
 #ifndef EXPERIENCESYSTEM_H_
 #define EXPERIENCESYSTEM_H_
 
-#include <iomanip>
-#include <locale>
-#include <sstream>
+//#include <iomanip>
+//#include <locale>
+//#include <sstream>
 #include <string>
 using namespace std;
 

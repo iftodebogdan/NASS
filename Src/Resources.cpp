@@ -7,6 +7,8 @@
 
 #include "../Includes/Resources.h"
 
+#include <sstream>
+
 string Resources::IMG_PRIMARY_BACKGROUND = "Res/img/PrimaryBackground.png";
 string Resources::IMG_PARALLAX_BACKGROUND = "Res/img/ParallaxBackground.png";
 string Resources::IMG_GAME_LOGO = "Res/img/GameLogo.png";
@@ -181,6 +183,8 @@ AnimatedSprite* Resources::mAsteroidS = NULL;
 AnimatedSprite* Resources::mMoonRock = NULL;
 AnimatedSprite* Resources::mAsteroidExplosion = NULL;
 
+Screen* Resources::mScreen = NULL;
+
 Sound* Resources::mDropDownMenuSweep = NULL;
 Sound* Resources::mInGameBGM = NULL;
 Sound* Resources::mMainMenuBGM = NULL;
@@ -258,6 +262,8 @@ void Resources::LoadResources()
 						ASTEROID_EXPLOSION_FREME_HEIGHT_SIZE,
 						ASTEROID_EXPLOSION_FRAMERATE);
 
+	mScreen = new Screen();
+
 	mDropDownMenuSweep = new Sound(SND_DROP_DOWN_MENU_SWEEP, false);
 	mInGameBGM = new Sound(SND_IN_GAME_BGM, false);
 	mMainMenuBGM = new Sound(SND_MAIN_MENU_BGM, false);
@@ -308,6 +314,8 @@ void Resources::AssertResources()
 	oslAssert(mAsteroidM != NULL);
 	oslAssert(mAsteroidS != NULL);
 	oslAssert(mAsteroidExplosion != NULL);
+
+	oslAssert(mScreen != NULL);
 
 	oslAssert(mDropDownMenuSweep != NULL);
 	oslAssert(mInGameBGM != NULL);

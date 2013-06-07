@@ -8,8 +8,6 @@
 #ifndef SAVELOAD_H_
 #define SAVELOAD_H_
 
-#include <fstream>
-
 class SaveLoad
 {
 	struct SaveGame

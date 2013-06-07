@@ -21,10 +21,9 @@
 #include "CollisionDetection.h"
 #include "SkillsSystem.h"
 #include "SaveLoad.h"
+#include "Screen.h"
 
 #include <string>
-#include <list>
-#include <time.h>
 using namespace std;
 
 #define COLOR_RED RGB(255, 0, 0)
@@ -213,6 +212,8 @@ public:
 	static AnimatedSprite* mAsteroidM;
 	static AnimatedSprite* mAsteroidS;
 	static AnimatedSprite* mAsteroidExplosion;
+
+	static Screen* mScreen;
 
 	static Sound* mDropDownMenuSweep;
 	static Sound* mInGameBGM;

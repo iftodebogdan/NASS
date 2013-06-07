@@ -5,8 +5,10 @@
  *      Author: Bogdan
  */
 
-#include "../Includes/Resources.h"
 #include "../Includes/ExperienceSystem.h"
+
+#include "../Includes/Resources.h"
+#include <sstream>
 
 ExperienceSystem::ExperienceSystem()
 {

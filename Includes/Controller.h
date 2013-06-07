@@ -8,8 +8,6 @@
 #ifndef CONTROLLER_H_
 #define CONTROLLER_H_
 
-#include <oslib/oslib.h>
-
 class Controller
 {
 public:

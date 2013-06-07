@@ -8,10 +8,7 @@
 #ifndef DROPDOWNMENU_H_
 #define DROPDOWNMENU_H_
 
-#include "Controller.h"
-#include "Font.h"
 #include "ScrollingDrawable.h"
-//#include "Resources.h" //->Moved to DropDownMenu.cpp
 
 class DropDownMenu : public ScrollingDrawable
 {

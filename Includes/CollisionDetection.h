@@ -8,10 +8,8 @@
 #ifndef COLLISIONDETECTION_H_
 #define COLLISIONDETECTION_H_
 
-#include "Resources.h"
-
-#include <list>
-using namespace std;
+#include "Player.h"
+#include "Enemy.h"
 
 class CollisionDetection
 {

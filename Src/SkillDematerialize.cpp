@@ -6,7 +6,9 @@
  */
 
 #include "../Includes/SkillDematerialize.h"
+
 #include "../Includes/Resources.h"
+#include <math.h>
 
 SkillDematerialize::SkillDematerialize()
 {
