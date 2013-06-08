@@ -5,7 +5,7 @@ OBJS = Src/main.o Src/Drawable.o Src/Game.o Src/AnimatedSprite.o \
 	   Src/Player.o Src/Enemy.o Src/CollisionDetection.o Src/ExperienceSystem.o \
 	   Src/SkillsSystem.o Src/SaveLoad.o Src/SkillWarp.o Src/SkillDematerialize.o \
 	   Src/SkillOverdrive.o Src/SkillForceField.o Src/Audio.o Src/Screen.o \
-	   Src/Debug.o
+	   Src/Debug.o Src/BinaryFileIO.o
  
 INCDIR = 
 CFLAGS = -O2 -g -G0 -Wall 

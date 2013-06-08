@@ -10,6 +10,11 @@
 #include "../Includes/Resources.h"
 #include <sstream>
 
+Screen::Screen()
+{
+	SetSkillsScreenCursorPosition(1);
+}
+
 void Screen::RenderTitleScreen()
 {
 	Resources::mGameBackground->Render();
@@ -41,7 +46,7 @@ void Screen::RenderTitleScreen()
 		}
 
 	if(Resources::mGameLogo->GetState() == GameLogo::EXITED)
-		Resources::mGameApp->SetState(Game::GAME_SCREEN);
+		SetState(GAME_SCREEN);
 }
 
 void Screen::RenderGameScreen()
@@ -54,10 +59,10 @@ void Screen::RenderGameScreen()
 		Resources::mSkillsSystem->Render();
 
 	if(CollisionDetection::CheckForPixelPerfectCollisions(Resources::mPlayer, Resources::mEnemyList) &&
-			Resources::mGameApp->GetState() != Game::TRANSITION_GAME_OVER_SCREEN)
+			GetState() != TRANSITION_GAME_OVER_SCREEN)
 	{
 		Resources::mPlayerExplosion->Play();
-		Resources::mGameApp->SetState(Game::TRANSITION_GAME_OVER_SCREEN);
+		SetState(TRANSITION_GAME_OVER_SCREEN);
 	}
 
 
@@ -71,7 +76,7 @@ void Screen::RenderGameScreen()
 			oslMake3Buttons(OSL_KEY_CROSS, OSL_MB_YES, OSL_KEY_CIRCLE, OSL_MB_NO, 0, 0)) == OSL_MB_YES)
 			{
 				Resources::mMenuSelect->Play();
-				Resources::mGameApp->SetState(Game::TITLE_SCREEN);
+				SetState(TITLE_SCREEN);
 			}
 		else
 			Resources::mMenuCancel->Play();
@@ -100,7 +105,7 @@ void Screen::RenderGameOverScreen()
 	if(Resources::mController->IsPressed(Controller::CROSS))
 	{
 		Resources::mMenuSelect->Play();
-		Resources::mGameApp->SetState(Game::TITLE_SCREEN);
+		SetState(TITLE_SCREEN);
 	}
 }
 
@@ -251,7 +256,7 @@ void Screen::RenderSkillsScreen()
 	if(Resources::mController->IsPressed(Controller::CIRCLE))
 	{
 		Resources::mMenuCancel->Play();
-		Resources::mGameApp->SetState(Game::TITLE_SCREEN);
+		SetState(TITLE_SCREEN);
 	}
 
 	if(Resources::mController->IsPressed(Controller::DPAD_UP))
@@ -377,6 +382,55 @@ void Screen::RenderControlsScreen()
 	if(Resources::mController->IsPressed(Controller::CIRCLE))
 	{
 		Resources::mMenuCancel->Play();
-		Resources::mGameApp->SetState(Game::TITLE_SCREEN);
+		SetState(TITLE_SCREEN);
 	}
+}
+
+void Screen::SetState(ScreenState newState)
+{
+	if(newState == TITLE_SCREEN)
+	{
+		//Resources::mGameLogo->Reset();
+		//Resources::mDropDownMenu->Reset();
+
+		if(Resources::mInGameBGM->IsPlaying())
+			Resources::mInGameBGM->Stop();
+		if(!Resources::mMainMenuBGM->IsPlaying())
+			Resources::mMainMenuBGM->PlayLooped();
+
+		Resources::mSaveLoad->AutoSaveGame();
+	}
+
+	if(newState == GAME_SCREEN)
+	{
+		if(!Resources::mInGameBGM->IsPlaying())
+			Resources::mInGameBGM->PlayLooped();
+
+		Resources::mGameLogo->Reset();
+
+		Resources::mPlayer->Reset();
+		Resources::mEnemyList->Reset();
+
+		Resources::mSkillsSystem->ResetPlayerScore();
+		Resources::mSkillsSystem->ResetEnergy();
+		Resources::mSkillsSystem->ResetSkills();
+	}
+
+	if(newState == TRANSITION_GAME_OVER_SCREEN)
+	{
+		Resources::mPlayer->SetState(Player::DYING);
+	}
+
+	if(newState == TITLE_SCREEN && GetState() == GAME_OVER_SCREEN)
+		Resources::mSkillsSystem->UpdateExperiencePoints();
+
+	if(newState == SKILLS_SCREEN)
+		Resources::mScreen->SetSkillsScreenCursorPosition(1);
+
+	mScreenState = newState;
+}
+
+Screen::ScreenState Screen::GetState()
+{
+	return mScreenState;
 }

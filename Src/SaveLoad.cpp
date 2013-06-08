@@ -8,12 +8,10 @@
 #include "../Includes/SaveLoad.h"
 
 #include "../Includes/Resources.h"
-#include <fstream>
+#include "../Includes/BinaryFileIO.h"
 
 void SaveLoad::AutoSaveGame()
 {
-	FILE* saveGameFile = NULL;
-
 	SaveGame save;
 	memset(&save, 0, sizeof(save));
 	save.warpLevel = Resources::mSkillsSystem->GetWarpLevel();
@@ -23,28 +21,31 @@ void SaveLoad::AutoSaveGame()
 	save.expPointsAvailable = Resources::mSkillsSystem->GetExperiencePoints();
 	save.playerHiScore = Resources::mSkillsSystem->GetHiScore();
 
-	if((saveGameFile = fopen("savegame.bin", "wb")) != NULL)
-	{
-		fwrite(&save, sizeof(save), 1, saveGameFile);
-		fclose(saveGameFile);
-	}
+	BinaryFileIO *saveGameFile;
+	saveGameFile = new BinaryFileIO("savegame.bin");
+
+	saveGameFile->Write(&save, sizeof(save));
+
+	delete saveGameFile;
 }
 
 void SaveLoad::LoadSaveGame()
 {
-	FILE* saveGameFile = NULL;
-
 	SaveGame save;
 	memset(&save, 0, sizeof(save));
 
-	if((saveGameFile = fopen("savegame.bin", "rb")) == NULL)
+	BinaryFileIO *saveGameFile;
+	saveGameFile = new BinaryFileIO("savegame.bin");
+
+	if(!saveGameFile->IsFileOpen())
 	{
 		AutoSaveGame();
 		return;
 	}
 
-	fread(&save, sizeof(save), 1, saveGameFile); // load the game save data
-	fclose(saveGameFile);
+	saveGameFile->Read(&save, sizeof(save));
+
+	delete saveGameFile;
 
 	Resources::mSkillsSystem->SetWarpLevel(save.warpLevel);
 	Resources::mSkillsSystem->SetDematerializeLevel(save.dematerializeLevel);

@@ -138,10 +138,10 @@ void DropDownMenu::EvaluateState()
 		switch(mMenuItemIndex)
 		{
 		case 0:
-			Resources::mGameApp->SetState(Game::SKILLS_SCREEN);
+			Resources::mScreen->SetState(Screen::SKILLS_SCREEN);
 			break;
 		case 1:
-			Resources::mGameApp->SetState(Game::CONTROLS_SCREEN);
+			Resources::mScreen->SetState(Screen::CONTROLS_SCREEN);
 			break;
 		case 2:
 			Resources::mSaveLoad->ResetProgress();
