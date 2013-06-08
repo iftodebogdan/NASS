@@ -41,8 +41,7 @@ private:
 class Audio
 {
 	friend class Sound;
-	friend class Game;
-	friend class Screen;
+	friend class Debug;
 
 private:
 	static int GetAvailableChannel();

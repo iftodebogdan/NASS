@@ -9,8 +9,6 @@
 
 #include "../Includes/Resources.h"
 
-#define DEBUG_MODE 0
-
 Game::Game()
 {
 	oslInit(0);
@@ -84,7 +82,7 @@ void Game::Run()
 			oslBenchmarkTest(OSL_BENCH_END);
 			oslSysBenchmarkDisplay();
 			oslPrintf("\n");
-			Resources::mScreen->DebugScreen();
+			Debug::DebugScreen();
 		}
 
 		oslEndDrawing();

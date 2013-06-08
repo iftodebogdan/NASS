@@ -11,9 +11,6 @@
 #include <list>
 using namespace std;
 
-#define DEBUG_MODE_NO_COLLISION 0
-#define DEBUG_MODE_COLLISION_TEST 0
-
 bool CollisionDetection::CheckForCollisions(Player *playerObject, EnemyList *enemyListObject)
 {
 	if(Resources::mSkillsSystem->mSkillDematerialize->IsActive() &&

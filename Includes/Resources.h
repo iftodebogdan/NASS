@@ -22,6 +22,7 @@
 #include "SkillsSystem.h"
 #include "SaveLoad.h"
 #include "Screen.h"
+#include "Debug.h"
 
 #include <string>
 using namespace std;

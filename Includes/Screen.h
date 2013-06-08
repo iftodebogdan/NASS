@@ -18,8 +18,6 @@ public:
 	void RenderSkillsScreen();
 	void RenderControlsScreen();
 
-	void DebugScreen();
-
 private:
 	void DisplaySkillLevel(unsigned skillLevel, int posX, int posY);
 

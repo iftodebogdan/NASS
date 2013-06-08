@@ -380,18 +380,3 @@ void Screen::RenderControlsScreen()
 		Resources::mGameApp->SetState(Game::TITLE_SCREEN);
 	}
 }
-
-void Screen::DebugScreen()
-{
-	oslSetBkColor(COLOR_BLACK);
-	oslSetTextColor(COLOR_WHITE);
-
-	oslPrintf("RAM free: %f KB\n", (float)oslGetRamStatus().maxAvailable / 1024);
-	oslPrintf("Enemy count: %d\n", Resources::mEnemyList->GetEnemyCount());
-	oslPrintf("mEnemySpeedModifier: %d\n", Resources::mEnemyList->GetEnemySpeedModifier());
-	oslPrintf("Available audio channels: ");
-	for(int i=0;i<=7;i++)
-		if(Audio::IsChannelAvailable(i))
-			oslPrintf("%i ", i);
-	oslPrintf("\n");
-}
