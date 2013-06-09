@@ -235,6 +235,8 @@ public:
 	static SkillsSystem* mSkillsSystem;
 
 	static SaveLoad* mSaveLoad;
+
+	static Debug* mDebug;
 };
 
 #endif /* RESOURCE_H_ */

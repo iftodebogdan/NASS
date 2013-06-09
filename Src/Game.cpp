@@ -17,14 +17,14 @@ Game::Game()
 	oslSetTransparentColor(COLOR_TRANSPARENT);
 	oslSetQuitOnLoadFailure(1);
 
-	if(DEBUG_MODE)
-		oslBenchmarkTest(OSL_BENCH_INIT);
-
 	Resources::LoadResources();
 	Resources::AssertResources();
 	Resources::mSaveLoad->LoadSaveGame();
 	Resources::mScreen->SetState(Screen::TITLE_SCREEN);
 	Resources::mGameApp = this;
+
+	if(DEBUG_MODE)
+		Resources::mDebug->InitBenchmark();
 }
 
 Game::~Game()
@@ -41,7 +41,7 @@ void Game::Run()
 	while (!osl_quit)
 	{
 		if(DEBUG_MODE)
-			oslBenchmarkTest(OSL_BENCH_START);
+			Resources::mDebug->StartBenckmark();
 
 		Resources::mController->ReadKeys();
 
@@ -74,10 +74,8 @@ void Game::Run()
 
 		if(DEBUG_MODE)
 		{
-			oslBenchmarkTest(OSL_BENCH_END);
-			oslSysBenchmarkDisplay();
-			oslPrintf("\n");
-			Debug::DebugScreen();
+			Resources::mDebug->EndBenchmark();
+			Resources::mDebug->DebugScreen();
 		}
 
 		oslEndDrawing();

@@ -205,6 +205,8 @@ SkillsSystem* Resources::mSkillsSystem = NULL;
 
 SaveLoad* Resources::mSaveLoad = NULL;
 
+Debug* Resources::mDebug = NULL;
+
 void Resources::LoadResources()
 {
 	oslSrand(time(NULL));
@@ -283,6 +285,9 @@ void Resources::LoadResources()
 	mSkillsSystem = new SkillsSystem();
 
 	mSaveLoad = new SaveLoad();
+
+	if(DEBUG_MODE)
+		mDebug = new Debug();
 }
 
 void Resources::AssertResources()
@@ -336,4 +341,7 @@ void Resources::AssertResources()
 	oslAssert(mSkillsSystem != NULL);
 
 	oslAssert(mSaveLoad != NULL);
+
+	if(DEBUG_MODE)
+		oslAssert(mDebug != NULL);
 }
