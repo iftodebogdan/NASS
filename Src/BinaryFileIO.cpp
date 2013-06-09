@@ -16,7 +16,8 @@ BinaryFileIO::BinaryFileIO(string pathToFile)
 
 BinaryFileIO::~BinaryFileIO()
 {
-	fclose(mFile);
+	if(mFile != NULL)
+		fclose(mFile);
 }
 
 bool BinaryFileIO::Write(const void* data, size_t size)

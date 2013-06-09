@@ -12,7 +12,8 @@
 #include <string>
 using namespace std;
 
-class Drawable {
+class Drawable
+{
 public:
 	Drawable(string pathToImgFile);	//creates a drawable using an image file in png format
 	Drawable(const Drawable *drawableImg);

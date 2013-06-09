@@ -54,6 +54,9 @@ int Drawable::GetHeight()
 
 unsigned Drawable::GetPixel(int coordX, int coordY)
 {
+	if(coordX >= GetWidth() || coordY >= GetHeight())
+		return 0;
+
 	return oslGetImagePixel(mDrawableImg, coordX, coordY);
 }
 

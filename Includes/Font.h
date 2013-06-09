@@ -24,6 +24,7 @@ public:
 	void DrawTextAlignedRight(string text, int posY);
 	int GetTextWidth(string text);
 
+private:
 	OSL_SFONT* mFont;
 };
 
