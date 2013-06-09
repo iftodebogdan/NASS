@@ -7,6 +7,8 @@
 
 #include "../Includes/ScrollingDrawable.h"
 
+#include "../Includes/Resources.h"
+
 #define PSP_SCREEN_WIDTH 480	//the width of the PSP's screen in pixels
 #define PSP_SCREEN_HEIGHT 272	//the height of the PSP's screen in pixels
 
@@ -62,7 +64,7 @@ void ScrollingDrawable::Reset()
 
 void ScrollingDrawable::Render()
 {
-	mPixelsToScrollX += GetScrollSpeedX() / 60.0f;
+	mPixelsToScrollX += GetScrollSpeedX() / (float)Resources::mDebug->GetFrameRate();
 	if(abs(mPixelsToScrollX) >= 1)
 	{
 		MoveX(mPixelsToScrollX);
@@ -71,7 +73,7 @@ void ScrollingDrawable::Render()
 	/*if(abs(GetPositionX()) > PSP_SCREEN_WIDTH)
 		MoveX(GetScrollSpeedX() / abs(GetScrollSpeedX()) * -PSP_SCREEN_WIDTH);*/
 
-	mPixelsToScrollY += GetScrollSpeedY() / 60.0f;
+	mPixelsToScrollY += GetScrollSpeedY() / (float)Resources::mDebug->GetFrameRate();
 	if(abs(mPixelsToScrollY) >= 1)
 	{
 		MoveY(mPixelsToScrollY);

@@ -16,6 +16,7 @@ public:
 	Timer();
 	unsigned long getStartTimeMs();
 	void Sleep(int ms);
+	void ResetStartTime();
 	void ResetStopwatch();
 	bool Stopwatch(int ms);
 

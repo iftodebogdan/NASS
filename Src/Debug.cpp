@@ -11,8 +11,7 @@
 
 Debug::Debug()
 {
-	mFrameCounter = 1;
-	mFrameRate = 0;
+	mFrameRate = 60;
 	mDebugTimer = new Timer();
 }
 
@@ -23,6 +22,8 @@ Debug::~Debug()
 
 void Debug::DebugScreen()
 {
+	CalculateFrameRate();
+
 	oslSetBkColor(COLOR_BLACK);
 	oslSetTextColor(COLOR_WHITE);
 
@@ -40,15 +41,16 @@ void Debug::DebugScreen()
 
 int Debug::GetFrameRate()
 {
-	if(mDebugTimer->Stopwatch(1000))
-	{
-		mFrameRate = mFrameCounter;
-		mFrameCounter = 1;
-	}
+	if(mFrameRate)
+		return mFrameRate;
 	else
-		mFrameCounter++;
+		return 1;
+}
 
-	return mFrameRate;
+void Debug::CalculateFrameRate()
+{
+	mFrameRate = (float)1000 / (float)mDebugTimer->getStartTimeMs();
+	mDebugTimer->ResetStartTime();
 }
 
 void Debug::InitBenchmark()

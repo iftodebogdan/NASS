@@ -10,7 +10,7 @@
 
 #import "Timer.h"
 
-#define DEBUG_MODE 1
+#define DEBUG_MODE 0
 #define DEBUG_MODE_NO_COLLISION 0
 #define DEBUG_MODE_COLLISION_TEST 0
 
@@ -23,11 +23,11 @@ public:
 	void InitBenchmark();
 	void StartBenckmark();
 	void EndBenchmark();
+	int GetFrameRate();
 
 private:
 	void DisplayBenchmark();
-	int GetFrameRate();
-	int mFrameCounter;
+	void CalculateFrameRate();
 	int mFrameRate;
 	Timer* mDebugTimer;
 };

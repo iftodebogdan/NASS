@@ -286,8 +286,7 @@ void Resources::LoadResources()
 
 	mSaveLoad = new SaveLoad();
 
-	if(DEBUG_MODE)
-		mDebug = new Debug();
+	mDebug = new Debug();
 }
 
 void Resources::AssertResources()
@@ -342,6 +341,5 @@ void Resources::AssertResources()
 
 	oslAssert(mSaveLoad != NULL);
 
-	if(DEBUG_MODE)
-		oslAssert(mDebug != NULL);
+	oslAssert(mDebug != NULL);
 }

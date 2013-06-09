@@ -85,7 +85,7 @@ void SkillDematerialize::Evaluate()
 	if(Resources::mController->IsHeld(Controller::CIRCLE) &&
 	   GetState() == ACTIVE)
 	{
-		mEnergyCost += (float)mEnergyCostPerSecond / 60.0f;
+		mEnergyCost += (float)mEnergyCostPerSecond / (float)Resources::mDebug->GetFrameRate();
 
 		if(Resources::mSkillsSystem->DepleteEnergy(floor(mEnergyCost)))
 			mEnergyCost -= floor(mEnergyCost);

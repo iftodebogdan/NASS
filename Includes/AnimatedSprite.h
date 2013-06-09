@@ -9,6 +9,7 @@
 #define ANIMATEDSPRITE_H_
 
 #include "Drawable.h"
+#include "Timer.h"
 
 class AnimatedSprite : public Drawable
 {
@@ -37,7 +38,7 @@ public:
 	void Render(); //renders the animation
 
 private:
-	int mTicksLeft;
+	Timer* mAnimationTimer;
 	int mFramesPerSecond;
 	int mFrameCount;
 	int mCurrentFrame;

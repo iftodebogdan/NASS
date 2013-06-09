@@ -29,6 +29,11 @@ void Timer::Sleep(int ms)
 	while(start + ((float)ms / 1000 * CLOCKS_PER_SEC) > getTimer());
 }
 
+void Timer::ResetStartTime()
+{
+	timer_start = getTimer();
+}
+
 void Timer::ResetStopwatch()
 {
 	stopwatch_start = getTimer();
