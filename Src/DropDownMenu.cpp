@@ -144,12 +144,21 @@ void DropDownMenu::EvaluateState()
 			Resources::mScreen->SetState(Screen::CONTROLS_SCREEN);
 			break;
 		case 2:
-			Resources::mSaveLoad->ResetProgress();
-			break;
-		case 3:
 			if(oslMessageBox(
 				Resources::STR_RESET_PROGRESS_MESSAGE.c_str(),
 				Resources::STR_RESET_PROGRESS_TITLE.c_str(),
+				oslMake3Buttons(OSL_KEY_CROSS, OSL_MB_YES, OSL_KEY_CIRCLE, OSL_MB_NO, 0, 0)) == OSL_MB_NO)
+				{
+					Resources::mMenuCancel->Play();
+					Resources::mSaveLoad->ResetProgress();
+				}
+			else
+				Resources::mMenuSelect->Play();
+			break;
+		case 3:
+			if(oslMessageBox(
+				Resources::STR_QUIT_GAME_MESSAGE.c_str(),
+				Resources::STR_QUIT_GAME_TITLE.c_str(),
 				oslMake3Buttons(OSL_KEY_CROSS, OSL_MB_YES, OSL_KEY_CIRCLE, OSL_MB_NO, 0, 0)) == OSL_MB_YES)
 				{
 					Resources::mMenuSelect->Play();

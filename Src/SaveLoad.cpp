@@ -57,17 +57,6 @@ void SaveLoad::LoadSaveGame()
 
 void SaveLoad::ResetProgress()
 {
-	if(oslMessageBox(
-		Resources::STR_RESET_PROGRESS_MESSAGE.c_str(),
-		Resources::STR_RESET_PROGRESS_TITLE.c_str(),
-		oslMake3Buttons(OSL_KEY_CROSS, OSL_MB_YES, OSL_KEY_CIRCLE, OSL_MB_NO, 0, 0)) == OSL_MB_NO)
-		{
-			Resources::mMenuCancel->Play();
-			return;
-		}
-	else
-		Resources::mMenuSelect->Play();
-
 	Resources::mSkillsSystem->SetWarpLevel(0);
 	Resources::mSkillsSystem->SetDematerializeLevel(0);
 	Resources::mSkillsSystem->SetOverdriveLevel(0);
