@@ -48,7 +48,7 @@ bool CollisionDetection::CheckForCollisions(Player *playerObject, EnemyList *ene
 
 		if(squareDist <= pow(playerObjectRadius + enemyObjectRadius, 2))
 		{
-			if(DEBUG_MODE_NO_COLLISION)
+			if(Resources::mDebug->GetDebugModeNoCollision())
 				return false;
 
 			if(((Enemy*)(*i))->GetState() == Enemy::SPAWNED)
@@ -100,7 +100,7 @@ bool CollisionDetection::CheckForPixelPerfectCollisions(Player* playerObject, En
 			int boxYEnd = min(playerObject->GetPositionY() + playerObject->GetHeight(),
 							  ((Enemy*)(*i))->GetPositionY() + ((Enemy*)(*i))->GetHeight());
 
-			if(DEBUG_MODE_COLLISION_TEST)
+			if(Resources::mDebug->GetDebugModeCollisionTest())
 			{
 				oslDrawFillRect(playerObject->GetPositionX(),
 								playerObject->GetPositionY(),
@@ -120,14 +120,14 @@ bool CollisionDetection::CheckForPixelPerfectCollisions(Player* playerObject, En
 					if((playerObject->GetFramePixel(abs(boxX - playerObject->GetPositionX() - 1), abs(boxY - playerObject->GetPositionY() - 1)) >> 24) != 0 &&
 					   (((Enemy*)(*i))->GetFramePixel(abs(boxX - ((Enemy*)(*i))->GetPositionX() - 1), abs(boxY - ((Enemy*)(*i))->GetPositionY() - 1)) >> 24) != 0)
 					{
-						if(DEBUG_MODE_COLLISION_TEST)
+						if(Resources::mDebug->GetDebugModeCollisionTest())
 						{
 							oslDrawLine(PSP_SCREEN_WIDTH, PSP_SCREEN_HEIGHT, boxX, boxY, COLOR_WHITE);
 							oslWaitKey();
 							return false;
 						}
 
-						if(DEBUG_MODE_NO_COLLISION)
+						if(Resources::mDebug->GetDebugModeNoCollision())
 							return false;
 
 						if(((Enemy*)(*i))->GetState() == Enemy::SPAWNED)

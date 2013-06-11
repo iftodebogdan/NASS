@@ -23,7 +23,7 @@ Game::Game()
 	Resources::mScreen->SetState(Screen::TITLE_SCREEN);
 	Resources::mGameApp = this;
 
-	if(DEBUG_MODE)
+	if(Resources::mDebug->GetDebugMode())
 		Resources::mDebug->InitBenchmark();
 }
 
@@ -40,7 +40,7 @@ void Game::Run()
 
 	while (!osl_quit)
 	{
-		if(DEBUG_MODE)
+		if(Resources::mDebug->GetDebugMode())
 			Resources::mDebug->StartBenckmark();
 
 		Resources::mController->ReadKeys();
@@ -72,7 +72,7 @@ void Game::Run()
 			break;
 		}
 
-		if(DEBUG_MODE)
+		if(Resources::mDebug->GetDebugMode())
 		{
 			Resources::mDebug->EndBenchmark();
 			Resources::mDebug->DebugScreen();

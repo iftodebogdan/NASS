@@ -156,6 +156,25 @@ void DropDownMenu::EvaluateState()
 				Resources::mMenuSelect->Play();
 			break;
 		case 3:
+			Resources::mDebug->SetDebugMode(!Resources::mDebug->GetDebugMode());
+			if(Resources::mDebug->GetDebugMode())
+			{
+				oslMessageBox(
+					Resources::STR_DEBUG_MODE_ON_MESSAGE.c_str(),
+					Resources::STR_DEBUG_MODE_ON_TITLE.c_str(),
+					oslMake3Buttons(OSL_KEY_CROSS, OSL_MB_OK, 0, 0, 0, 0));
+				Resources::mMenuSelect->Play();
+			}
+			else
+			{
+				oslMessageBox(
+					Resources::STR_DEBUG_MODE_OFF_MESSAGE.c_str(),
+					Resources::STR_DEBUG_MODE_OFF_TITLE.c_str(),
+					oslMake3Buttons(OSL_KEY_CROSS, OSL_MB_OK, 0, 0, 0, 0));
+				Resources::mMenuSelect->Play();
+			}
+			break;
+		case 4:
 			if(oslMessageBox(
 				Resources::STR_QUIT_GAME_MESSAGE.c_str(),
 				Resources::STR_QUIT_GAME_TITLE.c_str(),

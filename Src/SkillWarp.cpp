@@ -156,10 +156,6 @@ void SkillWarp::Evaluate()
 
 	if(GetState() == WARPING && mWarpEffect->GetCurrentFrame() == mWarpEffect->GetFrameCount())
 		SetState(READY);
-
-	if(Resources::mPlayer->GetState() != Player::ALIVE)
-		if(Resources::mSkillWarpTargetingSFX->IsPlaying())
-			Resources::mSkillWarpTargetingSFX->Stop();
 }
 
 void SkillWarp::RenderDurationBar()

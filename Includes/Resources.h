@@ -174,13 +174,17 @@ public:
 	static string STR_RESET_PROGRESS_TITLE;
 	static string STR_QUIT_GAME_MESSAGE;
 	static string STR_QUIT_GAME_TITLE;
+	static string STR_DEBUG_MODE_ON_MESSAGE;
+	static string STR_DEBUG_MODE_ON_TITLE;
+	static string STR_DEBUG_MODE_OFF_MESSAGE;
+	static string STR_DEBUG_MODE_OFF_TITLE;
 
 	static string STR_WARP_INFO_MESSAGE;
 	static string STR_DEMATERIALIZE_INFO_MESSAGE;
 	static string STR_OVERDRIVE_INFO_MESSAGE;
 	static string STR_FORCE_FIELD_INFO_MESSAGE;
 
-	static string STR_MENU_ITEMS[4];
+	static string STR_MENU_ITEMS[5];
 	static int MENU_ITEMS_COUNT;
 
 	static Game* mGameApp;

@@ -13,6 +13,10 @@ Debug::Debug()
 {
 	mFrameRate = 60;
 	mDebugTimer = new Timer();
+
+	SetDebugMode(false);
+	SetDebugModeCollisionTest(false);
+	SetDebugModeNoCollision(false);
 }
 
 Debug::~Debug()
@@ -30,13 +34,22 @@ void Debug::DebugScreen()
 	DisplayBenchmark();
 	oslPrintf("FPS: %d\n", GetFrameRate());
 	oslPrintf("RAM free: %f KB\n", (float)oslGetRamStatus().maxAvailable / 1024);
+	/*
 	oslPrintf("Enemy count: %d\n", Resources::mEnemyList->GetEnemyCount());
-	oslPrintf("mEnemySpeedModifier: %d\n", Resources::mEnemyList->GetEnemySpeedModifier());
 	oslPrintf("Available audio channels: ");
 	for(int i=0;i<=7;i++)
 		if(Audio::IsChannelAvailable(i))
 			oslPrintf("%i ", i);
 	oslPrintf("\n");
+	*/
+	oslPrintf("No collision: %s\n", GetDebugModeNoCollision() ? "true" : "false");
+	oslPrintf("Collision test: %s\n", GetDebugModeCollisionTest() ? "true" : "false");
+
+	if(Resources::mController->IsPressed(Controller::L))
+		SetDebugModeNoCollision(!GetDebugModeNoCollision());
+
+	if(Resources::mController->IsPressed(Controller::R))
+		SetDebugModeCollisionTest(!GetDebugModeCollisionTest());
 }
 
 int Debug::GetFrameRate()
@@ -72,4 +85,34 @@ void Debug::DisplayBenchmark()
 {
 	oslSysBenchmarkDisplay();
 	oslPrintf("\n");
+}
+
+void Debug::SetDebugMode(bool newDebugMode)
+{
+	mDebugMode = newDebugMode;
+}
+
+void Debug::SetDebugModeNoCollision(bool newDebugModeNoCollision)
+{
+	mDebugModeNoCollision = newDebugModeNoCollision;
+}
+
+void Debug::SetDebugModeCollisionTest(bool newDebugModeCollisionTest)
+{
+	mDebugModeCollisionTest = newDebugModeCollisionTest;
+}
+
+bool Debug::GetDebugMode()
+{
+	return mDebugMode;
+}
+
+bool Debug::GetDebugModeNoCollision()
+{
+	return mDebugModeNoCollision;
+}
+
+bool Debug::GetDebugModeCollisionTest()
+{
+	return mDebugModeCollisionTest;
 }

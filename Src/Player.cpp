@@ -62,6 +62,11 @@ Player::PlayerState Player::GetState()
 void Player::SetState(PlayerState newState)
 {
 	mPlayerState = newState;
+
+	if(newState == DYING &&
+	   Resources::mSkillsSystem->mSkillWarp->IsActive() &&
+	   Resources::mSkillWarpTargetingSFX->IsPlaying())
+		Resources::mSkillWarpTargetingSFX->Stop();
 }
 
 void Player::EvaluateState()

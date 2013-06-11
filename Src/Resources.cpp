@@ -92,6 +92,10 @@ string Resources::STR_RESET_PROGRESS_MESSAGE = "This will remove all purchased u
 string Resources::STR_RESET_PROGRESS_TITLE = "Reset progress";
 string Resources::STR_QUIT_GAME_MESSAGE = "Are you sure you want to quit?";
 string Resources::STR_QUIT_GAME_TITLE = "Quit game?";
+string Resources::STR_DEBUG_MODE_ON_MESSAGE = "Debug mode is now activated.\nPress L or R anytime to toggle 'no collision' or 'collision test', respectively.";
+string Resources::STR_DEBUG_MODE_ON_TITLE = "Debug mode active";
+string Resources::STR_DEBUG_MODE_OFF_MESSAGE = "Debug mode is now deactivated.";
+string Resources::STR_DEBUG_MODE_OFF_TITLE = "Debug mode inactive";
 
 string Resources::STR_WARP_INFO_MESSAGE = "Warp is activated by pressing the Triangle button. Upon activation, a crosshair appears on the screen which marks the point the ship will warp to after a second Triangle button press. Activation of the skill costs a fraction of the Energy bar, but requires it to be at 100%. After a second Triangle button press, the ship Warps to the crosshair's position and the Energy bar is reduced to 0%. Warp can be canceled by waiting for the crosshair to timeout.\n\nWarp distance: "+
 		string(static_cast<ostringstream*>( &(ostringstream() << WARP_DISTANCE_LV1 - PLAYER_SHIP_FRAME_WIDTH_SIZE) )->str())+"/"+
@@ -149,8 +153,8 @@ string Resources::STR_FORCE_FIELD_INFO_MESSAGE = "Force Field is activated by pr
 		string(static_cast<ostringstream*>( &(ostringstream() << FORCE_FIELD_ENERGY_COST_LV4 * 100 / MAX_ENERGY) )->str())+"/"+
 		string(static_cast<ostringstream*>( &(ostringstream() << FORCE_FIELD_ENERGY_COST_LV5 * 100 / MAX_ENERGY) )->str())+"%";
 
-string Resources::STR_MENU_ITEMS[4] = {"Skills", "Controls", "Reset progress", "Quit"};
-int Resources::MENU_ITEMS_COUNT = 4;
+string Resources::STR_MENU_ITEMS[5] = {"Skills", "Controls", "Reset progress", "Toggle debug mode", "Quit"};
+int Resources::MENU_ITEMS_COUNT = 5;
 
 Game* Resources::mGameApp = NULL;
 
