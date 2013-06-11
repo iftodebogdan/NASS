@@ -63,10 +63,15 @@ void Player::SetState(PlayerState newState)
 {
 	mPlayerState = newState;
 
-	if(newState == DYING &&
-	   Resources::mSkillsSystem->mSkillWarp->IsActive() &&
-	   Resources::mSkillWarpTargetingSFX->IsPlaying())
-		Resources::mSkillWarpTargetingSFX->Stop();
+	if(newState == DYING)
+	{
+		if(Resources::mSkillsSystem->mSkillWarp->IsActive() &&
+		   Resources::mSkillWarpTargetingSFX->IsPlaying())
+			Resources::mSkillWarpTargetingSFX->Stop();
+		if(Resources::mSkillsSystem->mSkillOverdrive->IsActive() &&
+				   Resources::mSkillOverdriveSFX->IsPlaying())
+					Resources::mSkillOverdriveSFX->Stop();
+	}
 }
 
 void Player::EvaluateState()
