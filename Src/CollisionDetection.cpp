@@ -94,10 +94,10 @@ bool CollisionDetection::CheckForPixelPerfectCollisions(Player* playerObject, En
 		   playerObject->GetPositionY() <= ((Enemy*)(*i))->GetPositionY() + ((Enemy*)(*i))->GetHeight())
 		{
 			int boxXBegin = max(playerObject->GetPositionX(), ((Enemy*)(*i))->GetPositionX());
-			int boxXEnd = min(playerObject->GetPositionX() + playerObject->GetWidth(),
+			int boxXEnd = min(playerObject->GetPositionX() + playerObject->GetWidth() - 1,
 							  ((Enemy*)(*i))->GetPositionX() + ((Enemy*)(*i))->GetWidth());
 			int boxYBegin = max(playerObject->GetPositionY(), ((Enemy*)(*i))->GetPositionY());
-			int boxYEnd = min(playerObject->GetPositionY() + playerObject->GetHeight(),
+			int boxYEnd = min(playerObject->GetPositionY() + playerObject->GetHeight() - 1,
 							  ((Enemy*)(*i))->GetPositionY() + ((Enemy*)(*i))->GetHeight());
 
 			if(Resources::mDebug->GetDebugModeCollisionTest())
@@ -115,10 +115,11 @@ bool CollisionDetection::CheckForPixelPerfectCollisions(Player* playerObject, En
 				oslDrawFillRect(boxXBegin, boxYBegin, boxXEnd, boxYEnd, RGBA(0, 0, 0, 128));
 			}
 
-			for(int boxX = boxXBegin; boxX <= boxXEnd; boxX++)
-				for(int boxY = boxYBegin; boxY <= boxYEnd; boxY++)
-					if((playerObject->GetFramePixel(abs(boxX - playerObject->GetPositionX() - 1), abs(boxY - playerObject->GetPositionY() - 1)) >> 24) != 0 &&
-					   (((Enemy*)(*i))->GetFramePixel(abs(boxX - ((Enemy*)(*i))->GetPositionX() - 1), abs(boxY - ((Enemy*)(*i))->GetPositionY() - 1)) >> 24) != 0)
+
+			for(int boxY = boxYBegin; boxY <= boxYEnd; boxY++)
+				for(int boxX = boxXBegin; boxX <= boxXEnd; boxX++)
+					if((playerObject->GetFramePixel(boxX - playerObject->GetPositionX(), boxY - playerObject->GetPositionY()) >> 24) != 0 &&
+					   (((Enemy*)(*i))->GetFramePixel(boxX - ((Enemy*)(*i))->GetPositionX(), boxY - ((Enemy*)(*i))->GetPositionY()) >> 24) != 0)
 					{
 						if(Resources::mDebug->GetDebugModeCollisionTest())
 						{
