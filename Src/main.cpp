@@ -5,8 +5,6 @@
  *      Author: Bogdan
  */
 
-#include "../Includes/main.h"
-
 #include "../Includes/Game.h"
 
 //The callbacks
