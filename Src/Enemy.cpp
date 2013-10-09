@@ -5,8 +5,8 @@
  *      Author: Bogdan
  */
 
-#include "../Includes/Resources.h"
-#include "../Includes/Enemy.h"
+#include "../Includes/Resources.hpp"
+#include "../Includes/Enemy.hpp"
 
 Enemy::Enemy(AnimatedSprite *enemySprite, int posY, int scrollSpeed)
 				: AnimatedSprite(enemySprite)

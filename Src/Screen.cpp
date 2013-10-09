@@ -5,9 +5,9 @@
  *      Author: Bogdan
  */
 
-#include "../Includes/Screen.h"
+#include "../Includes/Screen.hpp"
 
-#include "../Includes/Resources.h"
+#include "../Includes/Resources.hpp"
 #include <sstream>
 
 Screen::Screen()

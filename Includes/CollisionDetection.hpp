@@ -1,5 +1,5 @@
 /*
- * CollisionDetection.h
+ * CollisionDetection.hpp
  *
  *  Created on: Mar 8, 2013
  *      Author: Bogdan
@@ -8,8 +8,8 @@
 #ifndef COLLISIONDETECTION_H_
 #define COLLISIONDETECTION_H_
 
-#include "Player.h"
-#include "Enemy.h"
+#include "Player.hpp"
+#include "Enemy.hpp"
 
 class CollisionDetection
 {

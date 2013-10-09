@@ -5,7 +5,7 @@
  *      Author: Bogdan
  */
 
-#include "../Includes/Resources.h"
+#include "../Includes/Resources.hpp"
 
 #include <sstream>
 

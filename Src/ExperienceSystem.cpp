@@ -5,9 +5,9 @@
  *      Author: Bogdan
  */
 
-#include "../Includes/ExperienceSystem.h"
+#include "../Includes/ExperienceSystem.hpp"
 
-#include "../Includes/Resources.h"
+#include "../Includes/Resources.hpp"
 #include <sstream>
 
 ExperienceSystem::ExperienceSystem()

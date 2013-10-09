@@ -5,8 +5,8 @@
  *      Author: Bogdan
  */
 
-#include "../Includes/SkillsSystem.h"
-#include "../Includes/Resources.h"
+#include "../Includes/SkillsSystem.hpp"
+#include "../Includes/Resources.hpp"
 
 #define PER_LEVEL_EXP 2250
 #define BASE_LEVEL_EXP 3750

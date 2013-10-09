@@ -1,5 +1,5 @@
 /*
- * AnimatedSprite.h
+ * AnimatedSprite.hpp
  *
  *  Created on: Feb 27, 2013
  *      Author: Bogdan
@@ -8,8 +8,8 @@
 #ifndef ANIMATEDSPRITE_H_
 #define ANIMATEDSPRITE_H_
 
-#include "Drawable.h"
-#include "Timer.h"
+#include "Drawable.hpp"
+#include "Timer.hpp"
 
 class AnimatedSprite : public Drawable
 {

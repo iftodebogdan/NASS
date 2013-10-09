@@ -1,5 +1,5 @@
 /*
- * Player.h
+ * Player.hpp
  *
  *  Created on: Mar 6, 2013
  *      Author: Bogdan
@@ -8,7 +8,7 @@
 #ifndef PLAYER_H_
 #define PLAYER_H_
 
-#include "AnimatedSprite.h"
+#include "AnimatedSprite.hpp"
 
 class Player : public AnimatedSprite
 {

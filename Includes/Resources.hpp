@@ -1,5 +1,5 @@
 /*
- * Resource.h
+ * Resource.hpp
  *
  *  Created on: Feb 28, 2013
  *      Author: Bogdan
@@ -8,21 +8,21 @@
 #ifndef RESOURCE_H_
 #define RESOURCE_H_
 
-#include "Audio.h"
-#include "AnimatedSprite.h"
-#include "Background.h"
-#include "GameLogo.h"
-#include "DropDownMenu.h"
-#include "Controller.h"
-#include "Font.h"
-#include "Game.h"
-#include "Player.h"
-#include "Enemy.h"
-#include "CollisionDetection.h"
-#include "SkillsSystem.h"
-#include "SaveLoad.h"
-#include "Screen.h"
-#include "Debug.h"
+#include "Audio.hpp"
+#include "AnimatedSprite.hpp"
+#include "Background.hpp"
+#include "GameLogo.hpp"
+#include "DropDownMenu.hpp"
+#include "Controller.hpp"
+#include "Font.hpp"
+#include "Game.hpp"
+#include "Player.hpp"
+#include "Enemy.hpp"
+#include "CollisionDetection.hpp"
+#include "SkillsSystem.hpp"
+#include "SaveLoad.hpp"
+#include "Screen.hpp"
+#include "Debug.hpp"
 
 #include <string>
 using namespace std;

@@ -1,5 +1,5 @@
 /*
- * SkillsSystem.h
+ * SkillsSystem.hpp
  *
  *  Created on: May 27, 2013
  *      Author: Bogdan
@@ -8,11 +8,11 @@
 #ifndef SKILLSSYSTEM_H_
 #define SKILLSSYSTEM_H_
 
-#include "ExperienceSystem.h"
-#include "SkillWarp.h"
-#include "SkillDematerialize.h"
-#include "SkillOverdrive.h"
-#include "SkillForceField.h"
+#include "ExperienceSystem.hpp"
+#include "SkillWarp.hpp"
+#include "SkillDematerialize.hpp"
+#include "SkillOverdrive.hpp"
+#include "SkillForceField.hpp"
 
 class SkillsSystem : public ExperienceSystem
 {

@@ -1,5 +1,5 @@
 /*
- * Game.h
+ * Game.hpp
  *
  *  Created on: Feb 27, 2013
  *      Author: Bogdan
@@ -9,7 +9,7 @@
 #define GAME_H_
 
 #include <oslib/oslib.h>
-#include "../Includes/Screen.h"
+#include "../Includes/Screen.hpp"
 
 class Game
 {

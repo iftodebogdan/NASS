@@ -1,5 +1,5 @@
 /*
- * SkillOverdrive.h
+ * SkillOverdrive.hpp
  *
  *  Created on: Jun 2, 2013
  *      Author: Bogdan
@@ -8,7 +8,7 @@
 #ifndef SKILLOVERDRIVE_H_
 #define SKILLOVERDRIVE_H_
 
-#include "AnimatedSprite.h"
+#include "AnimatedSprite.hpp"
 
 #define OVERDRIVE_ENERGY_COST_LV1 MAX_ENERGY * 50 / 100
 #define OVERDRIVE_ENERGY_COST_LV2 MAX_ENERGY * 50 / 100

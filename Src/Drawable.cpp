@@ -5,7 +5,7 @@
  *      Author: Bogdan
  */
 
-#include "../Includes/Drawable.h"
+#include "../Includes/Drawable.hpp"
 
 Drawable::Drawable(string pathToImgFile)
 {

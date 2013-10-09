@@ -5,9 +5,9 @@
  *      Author: Bogdan
  */
 
-#include "../Includes/Game.h"
+#include "../Includes/Game.hpp"
 
-#include "../Includes/Resources.h"
+#include "../Includes/Resources.hpp"
 
 Game::Game()
 {

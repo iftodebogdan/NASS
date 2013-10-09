@@ -5,9 +5,9 @@
  *      Author: Bogdan
  */
 
-#include "../Includes/ScrollingDrawable.h"
+#include "../Includes/ScrollingDrawable.hpp"
 
-#include "../Includes/Resources.h"
+#include "../Includes/Resources.hpp"
 
 #define PSP_SCREEN_WIDTH 480	//the width of the PSP's screen in pixels
 #define PSP_SCREEN_HEIGHT 272	//the height of the PSP's screen in pixels

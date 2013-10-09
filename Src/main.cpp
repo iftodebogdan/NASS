@@ -5,7 +5,7 @@
  *      Author: Bogdan
  */
 
-#include "../Includes/Game.h"
+#include "../Includes/Game.hpp"
 
 //The callbacks
 PSP_MODULE_INFO("NASS", 0, 1, 1);

@@ -5,9 +5,9 @@
  *      Author: Bogdan
  */
 
-#include "../Includes/CollisionDetection.h"
+#include "../Includes/CollisionDetection.hpp"
 
-#include "../Includes/Resources.h"
+#include "../Includes/Resources.hpp"
 #include <list>
 using namespace std;
 

@@ -5,10 +5,10 @@
  *      Author: Bogdan
  */
 
-#include "../Includes/SaveLoad.h"
+#include "../Includes/SaveLoad.hpp"
 
-#include "../Includes/Resources.h"
-#include "../Includes/BinaryFileIO.h"
+#include "../Includes/Resources.hpp"
+#include "../Includes/BinaryFileIO.hpp"
 
 void SaveLoad::AutoSaveGame()
 {

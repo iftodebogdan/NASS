@@ -1,5 +1,5 @@
 /*
- * Background.h
+ * Background.hpp
  *
  *  Created on: Feb 27, 2013
  *      Author: Bogdan
@@ -8,7 +8,7 @@
 #ifndef BACKGROUND_H_
 #define BACKGROUND_H_
 
-#include "ScrollingDrawable.h"
+#include "ScrollingDrawable.hpp"
 
 class Background
 {

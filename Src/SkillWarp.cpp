@@ -5,8 +5,8 @@
  *      Author: Bogdan
  */
 
-#include "../Includes/SkillWarp.h"
-#include "../Includes/Resources.h"
+#include "../Includes/SkillWarp.hpp"
+#include "../Includes/Resources.hpp"
 
 SkillWarp::SkillWarp()
 {

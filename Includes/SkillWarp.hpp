@@ -1,5 +1,5 @@
 /*
- * SkillWarp.h
+ * SkillWarp.hpp
  *
  *  Created on: Jun 1, 2013
  *      Author: Bogdan
@@ -8,7 +8,7 @@
 #ifndef SKILLWARP_H_
 #define SKILLWARP_H_
 
-#include "AnimatedSprite.h"
+#include "AnimatedSprite.hpp"
 
 #define WARP_DISTANCE_LV1 PLAYER_SHIP_FRAME_WIDTH_SIZE + 50
 #define WARP_DISTANCE_LV2 PLAYER_SHIP_FRAME_WIDTH_SIZE + 70

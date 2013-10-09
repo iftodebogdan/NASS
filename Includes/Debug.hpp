@@ -1,5 +1,5 @@
 /*
- * Debug.h
+ * Debug.hpp
  *
  *  Created on: Jun 8, 2013
  *      Author: Bogdan
@@ -8,7 +8,7 @@
 #ifndef DEBUG_H_
 #define DEBUG_H_
 
-#import "Timer.h"
+#import "Timer.hpp"
 
 /*
 #define DEBUG_MODE 0

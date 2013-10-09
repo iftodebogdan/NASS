@@ -5,9 +5,9 @@
  *      Author: Bogdan
  */
 
-#include "../Includes/Resources.h"
+#include "../Includes/Resources.hpp"
 
-#include "../Includes/Background.h"
+#include "../Includes/Background.hpp"
 
 Background::Background(string pathToPrimaryBgImgFile)
 {

@@ -1,5 +1,5 @@
 /*
- * Audio.h
+ * Audio.hpp
  *
  *  Created on: Jun 4, 2013
  *      Author: Bogdan

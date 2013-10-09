@@ -5,9 +5,9 @@
  *      Author: Bogdan
  */
 
-#include "../Includes/Debug.h"
+#include "../Includes/Debug.hpp"
 
-#include "../Includes/Resources.h"
+#include "../Includes/Resources.hpp"
 
 Debug::Debug()
 {

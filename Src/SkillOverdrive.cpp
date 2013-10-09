@@ -5,8 +5,8 @@
  *      Author: Bogdan
  */
 
-#include "../Includes/SkillOverdrive.h"
-#include "../Includes/Resources.h"
+#include "../Includes/SkillOverdrive.hpp"
+#include "../Includes/Resources.hpp"
 
 SkillOverdrive::SkillOverdrive()
 {

@@ -1,5 +1,5 @@
 /*
- * ScrollDrawable.h
+ * ScrollDrawable.hpp
  *
  *  Created on: Feb 28, 2013
  *      Author: Bogdan
@@ -8,7 +8,7 @@
 #ifndef SCROLLDRAWABLE_H_
 #define SCROLLDRAWABLE_H_
 
-#include "Drawable.h"
+#include "Drawable.hpp"
 
 class ScrollingDrawable : public Drawable
 {

@@ -1,5 +1,5 @@
 /*
- * Drawable.h
+ * Drawable.hpp
  *
  *  Created on: Feb 26, 2013
  *      Author: Bogdan

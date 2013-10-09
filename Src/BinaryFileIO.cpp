@@ -5,8 +5,8 @@
  *      Author: Bogdan
  */
 
-#include "../Includes/Resources.h"
-#include "../Includes/BinaryFileIO.h"
+#include "../Includes/Resources.hpp"
+#include "../Includes/BinaryFileIO.hpp"
 
 BinaryFileIO::BinaryFileIO(string pathToFile)
 {

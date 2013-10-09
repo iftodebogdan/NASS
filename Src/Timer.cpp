@@ -5,7 +5,7 @@
  *      Author: Bogdan
  */
 
-#include "../Includes/Timer.h"
+#include "../Includes/Timer.hpp"
 
 Timer::Timer()
 {

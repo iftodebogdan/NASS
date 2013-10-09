@@ -1,5 +1,5 @@
 /*
- * SkillDematerialize.h
+ * SkillDematerialize.hpp
  *
  *  Created on: Jun 1, 2013
  *      Author: Bogdan
@@ -8,7 +8,7 @@
 #ifndef SKILLDEMATERIALIZE_H_
 #define SKILLDEMATERIALIZE_H_
 
-#include "AnimatedSprite.h"
+#include "AnimatedSprite.hpp"
 
 #define DEMATERIALIZE_ENERGY_COST_LV1 MAX_ENERGY * 100.0f / 100.0f
 #define DEMATERIALIZE_ENERGY_COST_LV2 MAX_ENERGY * 90.0f / 100.0f

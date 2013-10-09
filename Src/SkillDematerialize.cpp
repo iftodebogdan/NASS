@@ -5,9 +5,9 @@
  *      Author: Bogdan
  */
 
-#include "../Includes/SkillDematerialize.h"
+#include "../Includes/SkillDematerialize.hpp"
 
-#include "../Includes/Resources.h"
+#include "../Includes/Resources.hpp"
 #include <math.h>
 
 SkillDematerialize::SkillDematerialize()

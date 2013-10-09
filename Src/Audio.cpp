@@ -5,9 +5,9 @@
  *      Author: Bogdan
  */
 
-#include "../Includes/Audio.h"
+#include "../Includes/Audio.hpp"
 
-#include "../Includes/Resources.h"
+#include "../Includes/Resources.hpp"
 
 Sound::Sound(string pathToSndFile, bool isStream)
 {

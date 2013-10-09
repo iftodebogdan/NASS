@@ -1,5 +1,5 @@
 /*
- * Screen.h
+ * Screen.hpp
  *
  *  Created on: Jun 7, 2013
  *      Author: Bogdan

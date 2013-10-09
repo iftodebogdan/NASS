@@ -5,11 +5,11 @@
  *      Author: Bogdan
  */
 
-#include "../Includes/DropDownMenu.h"
+#include "../Includes/DropDownMenu.hpp"
 
-#include "../Includes/Resources.h"
-#include "../Includes/Controller.h"
-#include "../Includes/Font.h"
+#include "../Includes/Resources.hpp"
+#include "../Includes/Controller.hpp"
+#include "../Includes/Font.hpp"
 
 #define POS_Y_RETRACTED -GetHeight() + 16 -1
 

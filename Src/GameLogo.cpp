@@ -5,8 +5,8 @@
  *      Author: Bogdan
  */
 
-#include "../Includes/GameLogo.h"
-#include "../Includes/Resources.h"
+#include "../Includes/GameLogo.hpp"
+#include "../Includes/Resources.hpp"
 
 GameLogo::GameLogo(string pathToImgFile, int scrollSpeedX, int scrollSpeedY)
 			:ScrollingDrawable(pathToImgFile, scrollSpeedX, scrollSpeedY)

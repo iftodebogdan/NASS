@@ -5,8 +5,8 @@
  *      Author: Bogdan
  */
 
-#include "../Includes/SkillForceField.h"
-#include "../Includes/Resources.h"
+#include "../Includes/SkillForceField.hpp"
+#include "../Includes/Resources.hpp"
 
 SkillForceField::SkillForceField()
 {

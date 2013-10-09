@@ -5,7 +5,7 @@
  *      Author: Bogdan
  */
 
-#include "../Includes/AnimatedSprite.h"
+#include "../Includes/AnimatedSprite.hpp"
 
 AnimatedSprite::AnimatedSprite(
 		string pathToImgFile,

@@ -1,5 +1,5 @@
 /*
- * GameLogo.h
+ * GameLogo.hpp
  *
  *  Created on: Feb 28, 2013
  *      Author: Bogdan
@@ -8,7 +8,7 @@
 #ifndef GAMELOGO_H_
 #define GAMELOGO_H_
 
-#include "ScrollingDrawable.h"
+#include "ScrollingDrawable.hpp"
 
 class GameLogo : public ScrollingDrawable
 {

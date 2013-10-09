@@ -5,7 +5,7 @@
  *      Author: Bogdan
  */
 
-#include "../Includes/Controller.h"
+#include "../Includes/Controller.hpp"
 
 #include <oslib/oslib.h>
 

@@ -1,5 +1,5 @@
 /*
- * DropDownMenu.h
+ * DropDownMenu.hpp
  *
  *  Created on: Feb 28, 2013
  *      Author: Bogdan
@@ -8,7 +8,7 @@
 #ifndef DROPDOWNMENU_H_
 #define DROPDOWNMENU_H_
 
-#include "ScrollingDrawable.h"
+#include "ScrollingDrawable.hpp"
 
 class DropDownMenu : public ScrollingDrawable
 {

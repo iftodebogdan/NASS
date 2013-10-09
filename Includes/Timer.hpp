@@ -1,5 +1,5 @@
 /*
- * Timer.h
+ * Timer.hpp
  *
  *  Created on: Jun 9, 2013
  *      Author: Bogdan

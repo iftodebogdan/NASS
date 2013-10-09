@@ -1,5 +1,5 @@
 /*
- * SkillForceField.h
+ * SkillForceField.hpp
  *
  *  Created on: Jun 3, 2013
  *      Author: Bogdan
@@ -8,7 +8,7 @@
 #ifndef SKILLFORCEFIELD_H_
 #define SKILLFORCEFIELD_H_
 
-#include "AnimatedSprite.h"
+#include "AnimatedSprite.hpp"
 
 #define FORCE_FIELD_DURATION_LV1 1
 #define FORCE_FIELD_DURATION_LV2 2

@@ -1,5 +1,5 @@
 /*
- * Controller.h
+ * Controller.hpp
  *
  *  Created on: Feb 28, 2013
  *      Author: Bogdan

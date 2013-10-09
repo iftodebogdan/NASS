@@ -5,8 +5,8 @@
  *      Author: Bogdan
  */
 
-#include "../Includes/Resources.h"
-#include "../Includes/Font.h"
+#include "../Includes/Resources.hpp"
+#include "../Includes/Font.hpp"
 
 Font::Font(string fontFile)
 {
