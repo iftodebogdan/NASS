@@ -1,0 +1,225 @@
+The program that we are going to construct in this tutorial is a "backround changer." Basically, we are going to allow the user to select the color of the background, and we are going to change it accordingly, as well as display the components of that color on the screen.
+
+First, some background. There is a wide misconception about "overclocking" the PSP. Because of preconceived notions, people associate "overclocking" with heat issues and broken hardware. There is a myth that "overclocking" the PSP is dangerous to the hardware. This is simply not the case with the PSP. The truth is that the PSP is underclocked when it ships from the factory. There are several theories for why Sony did this. One theory is that it drained battery life too quickly for Sony's liking (for us, that isn't much of a concern; spinning the UMD takes up far more battery power than loading off of the Memory Stick, so we already have a tremendous advantage in terms of battery life). Another theory is that Sony wanted developers to write streamlined code. And the third prevalent theory (and the most likely in my opinion) is that they want to allow developers to use the full speed at some point in the future to give a boost to games that will come out later. Anyway, the PSP normally runs at 222 MHz. If you need more power for your programs, "overclocking" is an option. The program we make here will not need the power per se, but I think it's a good place to introduce the concept.
+
+So here we go, let's start out our program. You'll need to download another zip file for this lesson. You can get it here. You'll need to make a main.c file in the same folder as the files you extract from the zip file.
+
+#include <pspkernel.h>
+#include <pspdisplay.h>
+#include <pspctrl.h>
+#include <stdio.h>
+#include <psppower.h>
+
+#include "graphics.h"
+Assuming you have completed the previous lessons, this isn't anything you haven't seen. The only thing that should look new to you is the "psppower.h" include. This file contains the functions we will use to change the PSP's clock speed.
+
+On to some more familiar code:
+PSP_MODULE_INFO("Background Changer", 0, 1, 1);
+
+#define RGB(r, g, b) ((r)|((g)<<8)|((b)<<16))
+Remember how in Lesson 02 we just glossed over this line without explaining what it really did? Well, I think it's time that you learn. The first parameter is your program identifier, so basically your program name. The second parameter allows you to pass attributes. For most of your programs you will just want to use a 0, but if you are making a kernel mode app, you will need to switch this to "0x1000". The third parameter is for the major version, the fourth is minor version. These are just meant to document the version number of your program.
+
+Now the standard callbacks:
+/* Exit callback */
+int exit_callback(int arg1, int arg2, void *common) {
+          sceKernelExitGame();
+          return 0;
+}
+
+/* Callback thread */
+int CallbackThread(SceSize args, void *argp) {
+          int cbid;
+
+          cbid = sceKernelCreateCallback("Exit Callback", exit_callback, NULL);
+          sceKernelRegisterExitCallback(cbid);
+
+          sceKernelSleepThreadCB();
+
+          return 0;
+}
+
+/* Sets up the callback thread and returns its thread id */
+int SetupCallbacks(void) {
+          int thid = 0;
+
+          thid = sceKernelCreateThread("update_thread", CallbackThread, 0x11, 0xFA0, 0, 0);
+          if(thid >= 0) {
+                    sceKernelStartThread(thid, 0, 0);
+          }
+
+          return thid;
+} 
+
+So now that we have it all set up, we get to the meat of the program, the main() function.
+int main(void) {
+          scePowerSetClockFrequency(333, 333, 166);
+This is the line that sets the clock frequency (as should be evident from the function name). You may be wondering why there are three parameters, though. I mean, there's only one processor, right? Wrong. The PSP actually has three processors. The first sets the CPU (the main processor); this is what most of your programs will be running on. The second parameter is the Media Engine. Last I checked, you could only run MIPS Assembly code on this processor. The Media Engine also runs at 333 MHz. The third parameter controls the Graphics Core. This is what people mean when they talk about using the "GPU." The GPU runs at 166 MHz. The default speeds (if you don't change them yourself) are "222, 222, 111."
+
+Next, we'll set up the screen, this is just like what we did in the last tutorial:
+          SetupCallbacks();
+          initGraphics();
+Then, since we're going to be accepting input, if you'll remember from Lesson 03, we need to define a variable of type SceCtrlData. For old time's sake, we'll name it "pad."
+          SceCtrlData pad;
+Then we'll set up two more variables and an array:
+          int i;
+          int selComponent = 0;
+          char filler[10];
+The integer, "i," will be used in one of our loops later on. The character array is what we will use as a string to ouput some information later in the program. And "selComponent" is what we will use to remember which color component the user is editting.
+
+Next we will declare and initialize three variables that will store the information for our background. A color is composed of three components: Red, Green, and Blue. The maximum value of each in a 32 bit color is 255. Zero of each color is black, 255 of each is white, a combination is anywhere in between. You will sometimes see hex values representing colors. Hex is a base-16 counting system. It goes from 0 to F (F being 16). So, with a 32 bit system, FF would equal 255 (16*16, subtracting one because you start counting at zero). So, white would be "FFFFFF" (255 red, 255 blue, 255 green). Anyway, we'll use three variables to store the background color information:
+          int bgR = 0;
+          int bgG = 0;
+          int bgB = 0;
+Our background is now black. Remember, though, this is just storing the information so that we can manipulate it. We won't actually set the screen's background to black until we do something with these variables.
+
+Now, since we are going to be displaying text through functions in the "graphics.h" file rather than by pspDebugScreenPrintf, we need to tell our program what colors we want to use for the text.
+          Color highlightColor = RGB(200, 200, 200);
+          Color dimmedColor = RGB(100, 100, 100);
+          Color shadowColorH = RGB(55, 55, 55 );
+          Color shadowColorD = RGB(55, 55, 55 );
+First of all, I'll explain what exactly these lines are doing. They are using the RGB macro that was explained in Lesson 04 to turn color components into a single color. The "Color" datatype is defined in the "graphics.c" include file. You may also see a u32 (a 32 bit integer) used in some programs to hold a color.
+
+The reason we have four variables is because we want to highlight the component that the user is currently changing. So, we have two main colors for that, one color for the text that is highlighted and one color for the text that is dimmed. Also, since we have a dynamic background (meaning that it can change), we are going to use a shadow. This will help make our text stand out from the background. I tried a few different colors and this is what I ended up with. Feel free to play around with the colors and see if you find anything that looks better.
+
+Now we'll go into our game loop.
+          while(1) {
+                    sceCtrlReadBufferPositive(&pad, 1);
+A standard, infinite while loop and a standard control pad read.
+
+Now we'll handle that control pad read. What we want to do is have the up and down arrows select which color component the user is editting. We want the left and right arrows to adjust that color.
+
+                    if(pad.Buttons & PSP_CTRL_UP) {
+                              if(selComponent > 0) {
+                                        selComponent--;
+                              }
+                              for(i=0; i<10; i++) {
+                                        sceDisplayWaitVblankStart();
+                              }
+                    } else if(pad.Buttons & PSP_CTRL_DOWN) {
+                              if(selComponent < 2) {
+                                        selComponent++;
+                              }
+                              for(i=0; i<10; i++) {
+                                        sceDisplayWaitVblankStart();
+                              }
+                    }
+This chunk of code does the first half of that. It will decrement the variable if up is pressed (because we want to start from the top, 0 will be the top-most color, 1 will be the middle, and 2 will be the bottom). And it will increment the variable if the down arrow is pressed. The for loops are in there to pause the program for a second when one of the buttons is pressed. This way, it makes it easier for the user to go through the options one at a time, rather than accidentally scrolling too far.
+
+The next code block is what controls the left and right arrows:
+                    if(pad.Buttons & PSP_CTRL_RIGHT) {
+                              switch(selComponent) {
+                                        case 0:
+                                                  bgR++;
+                                                  break;
+                                        case 1:
+                                                  bgG++;
+                                                  break;
+                                        case 2:
+                                                  bgB++;
+                                                  break;
+                                        default:
+                                                  //SHOULD NEVER EXECUTE
+                                                  break;
+                              }
+                    } else if(pad.Buttons & PSP_CTRL_LEFT) {
+                              switch(selComponent) {
+                                        case 0:
+                                                  bgR--;
+                                                  break;
+                                        case 1:
+                                                  bgG--;
+                                                  break;
+                                        case 2:
+                                                  bgB--;
+                                                  break;
+                                        default:
+                                                  //SHOULD NEVER EXECUTE
+                                                  break;
+                              }
+                    }
+As you look at this code, you're probably asking yourself, "What the *insert naughty word here* is this switch structure?" Well, it's fairly simple. Basically it's like an if/else structure all built into one. It takes a variable, "switch(yourVariable)," and then compares it to several cases that it could be. If it doesn't match any of the cases, then it runs the default case. In our program, the "selComponent" variable should only be 0, 1, or 2, since we limited it to that above. In the top switch structure, if "selComponent" equals 0, our variable "bgR" will be incremented by one. If it equals 1, "bgG" will be incremented by one, and if it equals two, "bgB" will be incremented by one. The break statement exits out of the switch structure.
+
+So now we have code that allows us to select a color component to modify, and change the variable associated with that color. The next step is to actually display the program on the screen. Our user interface (UI) will consist of text, telling the user what the color components are, and the background.
+
+Recall that the colors can only be from 0-255. We need to make sure that they don't exceed this when the user scrolls through them, so we'll use a series of if/else statements to ensure that they stay within the target range.
+
+                    if(bgR < 0) {
+                              bgR = 0;
+                    } else if(bgR > 255) {
+                              bgR = 255;
+                    }
+                    if(bgG < 0) {
+                              bgG = 0;
+                    } else if(bgG > 255) {
+                              bgG = 255;
+                    }
+                    if(bgB < 0) {
+                              bgB = 0;
+                    } else if(bgB > 255) {
+                              bgB = 255;
+                    }
+This should be pretty self explanatory. If the value of any of the components gets out of the range, we just set it to the lowest (or highest) place it should be able to be.
+
+Now we want to fill the background the color that our variables dictate.
+fillScreenRect(RGB(bgR, bgG, bgB), 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+"fillScreenRect()" is a function that is defined in "graphics.c." It fills a rectangular portion of the screen a given color. It takes five parameters. The first is the color we want the rectangle to be. The second is the x position of the rectangle. The third is the y position of the rectangle. The fourth is the width of the rectangle. And the fifth is the height of the rectangle.
+
+Now we want to write the text over the background that we just drew:
+                    sprintf(filler, " RED: %i", bgR);
+                    if(selComponent == 0) {
+                              printTextScreen(11, 10, filler, shadowColorH);
+                              printTextScreen(10, 10, filler, highlightColor);
+                    } else {
+                              printTextScreen(11, 10, filler, shadowColorD);
+                              printTextScreen(10, 10, filler, dimmedColor);
+                    }
+You should remember the "sprintf()" function from Lesson 04. It is the one that parses a "printf()" into a string. This time, though, we are using a variable. We want to display both the color (Red) and the value (bgR). We do this the same way that we outputted an integer in Lesson 03 (with the "%i" modifier). Then, if the component is selected, we use the "printTextScreen()" function from "graphics.c" to print our string to the screen. The function takes four parameters, the first is the x position. The second is the y position. The third is the string. And the fourth is the color. The reason for the if/else statement is that we want to display the text in a different color if it is supposed to be selected. We also outputted the shadow below the text.
+
+We now need to do the same thing for the other two colors.
+                    sprintf(filler, "GREEN: %i", bgG);
+                    if(selComponent == 1) {
+                              printTextScreen(11, 20, filler, shadowColorH);
+                              printTextScreen(10, 20, filler, highlightColor);
+                    } else {
+                              printTextScreen(11, 20, filler, shadowColorD);
+                              printTextScreen(10, 20, filler, dimmedColor);
+                    }
+
+                    sprintf(filler, " BLUE: %i", bgB);
+                    if(selComponent == 2) {
+                              printTextScreen(11, 30, filler, shadowColorH);
+                              printTextScreen(10, 30, filler, highlightColor);
+                    } else {
+                              printTextScreen(11, 30, filler, shadowColorD);
+                              printTextScreen(10, 30, filler, dimmedColor);
+                    } 
+
+Then we flip the screen and add in a little pause just to control the speed of our program (we don't want it to go too fast). And finally, wrap up our program.
+
+                    flipScreen();
+
+                    for(i=0; i<1; i++) {
+                              sceDisplayWaitVblankStart();
+                    }
+          }
+
+          return 0;
+}
+Now, just create a Makefile, and you are ready to compile.
+TARGET = BackgroundChanger
+OBJS = main.o graphics.o framebuffer.o
+
+CFLAGS = -O2 -G0 -Wall
+CXXFLAGS = $(CFLAGS) -fno-exceptions -fno-rtti
+ASFLAGS = $(CFLAGS)
+
+LIBDIR =
+LIBS = -lpspgu -lpsppower -lpng -lz -lm
+LDFLAGS =
+
+EXTRA_TARGETS = EBOOT.PBP
+PSP_EBOOT_TITLE = Background Changer
+
+PSPSDK=$(shell psp-config --pspsdk-path)
+include $(PSPSDK)/lib/build.mak
+Nothing in the Makefile has been changed since Lesson 04 except for the name and the addition of "-lpsppower," which adds the library associated with overclocking. And there you have it, a Background Changer. 

@@ -1,0 +1,182 @@
+If it has been a while since you have updated your toolchain, you will need to do that since png.h is necessary for this tutorial and was not originally included in the PSP toolchain. Revisit Lesson 01 if you need a refresher on how to do that. I had to update before I was able to compile this program (if you already have CYGWIN installed, you can skip right to the step where you download the toolchain).
+
+I would like to thank Psilocybeing for allowing me to use his example source code as a base for this tutorial. I had originally planned on using my own example code (adapted from Shine's original Snake game in C) to demonstrate, but that code is antiquated and unnecessarily complex. One major benefit of Psilocybeing's code is that all of the functions and datatypes are defined in external files, allowing you to more easily integrate the code into your own projects.
+
+Before we do anything, we will need to install some new libraries from SVN. What's SVN you ask? Well, SVN is a version management system (it is shorthand for "subversion"). What we will be doing is grabbing some code from online to add more functionality to our compiler. The packages that we will need are zlib and libpng. zlib is a compression library and libpng allows us to work with PNG files (a type of image). To install these libraries, we will need to type the following things into a CYGWIN Bash Shell.
+svn checkout svn://svn.pspdev.org/psp/trunk/zlib
+"Checkout" is basically SVN's way of saying "download." This will download the zlib source into a folder called "zlib." It will take a minute, a bunch of stuff should scroll down the screen and you should be left back at the "$" for input.
+
+So now we need to compile this new library, so we'll "cd" into the new folder.
+cd zlib
+We are now in the zlib folder, and are ready to compile. So, like any other thing that we want to compile, we just need to type
+make
+And voila, it compiles the library for us.
+
+Now we need to put the resulting files into a place where the compiler can access them. So, we'll install them:
+make install
+And BAM! We've installed zlib. Now wasn't that simple?
+
+Now for libpng. We just need to do the same thing, except we'll substitute "libpng" for "zlib."
+cd ..
+svn checkout svn://svn.pspdev.org/psp/trunk/libpng
+cd libpng
+make
+make install
+And there we are, ready to use PNG's in our program.
+
+Now we'll just clean up those install files by deleting them. To delete things via a Linux shell (which is what CYGWIN emulates), you use the "rm" command. We don't only want to delete one file, though, we want to delete a whole folder and all of its contents, so we'll add the "-R" modifier to it to signify a recursive removal. Basically this just means we want to delete a folder and everything inside of that folder. We'll also use the "-f" modifier to force the deletion of write-protected files so that we don't have to hit "y" for each file we want to delete. So we'll "cd" back to the parent directory and remove both the "zlib" and "libpng" temporary folders that we just created.
+rm -Rf zlib
+rm -Rf libpng
+Now that we have that out of the way, we are ready to start programming.
+
+So, to start our program, download this file and extract it into a new folder in your ~/ directory. What's that you say? You don't know what the ~/ directory is? That's alright; unless you have experience with *nix, you wouldn't have any reason to. Basically, ~/ is synonymous with a user's home directory on a *nix system. So ~/ is equivalent to C:/cygwin/home/yourUserName. So, create a directory there and extract the files you just downloaded into that folder.
+
+Now open up your editor and create a new C source file. Name it "main.c" and save it in the folder you just created. From now on I will refer to this folder as your project folder, just for redundancy's sake. Insert the standard comment into the top of your new file, stating the purpose of the program, your name, and the date. This step is (again) optional, but it is a good programming practice to include it.
+
+/*
+          My Image Display Program
+          Author: Brad Dwyer
+          Date: 12/28/2005
+
+          Thanks to Psilocybeing for the base code.
+*/
+
+Simple enough so far, right? Next we'll add our include files. If you recall from Lesson 02, included files allow us to use prewritten and external functions and datatypes without having to include the behind the scenes code that makes them work. Programming with images ups the ante a bit, and we will have to include quite a few files:
+#include <pspdisplay.h>
+#include <pspctrl.h>
+#include <pspkernel.h>
+#include <pspdebug.h>
+#include <pspgu.h>
+#include <png.h>
+#include <stdio.h>
+#include "graphics.h"
+So we have the standard pspdisplay.h, pspkernel.h, and pspdebug.h. And then we have the pspctrl.h file which allows us to read input from the PSP's keys (as you should remember from Lesson 03). And then we have three files that probably look foreign to you. The first, pspgu.h gives us access to hardware acceleration, we won't be using any of the functions from this file, but it is used behind the scenes by graphics.h (which we will discuss shortly). The second, png.h, allows us to manipulate PNG image files. And the third, stdio.h gives us access to some standard C functions that we will take advantage of. Specifically, we will be using sprintf() to parse strings. And then finally we have an include that looks a bit different. Rather than using the less-than and greater-than characters, it uses quotes. These quotes signify that it is included not from the compiler's include directory, but from the project folder. This file, graphics.h, is the one that we downloaded, and it contains several functions that will make our job a lot easier, including the actual functions that we will use to load and display our image.
+
+Now we'll put in the #define statements, you should already be familiar with the first, but the second will probably throw you for a loop:
+#define printf pspDebugScreenPrintf
+#define MAX(X, Y) ((X) > (Y) ? (X) : (Y))
+This second #define is actually defining a function; but it is doing it in a shorthand form. This type of definition is called a Macro Function. It accepts the parameters X and Y, and then will run them through the function, which basically amounts to an if statement. Basically, what this function will do is return the value of X if it is greater than Y, or the value of Y if X is less than Y. The syntax of a Macro Function is "NAME (TEST ? TRUE : FALSE)" where NAME is the identifier, TEST is the equivalent of what would go in the parenthesis of an if statement, TRUE is what to return if the TEST result is true, and FALSE is what to return if the TEST result is false. It is the equivalent of the following function:
+//THIS IS AN EXAMPLE; DO NOT ADD IT TO YOUR CODE
+int MAX(int X, int Y) {
+          if(X > Y) {
+                    return X;
+          } else {
+                    return Y;
+          }
+}
+You will likely encounter the abbreviated syntax if you delve into other people's source codes, so it is important to understand how it works. Or at the very least understand what it does. The advantage of using this syntax over an if/else structure is that the compiler can often optimize this code better, resulting in slightly faster execution. It's probably insignificant except for those programs that push the hardware to its limits and need that little extra "umph."
+
+After that bit of a headache at the end of the last section, the next line should be a nice refresher. It's just the simple module definition that we have used in all of our other programs:
+PSP_MODULE_INFO("Image Display Program", 0, 1, 1);
+Again we will add some familiar code, our standard callbacks.
+
+/* Exit callback */
+int exit_callback(int arg1, int arg2, void *common) {
+          sceKernelExitGame();
+          return 0;
+}
+
+/* Callback thread */
+int CallbackThread(SceSize args, void *argp) {
+          int cbid;
+
+          cbid = sceKernelCreateCallback("Exit Callback", exit_callback, NULL);
+          sceKernelRegisterExitCallback(cbid);
+
+          sceKernelSleepThreadCB();
+
+          return 0;
+}
+
+/* Sets up the callback thread and returns its thread id */
+int SetupCallbacks(void) {
+          int thid = 0;
+
+          thid = sceKernelCreateThread("update_thread", CallbackThread, 0x11, 0xFA0, 0, 0);
+          if(thid >= 0) {
+                    sceKernelStartThread(thid, 0, 0);
+          }
+
+          return thid;
+}
+Look familiar? Good.
+
+Now we get to the good stuff; it's the start of our main() function.
+int main() {
+          char buffer[200];
+          Image* ourImage;
+Up to this point, all we have done with strings is display them on the screen through the use of printf(). That's fine and dandy, but it's about time we get a little more in depth about what a string actually is. Basically, in C a string is an array of characters. There isn't such a thing in C as "myString," it is really just 8 character variables placed next to each other in memory. So to allow us to create a string, we have to first allocate that memory, because as soon as we do anything else (define a variable or whatnot), the memory space next to that allocated space next to the string will be reserved and therefore our string won't be allow to extend into it. Well, it will, it's called a buffer overflow, but we're not concerned about that right now; just know that it's generally a bad thing and will freeze your PSP. So to define an array in C, you simply add on how large you want the array (of a given type) to be in brackets after the variable name. So, when we use the line char buffer[200], we are allocating a block in memory of 200 character variables. This is the maximum length that our string can be, 200 characters. There is a way to change the size, but that's beyond the scope of this tutorial.
+
+The second line in our main() function defines a new variable named "ourImage" of datatype Image; it is actually more of a linked list, but don't worry about that for now. This Image datatype was defined in the graphics.h header file which we included. Everything that we do with it will be through the use of other functions in that graphics.h file. Aren't you glad we are using that file? Otherwise this program would have been a major headache.
+
+The first two lines of this code are the same as what we have been using in other programs to set up the screen. The third line calls another function in graphics.h  that gets the PSP ready to display graphics; it does all of the initial setup.
+
+That's all of the setup that we needed to do before actually working with our images. Now we'll move on to loading our PNG file.
+          sprintf(buffer, "ourImage.png");
+          ourImage = loadImage(buffer);
+The first line of this code is similar to a printf() call. But instead of printing to the screen, this line prints into a string. It's very useful, trust me, before I knew about this function, I tried to write my own. Man was that a mistake. The first paramater that sprintf() takes is the character array (AKA string) that you want to output to. We're using the buffer array that we defined above. And then the rest is like a printf(). We only wanted to store the path of our image into the buffer, but if we had wanted to, we could have used this to insert variables into a string as well, by parsing them the same way as with printf() (if you don't remember how to do this, maybe a revisit to Lesson 03 is in order.
+
+The next line loads our image into the ourImage variable that we defined earlier. loadImage() is another function that is defined in that graphics.h file. It takes one parameter, and that is the string containing the path to the image.
+
+Now we'll do a quick check to see whether our loading of the image was successful:
+          if (!ourImage) {
+                    //Image load failed
+                    printf("Image load failed!\n");
+          } else {
+If the loadImage function encounters a problem, it will set the value of our variable to 0 (or false), alerting us of the error. So we check this with a simple if statement, and if there was a problem, we print out a short error message.
+
+Hopefully we won't encounter a problem loading the image, and if not, then the following code will execute:
+                    int x = 0;
+                    int y = 0;
+                    sceDisplayWaitVblankStart();
+This is just setup for our image display, it shouldn't look too foreign to you, it just declares and initializes a couple of integers and then calls a sceDisplayWaitVblankStart (if you'll remember, this is the same function we used when we were reading from the control pad). This allows the "Home" button to work.
+
+Now we will loop through the entire screen. The screen is 480 pixels wide and 272 pixels high:
+                    while (x < 480) {
+                              while (y < 272) {
+These are simple while loops, you should remember them from Lesson 03. The outer loop will continue while x is less than 480 (the screen's width), and the inner loop will continue while y is less than 272, the screen's height.
+
+Now inside there, we are going to put the code to blit (or display) our image.
+                                        blitAlphaImageToScreen(0 ,0 ,32 , 32, ourImage, x, y);
+                                        y += 32;
+                              }
+This first line is your key. It will display a 32 bit image on the screen. That includes an alpha channel! Alpha is another word for transparency. The blitAlphaImageToScreen function takes seven parameters. The first two are offsets. If you are using seperate PNGs for each of your images, these should be zero. What these two parameters allow for, though, is for you to have one master image file containing all of your sprites. Basically, if you have two images in the same image file (next to each other for example), you can use the offsets to tell your program which part of the master image you want to display. The second two parameters are for width and height respectively. Since our image is 32 pixels by 32 pixels, we are using 32 for both of these values. The fifth parameter is to tell the function which image variable you want to use (obviously we're using our ourImage variable). And finally, the last two parameters are for setting the x and y positions of the image on the screen. In programming, this is like an inverted coordinate plane. The x axis is the same as it would be in math (that is, it increases as you move from left to right). The y axis, on the other hand, is upside down; as you increase the y, you move DOWN on the coordinate plane. This can be confusing at first, if you're used to math coordinates, but you'll get the hang of it.
+
+The next line just increments our counter. We are incrementing by 32 because that's the height of our image. The "+=" operator increments a variable. That is, "x += 32" is equivalent to "x = x +32." The goal is to make a tile of our image on the screen.
+
+Next, we add the incrementation for the x, like so:
+                              x += 32;
+                              y = 0;
+                    }
+This moves the horizontal placeholder over 32 pixels, the width of our image. So essentially we're moving over one column. Then we set the y placeholder back to zero so it can start from the top of the column again and work its way down.
+
+Now our image is drawn. But wait, there's one more step! Right now the "screen" is only stored in memory. This is because it is much much quicker to write to memory than to write to the screen. So since we're done with our manipulation of the screen, we now need to actually put those changes into effect; this is called flipping the screen.
+                    flipScreen();
+          }
+The flipScreen() function is also defined in graphics.h. Calling it is what actually does the updating of the screen.
+
+And finally, we shut down the program, allowing us to look at our beautiful creation and admire our grid of images.
+          sceKernelSleepThread();
+          return 0;
+}
+
+So now you have your completed main.c, now we need to compile this baby. The Makefile for this program needs a few slight modifications.
+TARGET = hello
+OBJS = main.o graphics.o framebuffer.o
+
+CFLAGS = -O2 -G0 -Wall
+CXXFLAGS = $(CFLAGS) -fno-exceptions -fno-rtti
+ASFLAGS = $(CFLAGS)
+
+LIBDIR =
+LIBS = -lpspgu -lpng -lz -lm
+LDFLAGS =
+
+EXTRA_TARGETS = EBOOT.PBP
+PSP_EBOOT_TITLE = Image Example
+
+PSPSDK=$(shell psp-config --pspsdk-path)
+include $(PSPSDK)/lib/build.mak
+It's the standard Makefile, but with two differences. The first is that we have added graphics.o and framebuffer.o to the OBJS line. This is simply because we are using these source files (graphics.c and it uses framebuffer.c). This simply tells the compiler that we need these compiled into our project too. The second thing that we have added are some LIBS, we put in zlib with "-lz" and we added libpng with "-lpng." We also added access to the graphics hardware with "-lpspgu" and then put in the math library (which graphics.h uses) using "-lm." Compile, and there you have it, your first program with images. Now go out and create some great applications and games using your new knowledge!
+
+Note: Be sure that when you put the EBOOT on your PSP you also copy the PNG image file and place it in the same folder as the EBOOT. 

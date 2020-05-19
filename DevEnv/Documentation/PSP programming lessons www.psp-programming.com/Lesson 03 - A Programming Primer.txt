@@ -1,0 +1,82 @@
+What you need to understand is that this tutorial is not meant to be the be all and end all of PSP programming. It is much less a "how to create a game" than it is a foot in the door. What you will gain here are the basic building blocks of PSP (and C) programming. You will need to rearrange and add to these blocks together to create your own, functional application.
+
+Having read Lesson 02, or knowing how to set up a basic program is a prerequisite for this tutorial. We will not go through the process of setting up your program in this tutorial. So, to test the code that follows replace the line
+printf("Hello World.");
+from Lesson 02 except where otherwise noted. Since the other lines were just setup for our program, we need not go through what they do again.
+
+The final product of this tutorial will be a program that counts upwards until the user presses a button or until the counter hits a predefined limit. This is the perfect application for this tutorial; it combines several core elements of C programming to create a simple, yet useful result without requiring many program-specific functions. Covered in this tutorial are: variables, if/then statements, loops, text formatting, and button input.
+
+First off, we will need to add two more header includes. The first one is to give us a little more control over the screen (we need this for one of the functions we will be using later). The second file we will be including allows us to get button input. So to do add these two files (pspdisplay.h and pspctrl.h), we need to add these two lines right below our first two "#include" statements:
+#include <pspdisplay.h>
+#include <pspctrl.h>
+And that's all the extra setup we need. Now we'll move on to putting in the functional code. From here on, all code listed should go in your main function, replacing the "printf" statement from Lesson 02. The first thing we will do is declare the variables that we will use in our program. A variable declaration takes the following form:
+//EXAMPLE (Psuedo Code)
+//DO NOT ADD TO YOUR PROGRAM
+type name=value;
+The type is the data type of variable. Each data type can contain data (and only that data). For example, type "int" (meaning integer) can hold any non-decimal number from -32767 to 32767. A "float" is like an "int," but it can hold decimals. The "char" type can hold a letter. For our program, we will only use the built in type "int" and a PSP specific type called "SceCtrlData" which holds the button state of the PSP controls.
+
+So, to declare the two variables that we are going to use, we insert the following two lines of code into our program (these should go where your "printf("Hello World.");" line was in Lesson 02; right after the line "SetupCallbacks();."
+int counter = 0;
+int i = 0;
+SceCtrlData pad;
+So now we have three variables that we can use. Two of type "int," named "counter" and "i," containing a value of zero for now. And one of type "SceCtrlData," named "pad," which is filled with junk at the moment (since we haven't yet initialized it). This is something to keep in mind when writing your own programs. If you declare a variable without initializing it (like our pad variable), it will not just be empty. It will contain the information that was previously in that chunk of memory. Declaring the variable just allocates a certain amount of memory space for the variable to be stored in. The initialization is what clears it out and allows us to use it. The reason that we haven't initialized "pad" at the same time that we declared it is because it wouldn't really make sense. Since it holds button input, you can't just initialize it by typing in a value. We'll initialize it later, before we use it for anything.
+
+Now we're going to give the user some instructions. The way we do this is by using "printf" to output a statement to them. So put this after the variable declarations:
+printf("Press [X] To Start the Timer");
+Look familiar? Good. It's the same function we used to output "Hello World" in Lesson 02. So if you ran the program at this point, it would be just like the "hello world" application, except it would print out "Press [X] To Start the Timer" instead of "Hello World."
+
+Now we need the program to wait until the user presses the [X] button before it does anything else. Now, this could be a very difficult, nearly impossible thing to do. Fortunately, we have something perfect for dealing with it. It's called a loop. Basically what it does is run through a block of code multiple times. There are different types of loops available to you (for loops, while loops, do while loops, etc), but this tutorial will only introduce two of those loops, the "while" loop and the "for" loop. How this loop works is that you give it a statement, and it will execute a block of code while that statement is true. For example, if you had a block of code that incremented a variable (starting with a value of zero) by one each time the loop was run, and the statement that you passed in the loop was "i<10" it would execute your code ten times, because on the eleventh time that it checked the value of the variable, it would be 10, which is not less than 10, so the statement would be false (man, this is a run on sentence if I've ever seen one). One other important concept that you will need to grasp is that "true" and "false" are synonymous with "1" and "0" respectively.
+
+Our loop will not be of the classic form. It could easily be, but I've looked through a handful of PSP projects' code, and they always do it this way, so I figured it would be good to introduce you to the way that you will most commonly see. Anyway, what we will be doing is having an "infinite loop" per say. It's not really infinite though, because (as I so conveniently didn't mention earlier), there is another way to exit a loop other than the control statement returning false. That is the "break" statement. Any time this is encountered, it will exit out of the loop you are currently in and your program will continue executing at the end of that loop. So, here's the start of our loop:
+
+while(1) {
+As you can see, this control statement will always evaluate to "true," because "1" is the same as "true." So the following code (the lines between the opening bracket and the ending bracket) will execute repeatedly until it encounters a "break" statement.
+
+The next line is where we set the value of "pad." It uses a function that is defined in the "pspctrl.h" file that we included earlier. This is a function call, as you saw in Lesson 02, but there's a little bit of a twist. First of all, we are passing two values to it. No big deal here, you just seperate the two values with a comma. The second thing that's a little different is that we are going to pass a variable. Not a big deal here either, just insert the variable name instead of a number or string or whatever. The third thing that's quirky is that we need to pass it with the "&" operator in front of it. This is actually the "address of" operator, and when you get deeper into programming, you will probably get familiar with it. Basically what it does is instead of passing the value of the variable, it passes the memory address. For now, just know that in order for a function to be able to change the value of a variable you pass to it, you need to use the "&" operator. So here's how we'll set "pad" to contain the current status of the PSP controls:
+          sceCtrlReadBufferPositive(&pad, 1);
+If you're wondering what the "1" is for, don't worry about it. It sets the number of buffers to read, but I've only ever seen "1" used there. Honestly, I don't know why you'd want anything else there (if there's a reason, someone please enlighten me, and I can add it here).
+
+The next line is an "if" statement. It's how you can program logic into your applications. What it does is execute a block of code "if" a statement evaluates to true. So, what we want to do is "break" out of the loop if the [X] button has been pressed. Which, effectively will "unpause" our program and go on to the next section. If the statement evaluates to false, it will just skip the code, and if there's an "else" statement, execute that block of code, or just go on. We will not have an "else" statement, so it will go through the loop again, continually checking the status of the buttons, and seeing if the [X] button has been pressed. While we're at it, we'll close our loop by ending an ending bracket.
+          if(pad.Buttons & PSP_CTRL_CROSS) {
+                    break;
+          }
+}
+The statement in the "if()" translates to English as "if the [X] button is pressed." So if that button is pressed, it will break, if not, it will just continue going through the loop. Now on to the counter.
+
+After they press the [X] button, we want to start a counter that will go until the user presses the [O] button. So what do we do? You guessed it, another loop! So we'll start this loop, and add in the exit code (with the substitution of "PSP_CTRL_CIRCLE" for "PSP_CTRL_CROSS").
+while(1) {
+          sceCtrlReadBufferPositive(&pad, 1);
+          if(pad.Buttons & PSP_CTRL_CIRCLE) {
+                    break;
+          }
+
+Now, we need to use a new function. What it does is clear the screen. Since we still have the "Press [X] To Start the Timer" on the screen, we need to erase that. Plus, the next time the loop rolls around and this code is executed, there will be the text that we're going to print out on the screen. We need to clear this off. So here's how we do it:
+          pspDebugScreenClear();
+This will clear off the screen, so now we're ready to print out our counter (and tell the user how they can stop the counter and exit the program).
+
+The first line should look familiar. It's just a simple "printf" statement. The one thing that may look a little weird to you is the "\n" at the end of the string. "\n" is a special character that stands for a new line. So the new line character is the equivelant of pressing "ENTER" on your keyboard. The second "printf" statement is just a bit different. We need it to print out our "counter" variable. To do this, we will use the "%" operator. Basically this signifies that you want to display a variable, and the character that follows it tells the program what type of variable. For an integer, we will use "i" (integer; get it?). The second parameter that we will pass is which variable we want it to print. In our case, we want to pring the "counter" variable. So put these two lines in your program:
+          printf("Press [O] To Stop the Timer\n");
+          printf("Counter: %i", counter); 
+
+The next thing we need to do is increase our counter by one so that the next time through the loop, the number displayed is one higher. It wouldn't really be a counter if we didn't do this, now would it? We could do this in one of two ways. The first, less commmon way to do this would be by setting "counter = counter+1;" this works perfectly well, but there is an easier way. To increment a variable by one, just use the "++" operator:
+
+          counter++;
+It does the same thing as "counter = counter +1;" but it's a bit more elegant, don't you think?
+
+Now we need to insert a short pause to make the "HOME" button work. Here we will be utilizing a "for" loop. This loop is just a tad bit different than the "while" loop. It takes three parameters. The first is the initialization; it will set the variable for the start of the loop. The second is the control statement, which does the same thing as the control statement in the "while" loop. And the third is what you want to happen to your variable at the end of each loop.
+          for(i=0; i<5; i++) {
+                    sceDisplayWaitVblankStart();
+          }
+
+This will execute our line of code 5 times (when i = 0, 1, 2, 3, and 4).
+
+And finally, we need to end the code block that the loop runs through with a simple ending bracket:
+}
+
+Now for the final little bit. This is the code that will run after the "break" statement executes. We want to display a simple message, and the final count of our counter. So we'll clear the screen and use two more "printf" statements like we did in the loop, but with different text. Add:
+pspDebugScreenClear();
+printf("Counter Finished.");
+printf("Final Count: %i", counter);
+And we're done with our code! Now for a couple of cosmetic changes from Lesson 02.
+
+The Makefile needs to be changed to reflect our new program. Go into it and change the title to one that you think suits the new program. I named mine "Counter Program." And also change your target to "count." Now go ahead and build your program, and give it a test run. You should now have the basic skills you need to create your own programs (text based ones at least). You can check out some other C programming tutorials for information on how you can use more complex logic structures (if/if else/else), loops, functions, pointers, etc. There are a few differences with programming for the PSP, but the basic stuff is all straight-up C. Good luck, and have fun! 

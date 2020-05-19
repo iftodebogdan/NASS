@@ -1,0 +1,5 @@
+    ## PSPDEV SETTINGS
+    export PSPDEV="/usr/local/pspdev"
+    export PSPSDK="$PSPDEV/pspsdk"
+    export CVSROOT=":pserver:anonymous@cvs.ps2dev.org:/home/pspcvs"
+    export PATH="$PATH:$PSPDEV/bin:$PSPDEV/psp/bin:$PSPSDK/bin"

@@ -1,0 +1,147 @@
+This tutorial is a simple walkthrough concerning playing music in your programs. Sound FX and background music are two aspects that give an application a polished feeling, but they are often overlooked. Whether that is because a developer is rushing to get a release out of the door or whether it is because they simply don't know how to implement sound (or have any fitting music to to with their application) is unclear. Hopefully this tutorial will help some people get sound into their programs.
+
+The first thing we are going to have to do is grab libmad from SVN. libmad is an MPEG audio decoder released under the GPL. It has been ported to the PSP by John_K.
+
+To do this, open Cygwin, and type
+svn checkout svn://svn.ps2dev.org/psp/trunk/libmad
+You should see a long list of filenames scroll by as the package is downloaded.
+
+Now we will switch into the libmad directory and compile the library:
+cd libmad
+make
+The next bit is a little deviation from the routine we used to install our libraries in Lesson 04. Usually, you could type "make install" and it would automatically install the files to their appropriate directories. Unfortunately, libmad's install script appears to be broken at the moment. Not to worry though, we can install it manually ourselves.
+cp -Rf ./include /usr/local/pspdev/psp/
+cp -Rf ./lib/libmad.a /usr/local/pspdev/psp/lib
+NOTE: There is a space between "./include" and "/usr..." and between "libmad.a" and "/usr..."
+
+This will copy all of the files into their appropriate place. The "-Rf" tag stands for "Recursive" and "final" -- it will just make sure that you copy everything and that you won't get any permission errors (which some users have reported as a problem without these flags).
+
+Next, download and extract some necessary files into a new project folder. Inside are two files, mp3player.c and mp3player.h which were obtained from John_K's PSPMediaCenter, I made some slight changes to the files as follows (you don't need to do anything with this, it's just in case you were wondering):
+//DO NOT ADD THIS TO YOUR PROGRAM
+//IT IS EXAMPLE CODE
+mp3player.c
+Line 76 - /* void void MP3setStubs to end of function */ - specific to stubs again, see mp3player.h
+
+mp3player.h
+Line 10 - #include "../../codec.h" - specific to PSPMediaCenter
+Line 17 - void MP3setStubs(codecStubs * stubs); - specific to PSPMediaCenter
+Other than that, it was very clean. John_K has done a great job in porting it.
+
+Now, on to the fun part. Create main.c in your editor of choice, and begin with your comments:
+// Mp3 Player Sample on PSP
+// By *YOUR NAME HERE*
+The next little section should be standard to you. The only new includes are the "pspaudio.h" and "pspaudiolib.h." These headers are needed for the audio-specific functions that we will use in our program.
+#include <pspkernel.h>
+#include <pspctrl.h>
+#include <pspdebug.h>
+#include <pspaudio.h>
+#include <pspaudiolib.h>
+#include <psppower.h>
+
+#include "mp3player.h"
+
+PSP_MODULE_INFO("Mp3 Player Example", 0, 1, 1);
+#define printf pspDebugScreenPrintf
+You will also see that we included one of the files that you downloaded, "mp3player.h" (make sure that it's in the same directory as our source file). We also defined printf and did our PSP_MODULE_INFO.
+
+And now on to what I like to call the twilight zone. I call it that because at this moment, I have no clue how it works or why, but I do intend finding out some day. Anyway, these functions are necessary for your code.
+
+// TWILIGHT ZONE! <do doo do doo>
+/* Exit callback */
+int exit_callback(int arg1, int arg2, void *common) {
+          sceKernelExitGame();
+          return 0;
+}
+
+/* Callback thread */
+int CallbackThread(SceSize args, void *argp) {
+          int cbid;
+
+          cbid = sceKernelCreateCallback("Exit Callback", exit_callback, NULL);
+          sceKernelRegisterExitCallback(cbid);
+
+          sceKernelSleepThreadCB();
+
+          return 0;
+}
+
+/* Sets up the callback thread and returns its thread id */
+int SetupCallbacks(void) {
+          int thid = 0;
+
+          thid = sceKernelCreateThread("update_thread", CallbackThread, 0x11, 0xFA0, 0, 0);
+          if(thid >= 0) {
+                    sceKernelStartThread(thid, 0, 0);
+          }
+
+          return thid;
+}
+// END OF TWILIGHT ZONE! <do doo do do>
+Now onto the main section of your code. First thing we will do is set the PSP's clock speed to full. Please note that this will not damage your PSP in any way, as it has only been underclocked to this speed by Sony, the reason was most likely battery life (for more information, see Lesson 05. Another notable addition is the "pspAudioInit()" function. This is similar to the "pspDebugScreenInit()" function that we have always called. Basically, it sets up the speakers and everything to be ready to handle our sound output.
+int main() {
+          scePowerSetClockFrequency(333, 333, 166);
+
+          pspDebugScreenInit();
+          SetupCallbacks();
+
+          pspAudioInit();
+          SceCtrlData pad;
+          int i;
+Now for the shiny new stuff!
+          MP3_Init(1);
+          MP3_Load("test.mp3");
+          MP3_Play();
+MP3_Init() initialises the structures used by libmad and sets which channel the PSP will be playing back on (in this case, Channel 1). MP3_Load() is pretty self descriptive, it loads your MP3 file (either change this to your MP3 filename or change your MP3 to be called "test.mp3"). MP3_Play() starts the sound playing through the speakers.
+
+The next section shows some options you have, and also acts as a very simple user interface.
+
+          while(1) {
+                    sceCtrlReadBufferPositive(&pad, 1);
+                    if(pad.Buttons & PSP_CTRL_CROSS) {
+                              break;
+                    } else if(pad.Buttons & PSP_CTRL_CIRCLE) {
+                              MP3_Pause();
+                              for(i=0; i<10; i++) {
+                                        sceDisplayWaitVblankStart();
+                              }
+                    }
+
+                    if (MP3_EndOfStream() == 1) {
+                              MP3_Stop();
+                    }
+          }
+We read the buttons like we have been doing since Lesson 03. If they push the [X] button, we will exit out of the loop (and effectively, exit out of our program). If the user pushes [O], then we will pause the music using the MP3_Stop() function. Finally, we check the MP3_EndOfStream() function to see if the MP3 file has finished playing. The function will return "1" if it is over and "0" if it's still playing. If it's over, we stop the playback simply so that we're not eating up CPU power when we don't need to.
+
+Then we will enter some wrapup code for after the user exits the loop:
+          MP3_Stop();
+          MP3_FreeTune();
+
+          sceKernelSleepThread();
+
+          return 0;
+}
+To end our program, we will first stop the MP3, and then release the memory space of the music file we just used. Freeing up memory isn't incredibly important in this program (when the program terminates, the memory will be freed anyway), but it could be important in other homebrew programs. If you don't free the memory, it won't be available for other functions once the MP3 has finished.
+
+So that's it for your C file. Simple, right? Now we move on to the all-important Makefile.
+
+Remember - the Makefile has no suffix (no .exe, .doc, .txt, .tar, etc.)
+
+The main change is the addition of the our new libraries. "lmad" is for linking libmad for decoding the Mp3. "pspaudiolib" and "pspaudio" give our program access to the PSP's audio hardware (the speakers, for instance).
+TARGET = mp3
+OBJS = mp3player.o main.o
+CFLAGS = -O2 -G0 -Wall
+CXXFLAGS = $(CFLAGS) -fno-exceptions -fno-rtti
+ASFLAGS = $(CFLAGS)
+LIBDIR =
+
+LIBS = -lmad -lpspaudiolib -lpspaudio -lpsppower
+LDFLAGS =
+EXTRA_TARGETS = EBOOT.PBP
+PSP_EBOOT_TITLE = MP3 Player Example
+PSPSDK=$(shell psp-config --pspsdk-path)
+include $(PSPSDK)/lib/build.mak
+Now all that's left is to go into Cygwin, find your project folder, and type in the magic word, "make" (or for Firmware Version 1.50 type "make kxploit" to generate your two folders).
+
+You will need to copy your "test.mp3" into the folder where your program will be located on the PSP in order for it to be loaded when your program runs. On Firmware Version 1.50, it goes in the folder without the "%" at the end. Be sure that your MP3's bitrate is less than or equal to 160 KBPS or you will get an error (if you do get a "recoverable frame level error (lost synchronization)" error and your sound file still plays, you probably don't need to worry about it).
+
+You can now simply start the application and enjoy your MP3! 

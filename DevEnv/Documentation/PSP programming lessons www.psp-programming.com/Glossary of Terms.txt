@@ -1,0 +1,75 @@
+The world of PSP Homebrew can be intimidating to a new user. So, here is a list of terms to get you acquainted with the jargon. (By macca-hacker)
+
+    * Atrac3 - An audio codec made by sony that is comparable to mp3.
+    * AVC MP4 (Advanced Video Coding Mpeg-4) - A superior codec that allows for a better quality video with a smaller file size. Requires at least Firmware Version 2.00 or higher.
+    * Bière d'Alsace - eLoader 0.96, mainly bugfixes from the last version.
+    * Bock - eLoader 0.97; It supports WiFi access (both ad-hoc and infrastructure) on all PSP Firmwares. Gets rid of the hassle of a "WiFi hack" as was done in earlier versions.
+    * Brick - To render a Playstation Portable unit "useless as a brick" by corrupting it's firmware. Only PSP Versions 1.50 and lower may be bricked. Bricking can be prevented by avoiding firmware altering applications such as PSPSet and any homebrew EBOOTS from untrustworthy sources. There is no way to unbrick a PSP.
+    * Brown Ale - Eboot Loader 0.95 that allows homebrew to be run on 2.0 and above.
+    * Cache - A temporary storage area in memory or on a disk that holds the most recently downloaded web pages. If the web page has not changed, the cached page is displayed immediately.
+    * Cheat Device - A program made by Edison Carter to use cheats in Grand Theft Auto: Liberty City Stories. It was the first homebrew on 2.01+ and exploit is used as the basis for the eLoader.
+    * Decrypt - To restore information to its original, unprotected state (the reverse of "encrypt").
+    * Digital Signature - Information that is encrypted with an entity private key and is appended to a message to assure the recipient of the authenticity and integrity of the message or file.
+    * Downgrade - A way do revert your firmware to an older version. At the moment, it is only possible to go from 2.0 to 1.50.
+    * DRAM - Stands for Dynamic Random Access Memory, a type of memory used in most personal computers.
+    * EBOOT - An EBOOT file is a compiled program (like a windows .exe), there are many types such as games, emulators and applications
+    * eLoader - The eLoader is a program written by Fanjita and Ditlew to run hombrew software on Firmwares 2.0 and above.
+    * Emulator - A program that is built to run another systems games. The program allows the PSP to interpret functions native to the original system that a game (or ROM) might call.
+    * Encrypt - To encode (scramble) information in such a way that it is unreadable to all but those individuals possessing the key to the code.
+    * Exploit - An exploit is a piece of software/code that takes advantage of a bug, glitch or vulnerability in the firmware to run a script or a program. Every known exploit on the PSP is used to run homebrew applications (like eLoader or the 2.0 EBOOT Loader).
+    * Firmware - The PSP's Operating System (like Windows on a computer).
+    * Firmware Emulation - Running a PSP firmware through software. Basically making the PSP think that a totally different firmware is actually being used. It's done by first unloading the current firmware's modules and then loading their newer versions from the memory stick.
+    * Flash - The PSP's flash memory is where all of its firmware files are stored, messing with this can result in a bricked psp.
+    * Flash 0 - The major peice of the PSP's flash. This contains the firmware and all of the vital parts. If this becomes corrupt, your PSP is bricked.
+    * Flash 1 - The part of the PSP's flash that contains the Web Browser's cookies, settings, wallpapers (2.00+), and other non vital things.
+    * Flash Dump - A copy of the PSP's flash files. Dumping is the cool word for copying. It is generally used for firmware emulation or researching hacks.
+    * GTA Exploit - The GTA Exploit is a vunrability in the Grand Theft Auto game that allows homebrew code to be run.
+    * GUI - Graphical User Interface.
+    * Homebrew - A general term that describes programs made by enthusiasts in the psp scene.
+    * IDE - Integrated Development Environment. A single program bundling together many useful things like an editor (for typing out code), a debugger (for finding errors), and a compiler (for compiling code into binary). If the IDE is for another platform than the PC, then an emulator is possibly bundled. The official Sony PSP Dev Kit is a ide. And yes, it does have a fully functional PSP emulator. It is very very expensive and has not been leaked.
+    * IRDA - Infrared, used for programs such as the universal remote.
+    * ISO - An ISO is a dump of a game file from a cd, eg a neogeo game on psp would be an ISO.
+    * ISO Loader - A program used to load backed up or pirated psp games.
+    * Kernel mode - some memory locations can only be modified by the kernel itself. It is the "admin" account for your PSP. Kernel mode basically is the "power" to modify those memory locations. When people say kernel mode is not available on Firmwares above 1.50, it means you dont have the power to change the values of those memory locations.
+    * kXploit - An exploit which allows homebrew to be run on 1.5 psps, it involves using 2 folders and edited eboots
+    * LocationFree - A program included in Firmwares 2.50 and above to stream video files from your LocationFree Base station to your PSP via WiFi.
+    * Lua - A simple scripting language that has been ported to the psp.
+    * Lua Player - The PSP Application that allows excecution of Lua scripts.
+    * Memory Stick - A storage device analogous to the hard drive in your computer.
+    * MIPS - a kind of a processor. (eg x86 for Pentiums, Cell for ps3, etc.)
+    * MP3 - An audio codec that most music is formated in. It may not be the best but it is the most common.
+    * MP4 - A codec that the psp uses for audio and video.
+    * NAND - Used in memory cards such as the CompactFlash cards. It is also used in Sony PSP for the Firmware. NAND is best suited to flash devices requiring high capacity data storage.
+    * Pak - See WAD
+    * PARAM.SFO - Similar to a .ini file, this is the part of an EBOOT.PBP package which contains the "instructions" for running the code (DATA.PSP/DATA.PSAR), as well as supplying other information on the program, such as region and program title.
+    * PBP - the main executable file for the PSP's operating system. Akin to .exe files for Windows.
+    * PMF - Format: A media file format for PSP, it is a proprietary format of Sony and is not easily created or encoded. Video splash screens (at PSP startup and when loading a game) are in PMF format.
+    * PMP - A video format that allows full resolution video to be played using PMP homebrew.
+    * Port - A modified version of an application or game that allows it to run on a system that it was not originally designed for.
+    * Portal - A collection of JavaScript games designed to run in the webbrowser.
+    * Root - The root directory refers to the upermost level of a drive. eg X:\ would be the root if your PSP's drive letter was X
+    * PSPVideo9 - GUI for ffmpeg used to convert videos into PSP friendly formats.
+    * PRX - Files that are stored in the Flash and in UMD games. They contains certain functions (e.g. game-saving or media codecs).
+    * Resolution - A screen resolution of 480x272 means 480 pixels (dots) horizontally across each of 272 lines, which run vertically from top to bottom.
+    * Ripkit - A small program that takes extraneous files such as music and videos out of ISOs in order to make them fit into smaller file sizes.
+    * Rom - A rom is a dump of a game file from a cartridge, eg a SNES game on PSP would be a rom.
+    * SDK - Software Development Kit. Basically a bunch of apps which together make it easy to develop for a platform. Developing for the PSP was possible before the PSPSDK came out, but it was a lot more difficult. After it came out, homebrew came out by the bucketloads. (Not to be confused with an IDE).
+    * Shareware - Copyrighted software that is available free of charge on a trial basis, usually with the condition that users pay a fee for continued use and support.
+    * Shell - A program made to be used instead of the psp's firmware. It is not its own OS, but rather a program running on top, masking the true OS.
+    * SIRCS - Sony's own proprietary infrared protocol. Used in most, if not all Sony TVs and the Playstation 2. It is the native IR format for the PSP, therefore, making a SIRCS based remote for the PSP is a cakewalk.
+    * Sleep Mode - This is a mode where the PSP is effectivly turned off, but when you turn it back on it resumes from the same spot.
+    * SP MP4 - Simple Profile Mpeg-4. A video filetype that is playable on any firmware PSP.
+    * Swaploit - This was an early version of the kXploit which only worked on 1.50 PSPs. The exploit worked in a way that you first loaded an eboot from the dashboard and when the PSP splash screen appeared you quickly swiched your memory stick to one that contained a game or application.
+    * TIFF Exploit - The TIFF exploit was a vulnerability in the PSP's Photo Display code that allowed homebrew to be run on Firmware 2.00. It was patched in 2.01.
+    * UMD - Universal Media Disc, a Sony disk format used to store games, music and movies.
+    * USB Cable - The PSP features a Mini B USB port, it allows you to connect your PSP to the computer.
+    * User Mode - Used in the GTA Exploit. It prevents us from using certain functions (e.g. UMD emulation and irda). No flash access is available within this mode.
+    * Video RAM (VRAM) - VRAM is a term generally used in computers to describe RAM dedicated to the purpose of displaying graphics.
+    * VSH Mode - The TIFF exploit runs in this mode. This is a combination between Kernel Mode and User Mode which gives us a few extra functions like access to the flash.
+    * WEP - A form of encryption used for WiFi.
+    * WMA - Windows Media Audio. The default CD-ripping format in the Windows Media Player. It is only playable in Firmware Version 2.60.
+    * WAD - A container file. Something like zip files, but for DOOM-series game files.
+    * WiFi - WiFi is a wireless network protocol. It can be used to share files and internet connections.
+    * WPA - A form of encryption used for WiFi. It is more secure than WEP.
+    * XMB - The main menu on the PSP. This is the menu you will get to when you reboot your PSP completly.
+ 

@@ -1,0 +1,45 @@
+The first step to creating your own program is getting your environment set up. This environment is how you will convert the source code you write into a compiled file formatted for execution on you PSP. We will be setting up two important tools on our system.
+
+If, at any time in this tutorial series, you need help please head over to our forums and post a question. We are always happy to help a fellow programmer.
+
+The first of these tools is called CYGWIN. It is basically a Linux emulator for windows. It will create a simulated Linux environment on your computer so that you can run native Linux applications. This may sound intimidating, but don't worry, it's very simple to use.
+
+The second thing you'll need is the toolchain. This is the key to programming for the PSP. It will set up everything you need, from header files, to libraries, to the compiler itself, to the sample programs. Once you have this installed, you will be nearly ready to create your first program.
+
+Now for the part we've all been waiting for: the installation.
+
+The first step is to install CYGWIN. You can download the install file from the CYGWIN website here. After it has finished downloading, open up the executable. You will see a splash screen; click next. Now you will be asked what you want to do. Select the default option of "Install from Internet," and hit the next button. Now you will be prompted where you want to install CYGWIN. Change the install directory to "C:/cygwin" if it is not set as such already (where C: is your local hard drive). Leave the other options set to their defaults and hit next. Now you will be asked where you want to save the installation files. What you select here doesn't really matter, but I suggest putting them someplace where you will be able to find them and delete them after the installation is complete. Once you have selected a suitable location, click next. The next screen will ask about your network settings, if you don't use a proxy (or don't know what a proxy is), just click next on this screen. If it doesn't work, go back and try letting it use Internet Explorer's settings. Now you should be presented with a list of servers to download the installation files from. Any one of these will do, so select one, and then click on next. Now it will download the package list, this could take a few minutes, depending on your connection speed. Once it is done, scroll down to "devel" and click on where it says "default" so that it becomes "install." Then scroll down to "web," click the "+" next to it, scroll down and set "wget" to "install."
+
+When you are finished, click next. CYGWIN will now download and install the selected packages. This will quite possibly take a while, so go watch a TV show or do some web surfing while you wait. After the install has finished, you are ready to install the toolchain.
+
+Now, we are going to install the toolchain into our CYGWIN environment. To set up our environment, we will need to run CYGWIN first. So, either from the start menu, or from "C:/cygwin," run a CYGWIN bash shell (cygwin.bat). This will open up a command line. Once you see "yourusername@yourcomputername ~" you may close the window; your environment has successfully set up.
+
+To download the latest toolchain, go here. It should be at the top one. At the time of writing, the latest toolchain file is dated 20051202. Download this file. When it is finished, use Winrar to extract the file contents to "C:/cygwin/home/user," where "user" is your username.
+
+Now it's time to actually install, so open up your CYGWIN bash shell again. Now it's time to introduce you to the Linux command line. You should see a "$" at the beginning of the line. This means that you are running the shell in user mode, as opposed to root (or admin) mode. This is of little importance in CYGWIN, but if you ever use an actual Linux command line, this is an important thing to notice.
+
+We now need to change directories to where we extracted the toolchain. Type "ls" in the bash shell; this stands for list. It will give us an output of all of the files in our current directory (this is similar to "dir" in a Windows command line). Now you should see a folder named "psptoolchain," this is where we want to go. So type "cd psptoolchain" and hit enter. CD stands for change directory, and it will (obviously) switch the current operating directory). Now do a quick "ls" again, and you will see the files in this folder. The one that we are going to use to set everything up is "toolchain.sh."
+
+Due to a recent problem with the toolchain, we need to update everything, so to get the updates and have them modify the toolchain script, you will need to type "svn update" and hit enter.
+
+After that is finished, execute the updated script by typing "./toolchain.sh" and hitting enter. In Linux, "." means the current directory, and ".." means the parent directory, so this command means to execute "toolchain.sh," which is in the current directory. The toolchain.sh script will do the rest, for you. This can take up to several hours, depending on the specifications of your machine. For a frame of reference, my 3.0GHz Pentium 4 took about three hours to run the entire script, so be patient. Some people have reported it taking over 24 hours, but this is a little overkill. Go take a break and come back in a few hours. Or better yet, let it go while you sleep and when you wake up in the morning you should be ready for the next step.
+
+It is now time for the last step. We have to tell CYGWIN where it can find the PSPSDK (which the toolchain just installed) and the toolchain. To do this, we need to change "C:/cygwin/cygwin.bat" to include the paths. So, close CYGWIN, and navigate Explorer to "C:/cygwin" and right click on cygwin.bat. Select "Edit" and a Notepad window should appear with the following (you'll need to replace all instances of "C:" with "D:" or "E:" or "_:" if you installed CYGWIN on a drive other than your "C:" drive):
+
+@echo off
+
+C:
+chdir C:\cygwin\bin
+
+bash --login -i
+
+Change this to:
+@echo off
+
+C:
+chdir C:\cygwin\bin
+
+set path=%path%;C:/cygwin/usr/local/pspdev/bin
+set PSPSDK=C:/cygwin/usr/local/pspdev
+bash --login -i
+Now you're ready to go! If you have source code that you want to compile, go into that directory with "cd" and type "make" and it should give you an eboot.pbp that you can put on your PSP. If not, check out Lesson 02 to learn how to create your own simple application for the PSP.

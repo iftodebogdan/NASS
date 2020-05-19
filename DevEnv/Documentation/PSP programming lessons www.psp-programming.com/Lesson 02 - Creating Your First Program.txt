@@ -1,0 +1,105 @@
+We're going to create a folder hierarchy to organize our projects. Open up a CYGWIN bash shell, and type "mkdir projects" and then hit enter. This command ("mkdir") stands for "make directory" and it will create a directory, or folder, in your current operating directory. So now we have a new folder for all of our projects, navigate into it by typing "cd projects" and hitting enter. Now we are going to create another directory for this specific project. Type "mkdir helloworld" and hit enter. Now switch into the new directory with "cd helloworld."
+
+The next step is to open up a text editor. It doesn't really matter what you open, it can be Notepad, Wordpad, whatever you want. I prefer using an editor that is dedicated to editting C/C++ source code because of the syntax highlighting options that are built in (I use Dev-C++), but honestly, it doesn't matter (so long as you know how to use it).
+
+Now, create a new file and call it "main.c" in our "helloworld" directory. This is going to contain the source code for our program. For those of you who don't know what source code is (and I know there will be a few), the source code is what we write to create a program. It is written in a way that humans can understand. In most languages, the source needs to be converted to a format the computer (or in our case, the PSP) can understand. These are called compiled languages, and C and C++ fall into this category (the conversion is done by the compiler that we set up in Lesson 01). There are a few other programming languages that use what is called an interpreter to interpret the source code and send out machine code on the fly. These are called scripting languages (an example of a scripting language is PHP).
+
+Alright, so we have a new file that is going to hold our source code. Now we need to start writing it. The first part of the program should contain comments to tell anyone reading our code what the aim of the program is, when it was written, and who the author is. Comments are lines of source code that are omitted from the compiled binary (or skipped by the interpretter in scripting languages). Comments are a very important part of your code, because when you (or someone else) come back to edit your source code later, you will not remember all of the intricacies of the program. So, you can leave yourself notes in the form of comments. Comments are signalled with the "//" and "/*" characters. Any time you see a "//" it means that the rest of the line will be a comment. A "/*" means that the compiler (or interpretter) will ignore your code until it reaches a "*/" signal. Comments signalled by the "/*" operator can span many lines, but comments signalled with "//" only comment out the rest of that line.
+
+So, to start off our program, we are going to leave a comment at the top about what it does, when it was created, and who it was written by.
+// Hello World - My First App for the PSP
+
+/*
+          This program was created by (Your Name Here) on (Date Here)
+          It is a simple "Hello World" Application.
+*/
+The next portion of the program is where we tell the compiler which header files and which include files we are going to use in our program. Basically what the "#include" directive does is copy the code from the file you pass to it into the top of your program. This allows you to keep your program simple, while still using the advanced code that is already written for you. The include directive can include either header files that came with the compiler (or that you add to the compiler), or header files specific to the specific project that you are working on. The way that you discern which of these you are including is by whether you use "<>" to enclose the file or if you use quotes to do it. The less than and greater than signs include a file from the compiler's "include" directory, and the quotes include a file from the same directory as the file including them. We will be including two files in our program. The first is "pspkernel.h." This file will be included in every single program that you write for the PSP. It contains all of the code specific to your PSP. Your program will not work on the PSP if you do not include this file. The second file we are going to include is "pspdebug.h." This file contains several useful functions for debugging your programs, but specifically it includes the function that we are going to use to write text to the screen. So, add this code to your program:
+#include <pspkernel.h>
+#include <pspdebug.h>
+Next we tell the PSP a little bit about the program. This isn't really that important, your program will compile without it, but it is always a good idea to keep it in (if only for forwards compatibility). The first attribute is the name of the program, but it's not really the name of the program that will appear (we'll change that later). The other values are other attributes (just leave it alone), major version, and minor version. We'll just leave all of these except for the name as the defaults. So, add the following line to your program:
+PSP_MODULE_INFO("Hello World", 0, 1, 1);
+Now we are going to set up the function that we will use to write to the screen. This step is optional, but it makes writing text based programs much easier. The basis behind this line is to change the function that is built into the PSP, called "pspDebugScreenPrintf" into something that's much easier to type. This function is used to write to the screen (which you will see later). What we are basically going to do here is rename "pspDebugScreenPrintf" to "printf." So every time we use "printf" from now on, the compiler will just treat it as if we have typed "pspDebugScreenPrintf." Here's how we'll do it; we'll define "printf" as "pspDebugScreenPrintf" like this:
+#define printf pspDebugScreenPrintf.
+
+Ok, I have some bad news and some good news. The bad news, the next block of code is pretty complicated. The good news, you don't need to understand it. Here's a brief explanation of what it does (we'll leave the actual syntax and line-by-line explanation until later). Basically what this block of code contains is functions that will be called in our program. The functions will set up your program to run on the PSP and allow you to not worry about your PSP freezing or exiting the game when you don't want it to. Put this block into your program:
+
+/* Exit callback */
+int exit_callback(int arg1, int arg2, void *common) {
+          sceKernelExitGame();
+          return 0;
+}
+
+/* Callback thread */
+int CallbackThread(SceSize args, void *argp) {
+          int cbid;
+
+          cbid = sceKernelCreateCallback("Exit Callback", exit_callback, NULL);
+          sceKernelRegisterExitCallback(cbid);
+
+          sceKernelSleepThreadCB();
+
+          return 0;
+}
+
+/* Sets up the callback thread and returns its thread id */
+int SetupCallbacks(void) {
+          int thid = 0;
+
+          thid = sceKernelCreateThread("update_thread", CallbackThread, 0x11, 0xFA0, 0, 0);
+          if(thid >= 0) {
+                    sceKernelStartThread(thid, 0, 0);
+          }
+
+          return thid;
+}
+Next, we are going to define the "main" function. Each program in C and C++ needs a main function. This is where the code is executed from. C (and some of C++) functions in the proceedural paradigm. This means that the code goes in a linear path. For example, if you have the following code:
+//Do not put this in your program.
+//It is an example.
+
+int myFunction() {
+          //Print Out 'A'
+          return 0;
+}
+int main() {
+          //Print Out 'B'
+          myFunction();
+          //Print Out 'C'
+          return 0;
+}
+Where the comments (see above if you don't remember what comments are) do what they say. The program would print out 'B' then it would print out 'A' then 'C' because the compiler starts in the main function. It prints out 'B' then it sees the call to "myFunction" which is defined above it, and goes there, sees that it needs to print out 'A' and then returns to where it left off and prints out 'C.' All of your programs (until you get to advanced C++) will follow this linear structure. So, the "main" function is vital to your program. To define a function, you use the following structure: "[return type] [function name]() {". The return type is what the function will send back to the program. For "main" this should always be of type "int" (which stands for integer). The function name is your name for the function, "main" will obviously be named "main." So, define your function by putting the following line in your code:
+int main() { 
+
+We now need to add two lines to set up the screen and to use those functions that we put in earlier (which you didn't need to know how they worked). Even though you don't need to know how those functions worked, it is important to grasp the concept of how to call functions. It is actually very simply. You just put the function name with parenthesis at the end (and if it takes any parameters, you put those in the parenthesis, but we'll cover that later).
+
+Every line in your program will need a semicolon at the end. The reason for this is because the compiler does not see any white space. Between lines, you could have 100 empty lines, and the compiler wouldn't care. This is useful because it allows you to format your code how you want, in a way that you can understand. You can group lines together, or do whatever you want with your white space. But, in turn, to end a line, you need a semicolon. So add these two lines to your program to set it up:
+
+pspDebugScreenInit();
+SetupCallbacks();
+Now it's time to write some code that we will actually be able to see the results of. Remember when we defined "pspDebugScreenPrintf" as "printf?" Well, now it's time to use that function. The way that we will print text to the screen is by calling the "printf" function with a parameter (I told you we'd cover it later.) A parameter is a variable that you can pass to a function for it to use. These will come in handy later when you're writing your own functions. So, for "printf" to output to the screen, we need to pass a string to it. We will output "Hello World" by passing that string to the function. "Printf" is a powerful function because you can also use it to output other variables to the screen. We would pass these as other parameters, but that will all come in due time. For now, we will just print out "Hello World" to the screen, like so:
+printf("Hello World");
+And there it is, you have told "printf" to output to the screen. Now we just need to finish some things up and then our source code will be ready to build. We need to pause our program so that we can see the output. If we don't, it will just either freeze, or return you to the PSP Menu. You will never even get to see your beautiful phrase outputted to the screen because it will be erased so fast. So, add this line to pause the program until the "Home" button is pushed and the user is sent back to the PSP Operating System.
+sceKernelSleepThread();
+Now we need to give our function a return value, since when we defined it ("int main()"), we told the compiler that it would return an integer. So just return a '0' (that's a zero, not a capital 'o') by doing this:
+return 0;
+And finally, end the function by putting in a closing bracket:
+}
+And that's it for the program! Now we just have to tell the compiler how we want this project compiled by creating a Makefile. So create a new file called "Makefile" with no extention (ie, no .txt). Once you've done this, open it up in your text editor.
+
+Put the following in your Makefile:
+TARGET = hello
+OBJS = main.o
+
+CFLAGS = -O2 -G0 -Wall
+CXXFLAGS = $(CFLAGS) -fno-exceptions -fno-rtti
+ASFLAGS = $(CFLAGS)
+
+EXTRA_TARGETS = EBOOT.PBP
+PSP_EBOOT_TITLE = Hello World
+
+PSPSDK=$(shell psp-config --pspsdk-path)
+include $(PSPSDK)/lib/build.mak
+You can use this Makefile as a basis for all of your simple projects. Sometimes you will need to add libraries or whatnot to this file, but for now it is fairly simple. It basically just tells your compiler to take "main.c" and build it using the PSPSDK into a .pbp file that your PSP can read. What you will need to change if you use this Makefile in other projects is where it says "PSP_EBOOT_TITLE = Hello World." You can change where it says "Hello World" to the title of your program, this is the name that will appear on the PSP Game Menu when you select the file.
+
+Now open up a CYGWIN Bash Shell and "cd" into your "projects/helloworld" directory. Type "make" and your shell should output some stuff to you. It will tell you if your source code had any errors that made it uncompilable. Generally, if it gives you a few warnings, it's not a big deal. Errors are what you want to watch out for, warnings are just possible points that could cause bugs. Note: if you have Firmware Version 1.50, you can automatically generate your two folders by typing "make kxploit" instead of "make."
+
+If you didn't have any errors, congratulations! You have successfully created and compiled your first application for the PSP. I'll bet you're dying to test it out. So, put "C:/cygwin/home/yourUserName/projects/helloworld/EBOOT.PBP" on your PSP just like you would any other homebrew application, and try it out for yourself! 

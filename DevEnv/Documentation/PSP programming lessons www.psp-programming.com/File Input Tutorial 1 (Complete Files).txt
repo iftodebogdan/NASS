@@ -1,0 +1,211 @@
+This first tutorial covers printing an entire file to the screen. We will learn how to read an entire file into memory, how to print the contents to the screen, and how to terminate the file. This will give you the basic foundation for File I/O (Input / Output) which we will build upon in later parts of this tutorial series.
+
+First, we will need to make a few include statements, so open up your favourite text editor (I'm partial to vim) and create a new file called main.c. Now, inside the text editor, type:
+#include <pspkernel.h>
+#include <pspdebug.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+These includes do the following:
+
+    * pspkernel.h and pspdebug.h: Check out the general PSP C tutorials for information.
+    * stdio.h: "standard input-output header," is the library in C programming language which contains functions for manipulating standard input and output.
+    * stdlib.h: "general purpose standard", is the library in C programming language which includes functions involving memory allocation, process control, conversions and others general purpose functions.
+
+Ok, enough about includes already. I see you rolling your eyes at me... not cool.
+
+Here we insert our standard callbacks and setup. Check out the general PSP C tutorials for information.
+#define printf pspDebugScreenPrintf /* Exit callback */
+int exit_callback(int arg1, int arg2, void *common) {
+          sceKernelExitGame();
+          return 0;
+}
+
+/* Callback thread */
+int CallbackThread(SceSize args, void *argp) {
+          int cbid;
+
+          cbid = sceKernelCreateCallback("Exit Callback", exit_callback, NULL);
+          sceKernelRegisterExitCallback(cbid);
+
+          sceKernelSleepThreadCB();
+
+          return 0;
+}
+
+/* Sets up the callback thread and returns its thread id */
+int SetupCallbacks(void) {
+          int thid = 0;
+
+          thid = sceKernelCreateThread("update_thread", CallbackThread, 0x11, 0xFA0, 0, 0);
+          if(thid >= 0) {
+                    sceKernelStartThread(thid, 0, 0);
+          }
+
+          return thid;
+} 
+
+Now, start your main function:
+int main(void) {
+     pspDebugScreenInit();
+     SetupCallbacks();
+
+int meaning interger is used to refer to any data type which can represent some subset of the mathematical integers.
+void is used because in earlier versions of C, functions with no specific result defaulted to a return type of "int" and functions with no arguments simply had empty argument lists. Pointers to untyped data were declared as integers or pointers to "char".
+{ is used to show that the function has started!
+For more info about the other two lines, you'll need to read the other PSP C tutorials.
+
+Next we will declare some variables:
+FILE * pFile;
+long lSize;
+char * buffer;
+
+FILE, we use this to make the pFile variable a "file pointer".
+long, now this is tricky as int and long int both can be from -2,147,483,648 to +2,147,483,647. I would normally use int, but for this tutorial, I thought it would be good to introduce this datatype. int is an explained above. Basically, long can store bigger numbers than int, but it also takes up more space in memory (it's a tradeoff).
+char*, we use this to declare the variable "buffer." It can contain characters (a-z, A-Z, symbols, numbers, etc).
+
+Then we give the pFile variable some information:
+pFile = fopen ("myfile.txt" , "rb");
+
+pFile, this is the variable we already made into a "file pointer" above.
+=, the assignment operator sets "foo" equal to "bar" (foo = bar).
+fopen, this is a function in C that is used to open a file (file open). In requires 2 parameters, the "filename" and "mode".
+"myfile.txt", this is the first parameter, the "filename."
+rb, this contains the two modes we are using:
+
+    * r - Open a file for reading. The file must exist.
+    * b - Binary mode. End of file is reached at the last byte of the file. No conversions.
+
+The fopen command gets everything set up for reading. It then returns an identifier pointing to the file (this is what pFile now stores). We can now access the file we just opened by addressing our variable "pFile."
+
+Now we need to check if the file has any data inside. We do this like:
+if (pFile==NULL) sceKernelExitGame();
+
+if, an "if statement" can be used to compare things, (eg. if "foo" is equal to "bar").
+( ... ), the comparisson goes between the parenthesis. If it evaluates to "true," then the code following is executed.
+==, is a comparisson operator. It evaluates to "true" if the two arguments on either side of it are equal to each other. Note the difference between the assignment operator (=) and equality operator (==).
+NULL, this means "empty," or "nothing," or "not set."
+sceKernelExitGame(), this terminates the process (or exits the program).
+
+So, this entire if statement means in english: "if pFile is empty, exit the program."
+
+Now that we've got that covered, we are going to check the file size.
+fseek (pFile , 0 , SEEK_END);
+lSize = ftell (pFile);
+rewind (pFile);
+
+fseek, "Reposition stream's position indicator." As you probably guess, this function "seeks" trhough the file. fseek requires 3 parameters, he pointer to an open file, the offset (how many bytes from the beginning of the file to start) and the origin (or the end).
+( ... ), again, the parenthesis contain the parameters.
+pFile, this is the variable that contains the pointer to the file we opened earlier.
+0, this is the offset, zero means we want to start at the beginning.
+SEEK_END, we are saying here that we want to read to the end of the file.
+lSize = ftell (pFile);, we are going to store the return value of ftell() to lSize.
+ftell(pFile);, "Return the current position in a stream". ftell only requires one parameter, a pointer to an open file, in this case it is pFile. ftell's main function is to tell you how many bytes until the begining from the position you are at. Since we're at the end (we read to the end with fseek) it tells us the file's size.
+rewind (pFile);, rewind's function is to reopen the file back to the beginning. It also only requires one parameter, which is a pointer to an open file. So now the file is primed for use again.
+
+So, here's a recap of what we just did to find the length of the file: Open the file, seek the end, then find how many bytes away from the beginning we are. So if the file is 10 bytes, we'd go to the end and count back to the begining, finding that it is 10 bytes away. We stored this value into the variable lSize.
+
+Next we need to allocate enough memory to fit the file into.
+buffer = (char*) malloc (lSize);
+if (buffer == NULL) sceKernelExitGame();
+buffer =, we are setting the value of the variable "buffer."
+char *, this is typesetting malloc to tell it that it contains characters.
+malloc, this is a function to allocate memory (eg, malloc(56); will give you 56 bytes of memory for you to store information in). So malloc (lSize) is allocating space for the entire file size.
+sceKernelExitGame(), (I've already explained this, refer to where we checked to make sure the file wasn't empty for information).
+
+Ok, so now we have successfully opened the file, checked its size and allocated space for it in the memory.
+
+Next, we copy the file contents into the buffer (memory).
+fread(buffer, 1, lSize, pFile);
+
+fread, "Read block of data from a stream into memory". This function requires 4 parameters.
+buffer, the first parameter, the "buffer", which coincidently is named "buffer." Basically, this is where we're storing the information in.
+1, this is the second parameter, the "size". This is the size in bytes of each item to be read. Since characters are one byte long, we use a "1" here.
+lSize, this is the third parameter, "count". This is the amount of characters to read into the buffer, in this case its lSize, the file size.
+pFile, the fourth and final parameter "stream". This is the pointer to an open file, ours is pFile.
+
+Ok, so now we have just read the file into the memory. We have a string of the file in our "buffer" variable.
+
+Now, we need to close the file since it is not needed anymore. You always, always want to close your file. If you don't, bad things can happen.
+fclose(pFile);
+
+fclose (pFile);, "flushes any buffers maintained for the given file and closes the file." Pretty self explanatory, eh?
+
+Next we are going to print the buffer/file contents to the terminal.
+printf("%s\n", buffer);
+
+This will print the buffer to the screen. If you don't understand how, check out the other C tutorials.
+
+Next, we free the memory we allocated.
+free(buffer);
+
+free, is a function used to un-allocate memory you allocated. It requires one parameter, the variable you want to release.
+
+We now end the thread return 0. This shows that everything ran fine if it got to this point. And signals the end of our main function.
+     sceKernelSleepThread();
+     return 0;
+}
+
+And finally we closed the main function with an end bracket.
+
+Your final code should look like this:
+#include <pspkernel.h>
+#include <pspdebug.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+#define printf pspDebugScreenPrintf
+
+/* Your callbacks should go here. */
+
+int main (void) {
+     pspDebugScreenInit();
+     SetupCallbacks();
+
+     FILE * pFile;
+     long lSize;
+     char * buffer;
+
+     pFile = fopen ( "myfile.txt" , "rb" );
+
+     if (pFile==NULL) sceKernelExitGame();
+
+     fseek (pFile , 0 , SEEK_END);
+     lSize = ftell (pFile);
+     rewind (pFile);
+
+     buffer = (char*) malloc (lSize);
+
+     if (buffer == NULL) sceKernelExitGame();
+
+     fread (buffer,1,lSize,pFile);
+
+     fclose (pFile);
+
+     printf("%s\n", buffer);
+
+     free (buffer);
+
+     sceKernelSleepThread();
+     return 0;
+}
+
+You'll need your standard Makefile (place it in a new textfile called "Makefile" with no extention):
+TARGET = file1
+OBJS = main.o
+
+CFLAGS = -O2 -G0 -Wall
+CXXFLAGS = $(CFLAGS) -fno-exceptions -fno-rtti
+ASFLAGS = $(CFLAGS)
+
+EXTRA_TARGETS = EBOOT.PBP
+PSP_EBOOT_TITLE = File Input Tutorial 1
+
+PSPSDK=$(shell psp-config --pspsdk-path)
+include $(PSPSDK)/lib/build.mak
+
+Then just type "make" in CYGWIN and you're set.
+
+Except for one thing. You need a text file. Open up Notepad and write something in a file, then save it as "myfile.txt" (without quotes) and put it on your PSP with your EBOOT.
+
+Congratulations, you just read a file in C. You can now use this to read in settings for your program and have external data. This can be very useful for creating programs that need user configuration; you can change the configuration without recompiling the file! 

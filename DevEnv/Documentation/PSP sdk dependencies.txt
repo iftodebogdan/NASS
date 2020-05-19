@@ -1,0 +1,13 @@
+-bison
+-flex
+-libncurses
+-ncurses
+-autoconf
+-automake
+-gcc
+-gcc-c++
+-make
+-nano (optional)
+-patchutils
+-subversion
+-wget
